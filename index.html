@@ -718,7 +718,7 @@
                 <span>Show Shortcuts</span><kbd>Ctrl + /</kbd>
             </div>
         </div>
-    </div>
+    </main>
 
 
     <div id="toast-notification" class="toast-notification" role="status" aria-live="polite"></div>
@@ -967,7 +967,7 @@
                 input.dataset.listenerAttached = 'true';
             });
             const fileDropZone = document.getElementById('file-drop-zone');
-            if (fileDropZone && !fileDropZone.dataset.listenerAttached) {
+            if (fileDropZone && !fileDropZone.dataset.listener-attached) {
                 fileDropZone.addEventListener('dragover', (e) => { e.preventDefault(); fileDropZone.classList.add('hover'); });
                 fileDropZone.addEventListener('dragleave', () => { fileDropZone.classList.remove('hover'); });
                 fileDropZone.addEventListener('drop', (e) => {
@@ -978,7 +978,7 @@
                     }
                 });
                 document.getElementById('file-upload').addEventListener('change', (e) => { this.handleFileUpload(e.target.files[0]); });
-                fileDropZone.dataset.listenerAttached = 'true';
+                fileDropZone.dataset.listener-attached = 'true';
             }
         },
         getQrData() {
