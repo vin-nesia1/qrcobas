@@ -30,16 +30,28 @@
         :root {
             --color-background: #0d0d1a;
             --color-surface: rgba(20, 20, 35, 0.5);
-            --color-primary: #5271ff;
-            --color-secondary: #ad5bff;
-            --color-success: #10b981;
-            --color-danger: #ef4444;
+            --color-primary: #3b82f6; /* Blue */
+            --color-secondary: #8b5cf6; /* Purple */
+            --color-success: #10b981; /* Green */
+            --color-warning: #f59e0b; /* Orange */
+            --color-danger: #ef4444; /* Red */
             --color-text: #f0f0f5;
             --color-text-muted: #a0a0b0;
             --color-border: rgba(255, 255, 255, 0.1);
             --glass-blur: 16px;
             --transition-speed: 0.4s;
             --border-radius: 12px;
+            --input-padding-y: 0.8rem; /* Konsisten */
+            --input-padding-x: 1rem; /* Konsisten */
+        }
+
+        /* Dark Mode by Default, Light Mode Toggle would override */
+        body.light-mode {
+            --color-background: #f0f2f5;
+            --color-surface: rgba(255, 255, 255, 0.7);
+            --color-text: #2c3e50;
+            --color-text-muted: #7f8c8d;
+            --color-border: rgba(0, 0, 0, 0.1);
         }
 
         /* 2. ADVANCED ANIMATIONS */
@@ -48,6 +60,42 @@
             0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
         }
         @keyframes modal-fade-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes loading-spinner { to { transform: rotate(360deg); } }
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes blink-caret { 50% { border-color: transparent; } }
+
+        /* 3D Hover Effect for QR Code */
+        #qr-code-container:hover {
+            transform: perspective(1000px) rotateY(5deg) rotateX(2deg) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 0 8px var(--color-primary-light);
+        }
+
+        /* Typing animation for placeholder text */
+        .typing-placeholder::placeholder {
+            color: transparent;
+        }
+
+        /* Toast Notification */
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--color-success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all var(--transition-speed) ease-out;
+            z-index: 1001;
+        }
+        .toast-notification.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
 
         /* 3. DYNAMIC BACKGROUND & BODY */
         body {
@@ -57,7 +105,7 @@
             color: var(--color-text);
             line-height: 1.7;
             overflow-x: hidden;
-            transition: background var(--transition-speed) ease;
+            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
         }
         body::before {
             content: '';
@@ -72,6 +120,12 @@
             animation: aurora 20s ease infinite;
             background-size: 400% 400%;
         }
+        body.light-mode::before {
+             background: radial-gradient(at 20% 20%, hsla(220, 80%, 80%, 0.3) 0px, transparent 50%),
+                         radial-gradient(at 80% 20%, hsla(280, 80%, 80%, 0.3) 0px, transparent 50%),
+                         radial-gradient(at 20% 80%, hsla(180, 80%, 80%, 0.3) 0px, transparent 50%),
+                         radial-gradient(at 80% 80%, hsla(340, 80%, 80%, 0.3) 0px, transparent 50%);
+        }
 
         /* 4. LAYOUT & HEADER */
         .container { width: 90%; max-width: 1200px; margin: 2rem auto; animation: fadeIn 1s ease-out forwards; }
@@ -82,7 +136,7 @@
         main { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: flex-start; }
 
         /* 5. PROFESSIONAL CARD STYLING */
-        .controls, .output {
+        .controls, .output, .modal-content {
             background: var(--color-surface);
             padding: 2rem;
             border-radius: var(--border-radius);
@@ -94,52 +148,138 @@
         .output { position: sticky; top: 2rem; }
 
         /* 6. ENHANCED TABS */
-        .tabs-container { display: flex; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--color-border); padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
+        .tabs-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
+            gap: 0.5rem; 
+            border-bottom: 1px solid var(--color-border); 
+            padding-bottom: 1.5rem; 
+            margin-bottom: 1.5rem; 
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+        }
+        .tabs-container::-webkit-scrollbar { display: none; } /* Hide scrollbar for aesthetics */
         .tab-button {
-            display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.6rem 0.8rem;
             cursor: pointer; border: 1px solid transparent; background: transparent; color: var(--color-text-muted);
             border-radius: var(--border-radius); transition: all 0.2s ease;
-            font-size: 0.9em; font-weight: 600;
+            font-size: 0.9em; font-weight: 600; white-space: nowrap; /* Prevent text wrapping */
         }
         .tab-button:hover { background-color: rgba(255, 255, 255, 0.05); color: var(--color-text); }
         .tab-button.active {
             background: var(--color-primary); color: white; border-color: var(--color-primary);
-            box-shadow: 0 4px 15px rgba(82, 113, 255, 0.3); transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transform: translateY(-2px);
         }
         .tabs-content-viewport { overflow: hidden; position: relative; min-height: 280px; }
-        .tabs-content-wrapper { display: flex; transition: transform var(--transition-speed) ease-in-out; }
-        .tab-content { width: 100%; flex-shrink: 0; display: block; }
+        .tabs-content-wrapper { display: flex; transition: transform var(--transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth slide */ }
+        .tab-content { width: 100%; flex-shrink: 0; display: block; padding-top: 0.5rem; }
         
         /* 7. PREMIUM FORM ELEMENTS */
         .form-group { margin-bottom: 1.2rem; position: relative; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--color-text); font-size: 0.9em; }
         .form-group input, .form-group textarea, .form-group select {
-            width: 100%; padding: 0.8rem; border: 1px solid var(--color-border);
+            width: 100%; padding: var(--input-padding-y) var(--input-padding-x); border: 1px solid var(--color-border);
             border-radius: 8px; box-sizing: border-box; font-size: 1em;
             background-color: rgba(0,0,0,0.3); color: var(--color-text);
             transition: all var(--transition-speed) ease;
         }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             outline: none; border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(82, 113, 255, 0.4);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
         }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        /* Validation messages */
+        .validation-message {
+            font-size: 0.85em;
+            color: var(--color-danger);
+            margin-top: 0.4rem;
+            display: none;
+            position: absolute;
+            bottom: -1.5rem;
+            left: 0;
+        }
+        .form-group.invalid input, .form-group.invalid textarea {
+            border-color: var(--color-danger);
+        }
+        .form-group.invalid .validation-message {
+            display: block;
+        }
+        .character-counter {
+            font-size: 0.8em;
+            color: var(--color-text-muted);
+            text-align: right;
+            margin-top: 0.2rem;
+        }
+        .character-counter.warning { color: var(--color-warning); }
+        .character-counter.danger { color: var(--color-danger); }
+
+
+        /* Drag & Drop Upload */
+        .drop-zone {
+            border: 2px dashed var(--color-border);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            margin-top: 1rem;
+        }
+        .drop-zone.hover {
+            border-color: var(--color-primary);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        .drop-zone p { margin: 0; color: var(--color-text-muted); }
+        .drop-zone i { font-size: 2em; color: var(--color-primary); margin-bottom: 0.5rem; }
 
         /* 8. EXPERT DESIGN OPTIONS */
         .collapsible-header {
             cursor: pointer; font-size: 1.2em; font-weight: 700; display: flex;
             align-items: center; justify-content: space-between;
             padding: 1rem 0; border-top: 1px solid var(--color-border); margin-top: 2rem;
+            color: var(--color-text);
         }
         .collapsible-header i.fa-chevron-down { transition: transform var(--transition-speed) ease; }
         .collapsible-content { max-height: 0; overflow: hidden; transition: max-height var(--transition-speed) ease-out; }
-        .collapsible-content.open { max-height: 1000px; /* Arbitrary large value */ }
+        .collapsible-content.open { max-height: 2000px; /* Arbitrary large value */ }
         .collapsible.open .fa-chevron-down { transform: rotate(180deg); }
         .design-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.2rem; padding-top: 1rem;}
         
         #logo-palette { display: flex; gap: 0.5rem; margin-top: 0.8rem; flex-wrap: wrap; }
-        .palette-color { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid var(--color-border); transition: transform 0.2s ease; }
-        .palette-color:hover { transform: scale(1.2); }
+        .palette-color { 
+            width: 30px; height: 30px; border-radius: 50%; cursor: pointer; 
+            border: 2px solid var(--color-border); transition: transform 0.2s ease, border-color 0.2s ease; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .palette-color:hover { transform: scale(1.2); border-color: var(--color-primary); }
+
+        /* Gradient Color Pickers */
+        .gradient-picker {
+            display: flex; align-items: center; gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .gradient-picker input[type="color"] {
+            width: 40px;
+            height: 40px;
+            padding: 2px;
+            border-radius: 50%;
+            border: 2px solid var(--color-border);
+            cursor: pointer;
+            background: transparent;
+        }
+        .gradient-picker button {
+            background: none;
+            border: none;
+            color: var(--color-danger);
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+        .gradient-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            align-items: center;
+        }
 
         /* 9. QR CODE OUTPUT & ACTIONS */
         .output-header { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 1.5rem; }
@@ -149,16 +289,50 @@
             padding: 1rem; border-radius: var(--border-radius);
             box-shadow: 0 0 30px rgba(0,0,0,0.5); box-sizing: border-box;
             transition: all var(--transition-speed) ease;
+            transform-style: preserve-3d; /* For 3D hover */
+            position: relative; /* For loading spinner */
+            display: flex; /* For centering loading spinner */
+            justify-content: center;
+            align-items: center;
         }
-        #qr-code canvas, #qr-code svg { border-radius: 8px; display: block; width: 100% !important; height: auto !important; }
+        #qr-code canvas, #qr-code svg { 
+            border-radius: 8px; display: block; width: 100% !important; height: auto !important; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .qr-loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--color-primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: loading-spinner 1s linear infinite;
+            position: absolute;
+            z-index: 2;
+            display: none; /* Hidden by default */
+        }
+        #qr-code-container.loading .qr-loading-spinner { display: block; }
+        #qr-code-container.loading #qr-code { opacity: 0.5; } /* Dim QR when loading */
+
+
         .btn {
             width: 100%; padding: 0.9rem 1.5rem; border-radius: 8px; cursor: pointer;
             font-size: 1em; font-weight: bold; text-align: center;
             transition: all var(--transition-speed) ease; text-decoration: none; border: none;
             display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         .btn-primary { background: var(--color-primary); color: white; }
-        .btn-primary:hover { background: #405de0; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(82, 113, 255, 0.3); }
+        .btn-primary:hover { background: #405de0; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4); }
+        .btn-secondary { background: var(--color-secondary); color: white; }
+        .btn-secondary:hover { background: #6c42d0; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(139, 92, 246, 0.4); }
+        .btn-outline {
+            background: transparent; border: 1px solid var(--color-border); color: var(--color-text-muted);
+        }
+        .btn-outline:hover {
+            border-color: var(--color-primary); color: var(--color-primary);
+            background-color: rgba(59, 130, 246, 0.1); transform: translateY(-2px);
+        }
+
         .download-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; }
 
         /* 10. MODAL STYLES (SCANNER & BULK) */
@@ -181,14 +355,92 @@
         #qr-scanner-container { width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
         #scanner-result { word-break: break-all; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; }
 
+        /* PWA Install Prompt */
+        #install-prompt-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            z-index: 999;
+            transform: translateY(100%);
+            transition: transform var(--transition-speed) ease-out;
+        }
+        #install-prompt-banner.show {
+            transform: translateY(0);
+        }
+        #install-prompt-banner button {
+            margin-left: 1rem;
+        }
+        #install-prompt-banner .close-btn {
+            background: none;
+            border: none;
+            color: var(--color-text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* Dark/Light Mode Toggle */
+        .theme-toggle-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 100;
+        }
+        .theme-toggle-button {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.2em;
+            color: var(--color-text);
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .theme-toggle-button:hover {
+            transform: scale(1.1);
+            border-color: var(--color-primary);
+        }
+
+
         /* 11. RESPONSIVE DESIGN */
         @media (max-width: 992px) {
             main { grid-template-columns: 1fr; }
             .output { position: static; margin-top: 2rem; }
         }
+        
         @media (max-width: 768px) {
+            header h1 { font-size: 2.2em; }
+            header p { font-size: 1em; }
+            .tabs-container { 
+                grid-template-columns: repeat(3, 1fr); /* 3 columns for mobile as requested */
+                justify-content: start;
+            }
+            .tab-button {
+                font-size: 0.8em;
+                padding: 0.6rem 0.5rem;
+            }
             .form-row { grid-template-columns: 1fr; }
             .download-buttons { grid-template-columns: 1fr; }
+            .controls, .output, .modal-content { padding: 1.5rem; }
+            .collapsible-header { font-size: 1em; }
+            .design-grid { grid-template-columns: 1fr; } /* Stack design options on mobile */
+        }
+
+        /* Specific mobile grid layout for tabs */
+        .tabs-container[data-mobile-grid="3"] .tab-button {
+            width: 100%; /* Ensure buttons take full width of their grid cell */
         }
         
         /* --- [END] PREMIUM CSS UPGRADE --- */
@@ -197,27 +449,55 @@
 <body>
 
     <header>
-        <h1><img src="logo.png" alt="VIN NESIA Logo" class="logo-img"> VIN NESIA</h1>
+        <h1><img src="logo.png" onerror="this.onerror=null;this.src='https://placehold.co/50x50/3b82f6/ffffff?text=VN';" alt="VIN NESIA Logo" class="logo-img"> VIN NESIA</h1>
         <p>A Premium QR Code Suite. Generate, customize, scan, and bulk-create QR codes with a professional, real-time interface.</p>
     </header>
 
     <main class="container">
         <div class="controls">
-            <div class="tabs-container">
-                <button class="tab-button active" data-tab-index="0" onclick="App.openTab(event, 'text')"><i class="fas fa-link"></i> URL/Text</button>
-                <button class="tab-button" data-tab-index="1" onclick="App.openTab(event, 'wifi')"><i class="fas fa-wifi"></i> WiFi</button>
-                <button class="tab-button" data-tab-index="2" onclick="App.openTab(event, 'vcard')"><i class="fas fa-address-card"></i> vCard</button>
-                <button class="tab-button" data-tab-index="3" onclick="App.openTab(event, 'event')"><i class="fas fa-calendar-alt"></i> Event</button>
-                <button class="tab-button" data-tab-index="4" onclick="App.openTab(event, 'email')"><i class="fas fa-envelope"></i> Email</button>
+            <div class="tabs-container" data-mobile-grid="3">
+                <button class="tab-button active" data-tab-index="0" data-tab-name="text" onclick="App.openTab(event, 'text')"><i class="fas fa-font"></i> Text/URL</button>
+                <button class="tab-button" data-tab-index="1" data-tab-name="wifi" onclick="App.openTab(event, 'wifi')"><i class="fas fa-wifi"></i> WiFi</button>
+                <button class="tab-button" data-tab-index="2" data-tab-name="vcard" onclick="App.openTab(event, 'vcard')"><i class="fas fa-address-card"></i> vCard</button>
+                <button class="tab-button" data-tab-index="3" data-tab-name="email" onclick="App.openTab(event, 'email')"><i class="fas fa-envelope"></i> Email</button>
+                <button class="tab-button" data-tab-index="4" data-tab-name="sms" onclick="App.openTab(event, 'sms')"><i class="fas fa-sms"></i> SMS</button>
+                <button class="tab-button" data-tab-index="5" data-tab-name="location" onclick="App.openTab(event, 'location')"><i class="fas fa-map-marker-alt"></i> Location</button>
+                <button class="tab-button" data-tab-index="6" data-tab-name="file" onclick="App.openTab(event, 'file')"><i class="fas fa-file-alt"></i> File</button>
+                <button class="tab-button" data-tab-index="7" data-tab-name="event" onclick="App.openTab(event, 'event')"><i class="fas fa-calendar-alt"></i> Event</button>
+                <button class="tab-button" data-tab-index="8" data-tab-name="crypto" onclick="App.openTab(event, 'crypto')"><i class="fab fa-bitcoin"></i> Crypto</button>
+                <button class="tab-button" data-tab-index="9" data-tab-name="phone" onclick="App.openTab(event, 'phone')"><i class="fas fa-phone"></i> Phone</button>
+                <button class="tab-button" data-tab-index="10" data-tab-name="whatsapp" onclick="App.openTab(event, 'whatsapp')"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                <button class="tab-button" data-tab-index="11" data-tab-name="social" onclick="App.openTab(event, 'social')"><i class="fas fa-share-alt"></i> Social</button>
+                <button class="tab-button" data-tab-index="12" data-tab-name="appstore" onclick="App.openTab(event, 'appstore')"><i class="fab fa-app-store-ios"></i> App Store</button>
+                <button class="tab-button" data-tab-index="13" data-tab-name="multilang" onclick="App.openTab(event, 'multilang')"><i class="fas fa-globe"></i> Multi-Lang</button>
+                <button class="tab-button" data-tab-index="14" data-tab-name="html" onclick="App.openTab(event, 'html')"><i class="fab fa-html5"></i> HTML</button>
             </div>
 
             <div class="tabs-content-viewport">
                 <div class="tabs-content-wrapper">
-                    <div id="text" class="tab-content"><div class="form-group"><label for="text-input">Your URL or Text</label><textarea class="qr-input" id="text-input" placeholder="e.g., https://www.vinnesia.my.id"></textarea></div></div>
+                    <div id="text" class="tab-content">
+                        <div class="form-group">
+                            <label for="text-input">Your URL or Text</label>
+                            <textarea class="qr-input typing-placeholder" id="text-input" placeholder="e.g., https://www.vinnesia.my.id"></textarea>
+                            <span class="validation-message">Please enter valid URL or text.</span>
+                            <div class="character-counter" id="text-input-counter">0/250</div>
+                            <button class="btn btn-outline mt-2 copy-to-clipboard" data-target="text-input"><i class="fas fa-copy"></i> Copy Text</button>
+                        </div>
+                    </div>
                     <div id="wifi" class="tab-content"></div>
                     <div id="vcard" class="tab-content"></div>
                     <div id="event" class="tab-content"></div>
                     <div id="email" class="tab-content"></div>
+                    <div id="sms" class="tab-content"></div>
+                    <div id="location" class="tab-content"></div>
+                    <div id="file" class="tab-content"></div>
+                    <div id="crypto" class="tab-content"></div>
+                    <div id="phone" class="tab-content"></div>
+                    <div id="whatsapp" class="tab-content"></div>
+                    <div id="social" class="tab-content"></div>
+                    <div id="appstore" class="tab-content"></div>
+                    <div id="multilang" class="tab-content"></div>
+                    <div id="html" class="tab-content"></div>
                 </div>
             </div>
 
@@ -229,24 +509,115 @@
                 <div class="collapsible-content">
                     <div class="design-grid">
                         <div class="form-group"><label>Dot Style</label><select class="qr-input" id="dot-style"><option value="square">Square</option><option value="dots">Dots</option><option value="rounded">Rounded</option><option value="extra-rounded">Extra Rounded</option><option value="classy">Classy</option><option value="classy-rounded">Classy Rounded</option></select></div>
-                        <div class="form-group"><label>Dot Color</label><input type="color" class="qr-input" id="dot-color" value="#FFFFFF"></div>
-                        <div class="form-group"><label>Background Color</label><input type="color" class="qr-input" id="bg-color" value="#0D0D1A"></div>
-                        <div class="form-group"><label>Corner Square Color</label><input type="color" class="qr-input" id="corner-square-color" value="#FFFFFF"></div>
-                        <div class="form-group"><label>Corner Dot Color</label><input type="color" class="qr-input" id="corner-dot-color" value="#FFFFFF"></div>
+                        <div class="form-group"><label>Dot Color</label><input type="color" class="qr-input" id="dot-color" value="#3b82f6"></div>
+                        <div class="form-group">
+                            <label>Dot Gradient</label>
+                            <div id="dot-gradient-colors">
+                                <div class="gradient-picker">
+                                    <input type="color" class="qr-input" data-gradient-stop="0" value="#3b82f6">
+                                    <input type="color" class="qr-input" data-gradient-stop="1" value="#8b5cf6">
+                                    <button onclick="App.addGradientColor('dot')"><i class="fas fa-plus-circle"></i></button>
+                                </div>
+                            </div>
+                            <div class="gradient-options">
+                                <label for="dot-gradient-type">Type:</label>
+                                <select class="qr-input" id="dot-gradient-type">
+                                    <option value="radial">Radial</option>
+                                    <option value="linear">Linear</option>
+                                </select>
+                                <label for="dot-gradient-rotation">Rotation:</label>
+                                <input type="range" class="qr-input" id="dot-gradient-rotation" min="0" max="360" value="0">
+                                <span><span id="dot-gradient-rotation-value">0</span>°</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group"><label>Background Color</label><input type="color" class="qr-input" id="bg-color" value="#0d0d1a"></div>
+                        <div class="form-group">
+                            <label>Background Gradient</label>
+                            <div id="bg-gradient-colors">
+                                <div class="gradient-picker">
+                                    <input type="color" class="qr-input" data-gradient-stop="0" value="#0d0d1a">
+                                    <input type="color" class="qr-input" data-gradient-stop="1" value="#1a1a2e">
+                                    <button onclick="App.addGradientColor('bg')"><i class="fas fa-plus-circle"></i></button>
+                                </div>
+                            </div>
+                            <div class="gradient-options">
+                                <label for="bg-gradient-type">Type:</label>
+                                <select class="qr-input" id="bg-gradient-type">
+                                    <option value="radial">Radial</option>
+                                    <option value="linear">Linear</option>
+                                </select>
+                                <label for="bg-gradient-rotation">Rotation:</label>
+                                <input type="range" class="qr-input" id="bg-gradient-rotation" min="0" max="360" value="0">
+                                <span><span id="bg-gradient-rotation-value">0</span>°</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group"><label>Corner Square Style</label><select class="qr-input" id="corner-square-style"><option value="square">Square</option><option value="extra-rounded">Extra Rounded</option><option value="dot">Dot</option></select></div>
+                        <div class="form-group"><label>Corner Square Color</label><input type="color" class="qr-input" id="corner-square-color" value="#3b82f6"></div>
+                        
+                        <div class="form-group"><label>Corner Dot Style</label><select class="qr-input" id="corner-dot-style"><option value="square">Square</option><option value="dot">Dot</option></select></div>
+                        <div class="form-group"><label>Corner Dot Color</label><input type="color" class="qr-input" id="corner-dot-color" value="#3b82f6"></div>
+
+                        <div class="form-group"><label>Margin</label><input type="number" class="qr-input" id="margin" value="0" min="0" max="100"></div>
+                        <div class="form-group"><label>Image Size</label><input type="range" class="qr-input" id="image-size" min="0.1" max="1" step="0.05" value="0.4"></div>
                     </div>
+                    
                     <div class="form-group">
                         <label for="logo-upload">Upload Logo</label>
-                        <input type="file" id="logo-upload" accept="image/*" style="display:none;">
-                        <button class="btn" onclick="document.getElementById('logo-upload').click();"><i class="fas fa-upload"></i> Choose Logo</button>
+                        <div class="drop-zone" id="logo-drop-zone">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag & drop your logo here or click to upload</p>
+                            <input type="file" id="logo-upload" accept="image/*" style="display:none;">
+                            <button type="button" class="btn btn-outline mt-2" onclick="document.getElementById('logo-upload').click();"><i class="fas fa-upload"></i> Choose Logo</button>
+                        </div>
                         <div id="logo-palette-container" style="display: none; margin-top: 1rem;">
                             <label>Smart Palette (from Logo)</label>
                             <div id="logo-palette"></div>
                         </div>
+                        <div id="logo-controls" style="display: none; margin-top: 1rem;">
+                            <div class="form-group">
+                                <label for="logo-position-x">Logo Position X (px)</label>
+                                <input type="number" class="qr-input" id="logo-position-x" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="logo-position-y">Logo Position Y (px)</label>
+                                <input type="number" class="qr-input" id="logo-position-y" value="0">
+                            </div>
+                            <button class="btn btn-outline" onclick="App.removeLogo()"><i class="fas fa-times-circle"></i> Remove Logo</button>
+                        </div>
                     </div>
+                    
                     <div class="form-group">
                         <label for="frame-text">Frame Text (e.g., SCAN ME)</label>
                         <input type="text" class="qr-input" id="frame-text" placeholder="SCAN ME">
                     </div>
+                    <div class="form-group">
+                        <label for="frame-color">Frame Color</label>
+                        <input type="color" class="qr-input" id="frame-color" value="#3b82f6">
+                    </div>
+                    <div class="form-group">
+                        <label for="frame-font-color">Frame Font Color</label>
+                        <input type="color" class="qr-input" id="frame-font-color" value="#ffffff">
+                    </div>
+                    <div class="form-group">
+                        <label for="frame-corner-radius">Frame Corner Radius (%)</label>
+                        <input type="range" class="qr-input" id="frame-corner-radius" min="0" max="50" value="0">
+                        <span><span id="frame-corner-radius-value">0</span>%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="recent-qrs-collapsible" class="collapsible mt-4">
+                <div class="collapsible-header">
+                    <span><i class="fas fa-history"></i> Recent QR Codes</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="collapsible-content">
+                    <ul id="qr-history-list" class="list-disc pl-5 py-2">
+                        <!-- History items will be loaded here -->
+                    </ul>
+                    <button class="btn btn-outline mt-2" onclick="App.clearHistory()"><i class="fas fa-trash-alt"></i> Clear History</button>
                 </div>
             </div>
         </div>
@@ -255,11 +626,14 @@
             <div class="output-header">
                 <h2>Preview</h2>
                 <div style="display: flex; gap: 0.5rem;">
-                    <button id="scan-qr-btn" class="btn" style="width:auto; padding: 0.5rem 1rem;"><i class="fas fa-qrcode"></i> Scan</button>
-                    <button id="bulk-qr-btn" class="btn" style="width:auto; padding: 0.5rem 1rem;"><i class="fas fa-layer-group"></i> Bulk</button>
+                    <button id="scan-qr-btn" class="btn btn-outline" style="width:auto; padding: 0.5rem 1rem;"><i class="fas fa-qrcode"></i> Scan</button>
+                    <button id="bulk-qr-btn" class="btn btn-outline" style="width:auto; padding: 0.5rem 1rem;"><i class="fas fa-layer-group"></i> Bulk</button>
                 </div>
             </div>
-            <div id="qr-code-container"><div id="qr-code"></div></div>
+            <div id="qr-code-container">
+                <div class="qr-loading-spinner"></div>
+                <div id="qr-code"></div>
+            </div>
             <div class="download-buttons">
                 <button id="download-png" class="btn btn-primary"><i class="fas fa-file-image"></i> Download PNG</button>
                 <button id="download-svg" class="btn btn-secondary"><i class="fas fa-file-code"></i> Download SVG</button>
@@ -275,6 +649,7 @@
             </div>
             <div id="qr-scanner-container"></div>
             <p><strong>Result:</strong> <span id="scanner-result">Align QR code within the frame.</span></p>
+            <button class="btn btn-primary mt-3 copy-to-clipboard" data-target="scanner-result"><i class="fas fa-copy"></i> Copy Result</button>
         </div>
     </div>
     
@@ -284,15 +659,43 @@
                 <h2>Bulk QR Code Generator</h2>
                 <button class="modal-close-btn">&times;</button>
             </div>
-            <p>Enter data, one QR code per line. For vCards, use CSV format: "FullName,Email,Phone".</p>
+            <p class="text-sm text-gray-400 mb-4">Enter data, one QR code per line. For vCards, use CSV format: "FullName,Email,Phone".</p>
             <div class="form-group">
                 <label for="bulk-type">QR Code Type for Bulk</label>
-                <select id="bulk-type" class="qr-input"><option value="text">URL/Text</option><option value="vcard">vCard (CSV)</option></select>
+                <select id="bulk-type" class="qr-input">
+                    <option value="text">URL/Text</option>
+                    <option value="wifi">WiFi</option>
+                    <option value="vcard">vCard (CSV)</option>
+                    <option value="email">Email</option>
+                    <option value="sms">SMS</option>
+                    <option value="location">Location</option>
+                    <option value="phone">Phone</option>
+                    <option value="whatsapp">WhatsApp</option>
+                </select>
             </div>
             <div class="form-group">
-                <textarea id="bulk-data" rows="8" placeholder="https://google.com\nhttps://vinnesia.my.id\nJohn Doe,john@email.com,+12345"></textarea>
+                <label for="bulk-data">Data for Bulk Generation</label>
+                <textarea id="bulk-data" rows="8" placeholder="https://google.com&#10;https://vinnesia.my.id&#10;John Doe,john@email.com,+12345"></textarea>
             </div>
             <button id="bulk-generate-zip" class="btn btn-primary"><i class="fas fa-file-archive"></i> Generate & Download ZIP</button>
+        </div>
+    </div>
+
+    <div id="toast-notification" class="toast-notification"></div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle-button" class="theme-toggle-button" aria-label="Toggle dark/light mode">
+            <i class="fas fa-sun"></i>
+        </button>
+    </div>
+
+    <div id="install-prompt-banner">
+        <div>
+            <p>Install VIN NESIA QR Code Generator as an app for quick access!</p>
+        </div>
+        <div>
+            <button id="install-button" class="btn btn-primary">Install App</button>
+            <button class="close-btn" onclick="document.getElementById('install-prompt-banner').classList.remove('show');">&times;</button>
         </div>
     </div>
     
@@ -304,38 +707,116 @@
         html5QrCode: null,
         logoImage: null,
         debounceTimer: null,
-        state: { currentTab: 'text', currentTabIndex: 0 },
+        state: { 
+            currentTab: 'text', 
+            currentTabIndex: 0,
+            qrHistory: JSON.parse(localStorage.getItem('qrHistory')) || [],
+            appSettings: JSON.parse(localStorage.getItem('appSettings')) || { theme: 'dark', dotGradientColors: ['#3b82f6', '#8b5cf6'], bgGradientColors: ['#0d0d1a', '#1a1a2e'] },
+            undoStack: [],
+            redoStack: []
+        },
+        deferredPrompt: null, // For PWA install prompt
+        placeholderTexts: {
+            text: "e.g., https://www.vinnesia.my.id",
+            wifi: "Network Name (SSID)",
+            vcard: "Full Name, Email, Phone, Organization...",
+            email: "recipient@example.com",
+            sms: "+1234567890",
+            location: "Latitude, Longitude",
+            file: "Drag & drop your file here...",
+            event: "Event Title, Start Time, End Time, Location...",
+            crypto: "Wallet Address, Amount...",
+            phone: "+1234567890",
+            whatsapp: "+1234567890",
+            social: "Social Media URL (e.g., linkedin.com/in/vinnesia)",
+            appstore: "App Store URL",
+            multilang: "Lang1 Text::Lang2 Text",
+            html: "HTML content for web page..."
+        },
+        typingAnimationInterval: null,
+        maxHistoryItems: 50,
 
         init() {
+            this.setupPWA();
+            this.loadTheme();
             this.setupQRCode();
             this.attachEventListeners();
             this.loadInitialContent();
+            this.loadHistory();
+            this.applyInitialSettings();
+            this.startTypingAnimation('text-input', this.placeholderTexts.text); // Start initial typing animation
             console.log("Premium QR Suite Initialized.");
+        },
+
+        setupPWA() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => console.log('Service Worker Registered', reg))
+                    .catch(err => console.error('Service Worker Registration Failed', err));
+            }
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                this.deferredPrompt = e;
+                document.getElementById('install-prompt-banner').classList.add('show');
+            });
+
+            document.getElementById('install-button').addEventListener('click', async () => {
+                if (this.deferredPrompt) {
+                    this.deferredPrompt.prompt();
+                    const { outcome } = await this.deferredPrompt.userChoice;
+                    console.log(`User response to the install prompt: ${outcome}`);
+                    this.deferredPrompt = null;
+                    document.getElementById('install-prompt-banner').classList.remove('show');
+                }
+            });
+        },
+
+        loadTheme() {
+            if (this.state.appSettings.theme === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('theme-toggle-button').innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.getElementById('theme-toggle-button').innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        },
+
+        toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            this.state.appSettings.theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+            localStorage.setItem('appSettings', JSON.stringify(this.state.appSettings));
+            this.loadTheme(); // Update button icon
         },
 
         setupQRCode() {
             this.qrCode = new QRCodeStyling({
                 width: 300, height: 300, data: "https://qr.vinnesia.my.id",
-                dotsOptions: { color: "#ffffff", type: "rounded" },
+                dotsOptions: { color: "#3b82f6", type: "rounded" },
                 backgroundOptions: { color: "#0d0d1a" },
                 imageOptions: { crossOrigin: "anonymous", margin: 8, imageSize: 0.4 },
-                cornersSquareOptions: { color: "#ffffff" },
-                cornersDotOptions: { color: "#ffffff" },
+                cornersSquareOptions: { color: "#3b82f6", type: "square" },
+                cornersDotOptions: { color: "#3b82f6", type: "dot" },
                 qrOptions: { errorCorrectionLevel: 'H' }
             });
             this.qrCode.append(document.getElementById("qr-code"));
         },
 
         attachEventListeners() {
+            // Debounced input for QR generation
             document.querySelectorAll('.qr-input').forEach(input => {
-                input.addEventListener('input', () => {
+                input.addEventListener('input', (e) => {
+                    this.saveStateForUndo(); // Save state before change
+                    this.validateInput(e.target);
                     clearTimeout(this.debounceTimer);
-                    this.debounceTimer = setTimeout(() => this.generateQrCode(), 300);
+                    this.debounceTimer = setTimeout(() => this.generateQrCode(), 250); // Debounce to 250ms
+                    this.saveAppSettings(); // Auto-save settings on input
+                    this.updateCharacterCounter(e.target);
                 });
             });
-            
+
             document.getElementById('logo-upload').addEventListener('change', e => this.handleLogoUpload(e.target.files[0]));
             
+            // Design Collapsible
             const designCollapsible = document.getElementById('design-options-collapsible');
             const designHeader = designCollapsible.querySelector('.collapsible-header');
             if (designHeader) {
@@ -345,6 +826,15 @@
                 });
             }
 
+            // Recent QRs Collapsible
+            const recentQRsCollapsible = document.getElementById('recent-qrs-collapsible');
+            const recentQRsHeader = recentQRsCollapsible.querySelector('.collapsible-header');
+            if (recentQRsHeader) {
+                recentQRsHeader.addEventListener('click', () => {
+                    recentQRsCollapsible.classList.toggle('open');
+                    recentQRsCollapsible.querySelector('.collapsible-content').classList.toggle('open');
+                });
+            }
 
             // Modals
             document.getElementById('scan-qr-btn').addEventListener('click', () => this.openModal('scanner-modal'));
@@ -361,14 +851,118 @@
             document.getElementById('download-png').addEventListener('click', () => this.download('png'));
             document.getElementById('download-svg').addEventListener('click', () => this.download('svg'));
             document.getElementById('bulk-generate-zip').addEventListener('click', () => this.handleBulkGenerate());
+
+            // Drag & Drop for Logo
+            const dropZone = document.getElementById('logo-drop-zone');
+            dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('hover'); });
+            dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('hover'); });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('hover');
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    this.handleLogoUpload(e.dataTransfer.files[0]);
+                }
+            });
+
+            // Copy to Clipboard
+            document.querySelectorAll('.copy-to-clipboard').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const targetId = e.currentTarget.dataset.target;
+                    const targetElement = document.getElementById(targetId) || document.querySelector(`#${targetId} span`);
+                    if (targetElement) {
+                        this.copyToClipboard(targetElement.value || targetElement.textContent);
+                    }
+                });
+            });
+
+            // Gradient rotation updates
+            document.getElementById('dot-gradient-rotation').addEventListener('input', (e) => {
+                document.getElementById('dot-gradient-rotation-value').textContent = e.target.value;
+                this.generateQrCode();
+                this.saveAppSettings();
+            });
+            document.getElementById('bg-gradient-rotation').addEventListener('input', (e) => {
+                document.getElementById('bg-gradient-rotation-value').textContent = e.target.value;
+                this.generateQrCode();
+                this.saveAppSettings();
+            });
+            document.getElementById('frame-corner-radius').addEventListener('input', (e) => {
+                document.getElementById('frame-corner-radius-value').textContent = e.target.value;
+                this.generateQrCode();
+                this.saveAppSettings();
+            });
+
+            // Theme Toggle
+            document.getElementById('theme-toggle-button').addEventListener('click', () => this.toggleTheme());
+
+            // Keyboard Shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    this.generateQrCode();
+                    this.showToast('QR Code generated!');
+                }
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    this.download('png');
+                    this.showToast('Downloading PNG...');
+                }
+                if (e.ctrlKey && e.key === 'z') {
+                    e.preventDefault();
+                    this.undo();
+                }
+                if (e.ctrlKey && e.key === 'y') {
+                    e.preventDefault();
+                    this.redo();
+                }
+            });
+
+             // Swipe gestures for tabs (mobile)
+            let touchStartX = 0;
+            const tabsContentWrapper = document.querySelector('.tabs-content-wrapper');
+            tabsContentWrapper.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+            });
+            tabsContentWrapper.addEventListener('touchmove', (e) => {
+                // Prevent scrolling if swipe is primarily horizontal
+                // e.preventDefault(); 
+            });
+            tabsContentWrapper.addEventListener('touchend', (e) => {
+                const touchEndX = e.changedTouches[0].clientX;
+                const minSwipeDistance = 50;
+
+                if (touchEndX < touchStartX - minSwipeDistance) {
+                    // Swiped left
+                    const nextIndex = Math.min(this.state.currentTabIndex + 1, document.querySelectorAll('.tab-content').length - 1);
+                    if (nextIndex !== this.state.currentTabIndex) {
+                        this.openTab(null, document.querySelector(`.tab-button[data-tab-index="${nextIndex}"]`).dataset.tabName);
+                    }
+                } else if (touchEndX > touchStartX + minSwipeDistance) {
+                    // Swiped right
+                    const prevIndex = Math.max(this.state.currentTabIndex - 1, 0);
+                    if (prevIndex !== this.state.currentTabIndex) {
+                         this.openTab(null, document.querySelector(`.tab-button[data-tab-index="${prevIndex}"]`).dataset.tabName);
+                    }
+                }
+            });
         },
 
         loadInitialContent() {
             const content = {
-                wifi: `<div class="form-group"><label for="wifi-ssid">Network Name (SSID)</label><input type="text" class="qr-input" id="wifi-ssid" placeholder="MyWiFiNetwork"></div><div class="form-group"><label for="wifi-password">Password</label><input type="password" class="qr-input" id="wifi-password"></div>`,
-                vcard: `<div class="form-row"><div class="form-group"><label for="vcard-name">Full Name</label><input type="text" class="qr-input" id="vcard-name"></div><div class="form-group"><label for="vcard-org">Organization</label><input type="text" class="qr-input" id="vcard-org"></div></div><div class="form-row"><div class="form-group"><label for="vcard-phone">Phone</label><input type="tel" class="qr-input" id="vcard-phone"></div><div class="form-group"><label for="vcard-email">Email</label><input type="email" class="qr-input" id="vcard-email"></div></div>`,
-                event: `<div class="form-group"><label for="event-summary">Event Title</label><input type="text" class="qr-input" id="event-summary"></div><div class="form-group"><label for="event-start">Start Time</label><input type="datetime-local" class="qr-input" id="event-start"></div>`,
-                email: `<div class="form-group"><label for="email-to">Recipient Email</label><input type="email" class="qr-input" id="email-to"></div><div class="form-group"><label for="email-subject">Subject</label><input type="text" class="qr-input" id="email-subject"></div>`
+                wifi: `<div class="form-group"><label for="wifi-ssid">Network Name (SSID)</label><input type="text" class="qr-input" id="wifi-ssid" placeholder="MyWiFiNetwork"><span class="validation-message">SSID cannot be empty.</span></div><div class="form-group"><label for="wifi-password">Password</label><input type="password" class="qr-input" id="wifi-password" placeholder="Password (leave blank for open network)"></div><div class="form-group"><label for="wifi-encryption">Encryption</label><select class="qr-input" id="wifi-encryption"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">No Encryption</option></select></div>`,
+                vcard: `<div class="form-row"><div class="form-group"><label for="vcard-name">Full Name</label><input type="text" class="qr-input" id="vcard-name" placeholder="John Doe"><span class="validation-message">Full Name is required.</span></div><div class="form-group"><label for="vcard-org">Organization</label><input type="text" class="qr-input" id="vcard-org" placeholder="Acme Corp"></div></div><div class="form-row"><div class="form-group"><label for="vcard-phone">Phone</label><input type="tel" class="qr-input" id="vcard-phone" placeholder="+1234567890"></div><div class="form-group"><label for="vcard-email">Email</label><input type="email" class="qr-input" id="vcard-email" placeholder="john.doe@example.com"><span class="validation-message">Enter a valid email.</span></div></div><div class="form-group"><label for="vcard-url">Website</label><input type="url" class="qr-input" id="vcard-url" placeholder="https://example.com"></div><div class="form-group"><label for="vcard-address">Address</label><input type="text" class="qr-input" id="vcard-address" placeholder="123 Main St, City, Country"></div><div class="form-group"><label for="vcard-title">Title</label><input type="text" class="qr-input" id="vcard-title" placeholder="Software Engineer"></div>`,
+                event: `<div class="form-group"><label for="event-summary">Event Title</label><input type="text" class="qr-input" id="event-summary" placeholder="Team Meeting"><span class="validation-message">Event Title is required.</span></div><div class="form-group"><label for="event-location">Location</label><input type="text" class="qr-input" id="event-location" placeholder="Conference Room A"></div><div class="form-group"><label for="event-start">Start Time</label><input type="datetime-local" class="qr-input" id="event-start"><span class="validation-message">Start Time is required.</span></div><div class="form-group"><label for="event-end">End Time</label><input type="datetime-local" class="qr-input" id="event-end"></div><div class="form-group"><label for="event-description">Description</label><textarea class="qr-input" id="event-description" placeholder="Agenda for the weekly sync-up"></textarea></div>`,
+                email: `<div class="form-group"><label for="email-to">Recipient Email</label><input type="email" class="qr-input" id="email-to" placeholder="recipient@example.com"><span class="validation-message">Enter a valid email.</span></div><div class="form-group"><label for="email-subject">Subject</label><input type="text" class="qr-input" id="email-subject" placeholder="Meeting Request"></div><div class="form-group"><label for="email-body">Message Body</label><textarea class="qr-input" id="email-body" placeholder="Hi, I'd like to discuss..."></textarea></div>`,
+                sms: `<div class="form-group"><label for="sms-number">Phone Number</label><input type="tel" class="qr-input" id="sms-number" placeholder="+1234567890"><span class="validation-message">Enter a valid phone number.</span></div><div class="form-group"><label for="sms-message">Message</label><textarea class="qr-input" id="sms-message" placeholder="Hello there!"></textarea></div>`,
+                location: `<div class="form-row"><div class="form-group"><label for="location-lat">Latitude</label><input type="number" step="any" class="qr-input" id="location-lat" placeholder="34.0522"><span class="validation-message">Enter a valid latitude.</span></div><div class="form-group"><label for="location-lon">Longitude</label><input type="number" step="any" class="qr-input" id="location-lon" placeholder="-118.2437"><span class="validation-message">Enter a valid longitude.</span></div></div>`,
+                file: `<div class="form-group"><label>Upload File (Max 1MB)</label><div class="drop-zone" id="file-drop-zone"><i class="fas fa-file-upload"></i><p>Drag & drop your file here or click to upload</p><input type="file" id="file-upload" accept=".txt,.pdf,.csv" style="display:none;"></div><p id="file-upload-name" class="mt-2 text-sm text-gray-400"></p><span class="validation-message">File size exceeds 1MB.</span><button type="button" class="btn btn-outline mt-2" onclick="document.getElementById('file-upload').click();"><i class="fas fa-upload"></i> Choose File</button></div>`,
+                crypto: `<div class="form-group"><label for="crypto-currency">Currency</label><select class="qr-input" id="crypto-currency"><option value="bitcoin">Bitcoin (BTC)</option><option value="ethereum">Ethereum (ETH)</option></option></select></div><div class="form-group"><label for="crypto-address">Wallet Address</label><input type="text" class="qr-input" id="crypto-address" placeholder="bc1q..."><span class="validation-message">Wallet address is required.</span></div><div class="form-group"><label for="crypto-amount">Amount</label><input type="number" step="any" class="qr-input" id="crypto-amount" placeholder="0.001"></div>`,
+                phone: `<div class="form-group"><label for="phone-number">Phone Number</label><input type="tel" class="qr-input" id="phone-number" placeholder="+1234567890"><span class="validation-message">Enter a valid phone number.</span></div>`,
+                whatsapp: `<div class="form-group"><label for="whatsapp-number">WhatsApp Number</label><input type="tel" class="qr-input" id="whatsapp-number" placeholder="+1234567890"><span class="validation-message">Enter a valid WhatsApp number.</span></div><div class="form-group"><label for="whatsapp-message">Message</label><textarea class="qr-input" id="whatsapp-message" placeholder="Hi there!"></textarea></div>`,
+                social: `<div class="form-group"><label for="social-url">Social Media Profile URL</label><input type="url" class="qr-input" id="social-url" placeholder="https://linkedin.com/in/vinnesia"><span class="validation-message">Enter a valid URL.</span></div>`,
+                appstore: `<div class="form-group"><label for="appstore-url">App Store Link</label><input type="url" class="qr-input" id="appstore-url" placeholder="https://apps.apple.com/app/id..."><span class="validation-message">Enter a valid URL.</span></div><div class="form-group"><label for="playstore-url">Play Store Link (Optional)</label><input type="url" class="qr-input" id="playstore-url" placeholder="https://play.google.com/store/apps/details?id..."><span class="validation-message">Enter a valid URL.</span></div>`,
+                multilang: `<div class="form-group"><label for="multilang-default">Default Text</label><textarea class="qr-input" id="multilang-default" placeholder="Hello World"></textarea><span class="validation-message">Default text is required.</span></div><div class="form-group"><label for="multilang-en">English Text</label><textarea class="qr-input" id="multilang-en" placeholder="Hello World (English)"></textarea></div><div class="form-group"><label for="multilang-id">Indonesian Text</label><textarea class="qr-input" id="multilang-id" placeholder="Halo Dunia (Indonesia)"></textarea></div><p class="text-sm text-gray-400">Add more languages by adding input with id 'multilang-xx' where 'xx' is ISO 639-1 code. Example: multilang-es for Spanish.</p>`,
+                html: `<div class="form-group"><label for="html-content">HTML Content</label><textarea class="qr-input" id="html-content" rows="10" placeholder="<h1>Hello</h1><p>From QR Code!</p>"></textarea><span class="validation-message">HTML content cannot be empty.</span></div>`
             };
             Object.keys(content).forEach(key => {
                 const tab = document.getElementById(key);
@@ -381,36 +975,238 @@
         attachEventListenersToDynamicContent() {
             document.querySelectorAll('.qr-input').forEach(input => {
                  if (!input.dataset.listenerAttached) {
-                    input.addEventListener('input', () => {
+                    input.addEventListener('input', (e) => {
+                        this.saveStateForUndo();
+                        this.validateInput(e.target);
                         clearTimeout(this.debounceTimer);
-                        this.debounceTimer = setTimeout(() => this.generateQrCode(), 300);
+                        this.debounceTimer = setTimeout(() => this.generateQrCode(), 250);
+                        this.saveAppSettings();
+                        this.updateCharacterCounter(e.target);
                     });
                     input.dataset.listenerAttached = 'true';
                 }
             });
+
+            // File upload for 'file' tab
+            const fileDropZone = document.getElementById('file-drop-zone');
+            if (fileDropZone) {
+                fileDropZone.addEventListener('dragover', (e) => { e.preventDefault(); fileDropZone.classList.add('hover'); });
+                fileDropZone.addEventListener('dragleave', () => { fileDropZone.classList.remove('hover'); });
+                fileDropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    fileDropZone.classList.remove('hover');
+                    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                        this.handleFileUpload(e.dataTransfer.files[0]);
+                    }
+                });
+                document.getElementById('file-upload').addEventListener('change', (e) => {
+                    this.handleFileUpload(e.target.files[0]);
+                });
+            }
+
+            // Copy buttons for dynamically loaded content
+            document.querySelectorAll('.tab-content .copy-to-clipboard').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const targetId = e.currentTarget.dataset.target;
+                    const targetElement = document.getElementById(targetId) || document.querySelector(`#${targetId} span`);
+                    if (targetElement) {
+                        this.copyToClipboard(targetElement.value || targetElement.textContent);
+                    }
+                });
+            });
+
+            // Gradient color inputs for dynamically loaded content
+            document.querySelectorAll('#dot-gradient-colors input[type="color"], #bg-gradient-colors input[type="color"]').forEach(input => {
+                input.addEventListener('input', () => {
+                    this.saveStateForUndo();
+                    clearTimeout(this.debounceTimer);
+                    this.debounceTimer = setTimeout(() => this.generateQrCode(), 250);
+                    this.saveAppSettings();
+                });
+            });
+            document.querySelectorAll('#dot-gradient-type, #bg-gradient-type').forEach(select => {
+                select.addEventListener('change', () => {
+                    this.saveStateForUndo();
+                    this.generateQrCode();
+                    this.saveAppSettings();
+                });
+            });
         },
         
         getQrData() {
+            let data = "https://qr.vinnesia.my.id"; // Default fallback
             switch(this.state.currentTab) {
                 case 'text':
-                    return document.getElementById('text-input').value || "https://qr.vinnesia.my.id";
-                // Add cases for other tabs here
-                default:
-                     return document.getElementById('text-input').value || "https://qr.vinnesia.my.id";
+                    data = document.getElementById('text-input').value;
+                    break;
+                case 'wifi':
+                    const ssid = document.getElementById('wifi-ssid').value;
+                    const password = document.getElementById('wifi-password').value;
+                    const encryption = document.getElementById('wifi-encryption').value;
+                    data = `WIFI:S:${ssid};T:${encryption};P:${password};;`;
+                    break;
+                case 'vcard':
+                    const vName = document.getElementById('vcard-name').value;
+                    const vOrg = document.getElementById('vcard-org').value;
+                    const vPhone = document.getElementById('vcard-phone').value;
+                    const vEmail = document.getElementById('vcard-email').value;
+                    const vUrl = document.getElementById('vcard-url').value;
+                    const vAddress = document.getElementById('vcard-address').value;
+                    const vTitle = document.getElementById('vcard-title').value;
+                    data = `BEGIN:VCARD\nVERSION:3.0\nFN:${vName}\nORG:${vOrg}\nTEL:${vPhone}\nEMAIL:${vEmail}\nURL:${vUrl}\nADR:${vAddress}\nTITLE:${vTitle}\nEND:VCARD`;
+                    break;
+                case 'event':
+                    const eSummary = document.getElementById('event-summary').value;
+                    const eLocation = document.getElementById('event-location').value;
+                    const eStart = document.getElementById('event-start').value ? new Date(document.getElementById('event-start').value).toISOString().replace(/[-:]|\.\d{3}/g, '') : '';
+                    const eEnd = document.getElementById('event-end').value ? new Date(document.getElementById('event-end').value).toISOString().replace(/[-:]|\.\d{3}/g, '') : '';
+                    const eDescription = document.getElementById('event-description').value;
+                    data = `BEGIN:VEVENT\nSUMMARY:${eSummary}\nLOCATION:${eLocation}\nDTSTART:${eStart}\nDTEND:${eEnd}\nDESCRIPTION:${eDescription}\nEND:VEVENT`;
+                    break;
+                case 'email':
+                    const mailTo = document.getElementById('email-to').value;
+                    const mailSubject = document.getElementById('email-subject').value;
+                    const mailBody = document.getElementById('email-body').value;
+                    data = `mailto:${mailTo}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+                    break;
+                case 'sms':
+                    const smsNumber = document.getElementById('sms-number').value;
+                    const smsMessage = document.getElementById('sms-message').value;
+                    data = `SMSTO:${smsNumber}:${smsMessage}`;
+                    break;
+                case 'location':
+                    const lat = document.getElementById('location-lat').value;
+                    const lon = document.getElementById('location-lon').value;
+                    data = `geo:${lat},${lon}`;
+                    break;
+                case 'file':
+                    // For file, we store the base64 string in data.
+                    // If no file, default to text or a placeholder.
+                    data = document.getElementById('file-upload-name').dataset.fileContent || "Please upload a file.";
+                    break;
+                case 'crypto':
+                    const currency = document.getElementById('crypto-currency').value;
+                    const address = document.getElementById('crypto-address').value;
+                    const amount = document.getElementById('crypto-amount').value;
+                    data = `${currency}:${address}${amount ? `?amount=${amount}` : ''}`;
+                    break;
+                case 'phone':
+                    const phoneNumber = document.getElementById('phone-number').value;
+                    data = `tel:${phoneNumber}`;
+                    break;
+                case 'whatsapp':
+                    const whatsappNumber = document.getElementById('whatsapp-number').value.replace(/\D/g, ''); // Remove non-digits
+                    const whatsappMessage = document.getElementById('whatsapp-message').value;
+                    data = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+                    break;
+                case 'social':
+                    data = document.getElementById('social-url').value;
+                    break;
+                case 'appstore':
+                    const appStoreUrl = document.getElementById('appstore-url').value;
+                    const playStoreUrl = document.getElementById('playstore-url').value;
+                    data = appStoreUrl; // Default to App Store
+                    if (appStoreUrl && playStoreUrl) {
+                        data = `https://linktree.com/?appstore=${encodeURIComponent(appStoreUrl)}&playstore=${encodeURIComponent(playStoreUrl)}`; // Simple redirect link for both
+                    } else if (playStoreUrl) {
+                        data = playStoreUrl;
+                    }
+                    break;
+                case 'multilang':
+                    let multiLangData = [];
+                    const defaultText = document.getElementById('multilang-default').value;
+                    if (defaultText) multiLangData.push(`DEFAULT:${defaultText}`);
+                    
+                    document.querySelectorAll('[id^="multilang-"]:not(#multilang-default)').forEach(input => {
+                        const langCode = input.id.replace('multilang-', '').toUpperCase();
+                        if (input.value) multiLangData.push(`${langCode}:${input.value}`);
+                    });
+                    data = multiLangData.join('\n'); // Not standard, but a common approach
+                    break;
+                case 'html':
+                    data = document.getElementById('html-content').value;
+                    break;
             }
+            return data || "https://qr.vinnesia.my.id";
+        },
+
+        getGradientColors(prefix) {
+            const colors = [];
+            document.querySelectorAll(`#${prefix}-gradient-colors input[type="color"]`).forEach(input => {
+                colors.push(input.value);
+            });
+            return colors;
         },
 
         generateQrCode() {
             if (!this.qrCode) return;
+
+            document.getElementById('qr-code-container').classList.add('loading');
+            
+            // Check for valid inputs before generating
+            const currentInput = document.querySelector(`#${this.state.currentTab} .qr-input`);
+            if (currentInput && !this.validateInput(currentInput, true)) {
+                document.getElementById('qr-code-container').classList.remove('loading');
+                this.showToast('Please fix input errors.', 'danger');
+                return;
+            }
+
+            const dotColors = this.getGradientColors('dot');
+            const bgColors = this.getGradientColors('bg');
+
             const options = {
                 data: this.getQrData(),
                 image: this.logoImage,
-                dotsOptions: { color: document.getElementById('dot-color').value, type: document.getElementById('dot-style').value },
-                backgroundOptions: { color: document.getElementById('bg-color').value },
-                cornersSquareOptions: { color: document.getElementById('corner-square-color').value },
-                cornersDotOptions: { color: document.getElementById('corner-dot-color').value }
+                imageOptions: { 
+                    crossOrigin: "anonymous", 
+                    margin: 8, 
+                    imageSize: parseFloat(document.getElementById('image-size').value),
+                    // Logo positioning controls
+                    // offsetX: parseInt(document.getElementById('logo-position-x').value || 0),
+                    // offsetY: parseInt(document.getElementById('logo-position-y').value || 0),
+                },
+                qrOptions: { errorCorrectionLevel: 'H' }, // Always high for better scanability
+                dotsOptions: { 
+                    type: document.getElementById('dot-style').value,
+                    gradient: dotColors.length > 1 ? {
+                        type: document.getElementById('dot-gradient-type').value,
+                        rotation: parseFloat(document.getElementById('dot-gradient-rotation').value) * Math.PI / 180,
+                        colorStops: dotColors.map((color, index) => ({ offset: index / (dotColors.length - 1 || 1), color: color }))
+                    } : null,
+                    color: dotColors[0] || "#3b82f6"
+                },
+                backgroundOptions: { 
+                    gradient: bgColors.length > 1 ? {
+                        type: document.getElementById('bg-gradient-type').value,
+                        rotation: parseFloat(document.getElementById('bg-gradient-rotation').value) * Math.PI / 180,
+                        colorStops: bgColors.map((color, index) => ({ offset: index / (bgColors.length - 1 || 1), color: color }))
+                    } : null,
+                    color: bgColors[0] || "#0d0d1a"
+                },
+                cornersSquareOptions: { 
+                    color: document.getElementById('corner-square-color').value, 
+                    type: document.getElementById('corner-square-style').value 
+                },
+                cornersDotOptions: { 
+                    color: document.getElementById('corner-dot-color').value,
+                    type: document.getElementById('corner-dot-style').value
+                },
+                margin: parseInt(document.getElementById('margin').value || 0),
             };
+
+            // Custom Frame Text Logic (if any) - This is handled in download
+            // Custom Corner Radius is for the overall QR image, not the internal dots.
+            // QRCodeStyling doesn't directly support custom border radius for the entire QR matrix,
+            // but we can apply it to the container or canvas itself in CSS/post-processing.
+            // For now, it will affect the frame if generated via canvas.
+
             this.qrCode.update(options);
+            
+            // Simulate loading for animation
+            setTimeout(() => {
+                document.getElementById('qr-code-container').classList.remove('loading');
+                this.addQrToHistory(options.data); // Add to history after successful generation
+            }, 500); // Shorter debounce, but visual loading takes 0.5s
         },
 
         handleLogoUpload(file) {
@@ -420,8 +1216,19 @@
                 this.logoImage = e.target.result;
                 this.generateQrCode();
                 this.extractColorsFromImage(this.logoImage);
+                document.getElementById('logo-controls').style.display = 'block';
+                this.showToast('Logo uploaded!');
             };
             reader.readAsDataURL(file);
+        },
+
+        removeLogo() {
+            this.logoImage = null;
+            this.generateQrCode();
+            document.getElementById('logo-upload').value = '';
+            document.getElementById('logo-palette-container').style.display = 'none';
+            document.getElementById('logo-controls').style.display = 'none';
+            this.showToast('Logo removed!');
         },
 
         extractColorsFromImage(imageUrl) {
@@ -437,7 +1244,6 @@
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
                 const colorCount = {};
-                let max = 0;
                 for (let i = 0; i < imageData.length; i += 4 * 4) { // Sample pixels
                     if (imageData[i+3] < 255) continue; // Skip transparent pixels
                     const rgb = `rgb(${imageData[i]}, ${imageData[i+1]}, ${imageData[i+2]})`;
@@ -445,6 +1251,10 @@
                 }
                 const sortedColors = Object.keys(colorCount).sort((a, b) => colorCount[b] - colorCount[a]);
                 this.displayColorPalette(sortedColors.slice(0, 5));
+            };
+            img.onerror = () => {
+                console.error("Failed to load image for color extraction.");
+                document.getElementById('logo-palette-container').style.display = 'none';
             };
         },
 
@@ -460,81 +1270,223 @@
                     document.getElementById('corner-square-color').value = this.rgbToHex(color);
                     document.getElementById('corner-dot-color').value = this.rgbToHex(color);
                     this.generateQrCode();
+                    this.showToast(`Color ${this.rgbToHex(color).toUpperCase()} applied!`);
                 });
                 paletteContainer.appendChild(colorDiv);
             });
             document.getElementById('logo-palette-container').style.display = 'block';
         },
 
+        addGradientColor(type) {
+            const container = document.getElementById(`${type}-gradient-colors`);
+            const newPicker = document.createElement('div');
+            newPicker.className = 'gradient-picker';
+            newPicker.innerHTML = `
+                <input type="color" class="qr-input" data-gradient-stop="${container.children.length}" value="#ffffff">
+                <button onclick="App.removeGradientColor(this, '${type}')"><i class="fas fa-minus-circle"></i></button>
+            `;
+            container.appendChild(newPicker);
+            // Attach event listener to new color input
+            newPicker.querySelector('input[type="color"]').addEventListener('input', () => {
+                this.saveStateForUndo();
+                clearTimeout(this.debounceTimer);
+                this.debounceTimer = setTimeout(() => this.generateQrCode(), 250);
+                this.saveAppSettings();
+            });
+            this.generateQrCode();
+            this.showToast('Gradient color added!');
+        },
+
+        removeGradientColor(button, type) {
+            const container = document.getElementById(`${type}-gradient-colors`);
+            if (container.children.length > 1) { // Ensure at least one color remains
+                this.saveStateForUndo();
+                button.closest('.gradient-picker').remove();
+                this.generateQrCode();
+                this.saveAppSettings();
+                this.showToast('Gradient color removed!');
+            } else {
+                this.showToast('Cannot remove the last gradient color.', 'warning');
+            }
+        },
+
         async download(extension) {
+            this.showToast(`Generating ${extension.toUpperCase()}...`, 'primary');
             const frameText = document.getElementById('frame-text').value;
+            const frameColor = document.getElementById('frame-color').value;
+            const frameFontColor = document.getElementById('frame-font-color').value;
+            const frameCornerRadius = parseInt(document.getElementById('frame-corner-radius').value);
+
             if (!frameText) {
                 this.qrCode.download({ name: "vinnesia-qr", extension });
+                this.showToast(`Downloading QR code as ${extension.toUpperCase()}!`);
                 return;
             }
 
+            // If frame text is present, we need to draw it on a canvas
             const qrBlob = await this.qrCode.getRawData(extension === 'svg' ? 'svg' : 'png');
-            if (!qrBlob) return;
-            const qrImage = URL.createObjectURL(qrBlob);
+            if (!qrBlob) {
+                this.showToast('Failed to generate QR code for download.', 'danger');
+                return;
+            }
+            const qrImageURL = URL.createObjectURL(qrBlob);
 
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             const qrSize = 512;
             const padding = 60;
             const fontSize = 32;
+            const totalHeight = qrSize + padding * 2 + fontSize + 20; // Extra space for frame text
+
             canvas.width = qrSize + padding * 2;
-            canvas.height = qrSize + padding * 2 + fontSize + 20;
+            canvas.height = totalHeight;
 
-            ctx.fillStyle = document.getElementById('bg-color').value;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Apply frame background
+            ctx.fillStyle = frameColor;
+            this.roundRect(ctx, 0, 0, canvas.width, canvas.height, frameCornerRadius / 100 * (canvas.width / 2));
+            ctx.fill();
             
+            // Draw frame text
             ctx.font = `bold ${fontSize}px Poppins`;
-            ctx.fillStyle = document.getElementById('dot-color').value;
+            ctx.fillStyle = frameFontColor;
             ctx.textAlign = 'center';
-            ctx.fillText(frameText.toUpperCase(), canvas.width / 2, padding / 2 + fontSize);
+            ctx.textBaseline = 'middle';
+            ctx.fillText(frameText.toUpperCase(), canvas.width / 2, padding / 2 + (fontSize / 2) + 10); // Adjust Y for better centering
 
+            // Draw QR code image
             const img = new Image();
-            img.src = qrImage;
+            img.src = qrImageURL;
             img.onload = () => {
-                ctx.drawImage(img, padding, padding, qrSize, qrSize);
-                URL.revokeObjectURL(qrImage);
-                const link = document.createElement('a');
-                link.download = `vinnesia-qr-framed.png`;
-                link.href = canvas.toDataURL(`image/png`);
-                link.click();
+                ctx.drawImage(img, padding, padding + fontSize + 20, qrSize, qrSize); // Adjust Y position for QR code
+                URL.revokeObjectURL(qrImageURL); // Clean up blob URL
+
+                if (extension === 'png') {
+                    const link = document.createElement('a');
+                    link.download = `vinnesia-qr-framed.png`;
+                    link.href = canvas.toDataURL(`image/png`);
+                    link.click();
+                } else if (extension === 'svg') {
+                    // For SVG with frame, convert canvas to SVG or re-render with SVG library
+                    // This is more complex. For now, we'll download PNG framed, SVG unframed.
+                    // Or convert the framed canvas to PNG if SVG is requested with frame.
+                    const link = document.createElement('a');
+                    link.download = `vinnesia-qr-framed.png`; // Fallback to PNG for framed SVG
+                    link.href = canvas.toDataURL(`image/png`);
+                    link.click();
+                    this.showToast('Framed SVG not fully supported, downloading as PNG.', 'warning');
+                }
+                this.showToast(`Downloading QR code as ${extension.toUpperCase()}!`);
             };
+            img.onerror = () => {
+                this.showToast('Failed to load QR image for framing.', 'danger');
+            };
+        },
+
+        // Utility to draw rounded rectangle for frame
+        roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
         },
 
         async handleBulkGenerate() {
             const type = document.getElementById('bulk-type').value;
-            const data = document.getElementById('bulk-data').value.trim().split('\n');
-            if (data.length === 0 || data[0] === '') {
-                alert('Please enter data for bulk generation.');
+            const rawData = document.getElementById('bulk-data').value.trim();
+            if (!rawData) {
+                this.showToast('Please enter data for bulk generation.', 'danger');
                 return;
             }
+            const dataLines = rawData.split('\n');
 
             const zip = new JSZip();
-            const tempQr = new QRCodeStyling({ ...this.qrCode.options });
+            const tempQr = new QRCodeStyling({ ...this.qrCode.options }); // Use current settings
+            
+            // Show loading spinner for bulk generation
+            const bulkGenerateButton = document.getElementById('bulk-generate-zip');
+            bulkGenerateButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+            bulkGenerateButton.disabled = true;
 
-            for (let i = 0; i < data.length; i++) {
-                let qrDataString = data[i];
-                if (type === 'vcard') {
-                    const parts = qrDataString.split(',');
-                    qrDataString = `BEGIN:VCARD\nVERSION:3.0\nFN:${parts[0] || ''}\nEMAIL:${parts[1] || ''}\nTEL:${parts[2] || ''}\nEND:VCARD`;
+            try {
+                for (let i = 0; i < dataLines.length; i++) {
+                    let qrDataString = dataLines[i].trim();
+                    if (!qrDataString) continue;
+
+                    let generatedQrData = qrDataString;
+
+                    switch (type) {
+                        case 'vcard':
+                            const parts = qrDataString.split(',');
+                            generatedQrData = `BEGIN:VCARD\nVERSION:3.0\nFN:${parts[0] || ''}\nORG:${parts[1] || ''}\nTEL:${parts[2] || ''}\nEMAIL:${parts[3] || ''}\nEND:VCARD`;
+                            break;
+                        case 'wifi':
+                            // Assuming format: SSID,Password,EncryptionType (e.g., MyHome,pass123,WPA)
+                            const wifiParts = qrDataString.split(',');
+                            const wifiSsid = wifiParts[0] || '';
+                            const wifiPass = wifiParts[1] || '';
+                            const wifiEnc = wifiParts[2] || 'WPA';
+                            generatedQrData = `WIFI:S:${wifiSsid};T:${wifiEnc};P:${wifiPass};;`;
+                            break;
+                        case 'email':
+                            // Assuming format: recipient,subject,body
+                            const emailParts = qrDataString.split(',');
+                            generatedQrData = `mailto:${emailParts[0] || ''}?subject=${encodeURIComponent(emailParts[1] || '')}&body=${encodeURIComponent(emailParts[2] || '')}`;
+                            break;
+                        case 'sms':
+                            // Assuming format: number,message
+                            const smsParts = qrDataString.split(',');
+                            generatedQrData = `SMSTO:${smsParts[0] || ''}:${smsParts[1] || ''}`;
+                            break;
+                        case 'location':
+                            // Assuming format: lat,lon
+                            const locParts = qrDataString.split(',');
+                            generatedQrData = `geo:${locParts[0] || ''},${locParts[1] || ''}`;
+                            break;
+                        case 'phone':
+                            // Assuming format: number
+                            generatedQrData = `tel:${qrDataString}`;
+                            break;
+                        case 'whatsapp':
+                            // Assuming format: number,message
+                            const waParts = qrDataString.split(',');
+                            const waNumber = waParts[0].replace(/\D/g, '') || '';
+                            const waMessage = waParts[1] || '';
+                            generatedQrData = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
+                            break;
+                        case 'text':
+                        default:
+                            generatedQrData = qrDataString;
+                            break;
+                    }
+                    
+                    tempQr.update({ data: generatedQrData });
+                    const blob = await tempQr.getRawData('png');
+                    zip.file(`qr_code_${type}_${i + 1}.png`, blob);
                 }
-                
-                tempQr.update({ data: qrDataString });
-                const blob = await tempQr.getRawData('png');
-                zip.file(`qr_code_${i + 1}.png`, blob);
-            }
 
-            zip.generateAsync({ type: 'blob' }).then(content => {
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(content);
-                link.download = 'vinnesia-bulk-qrcodes.zip';
-                link.click();
-                URL.revokeObjectURL(link.href);
-            });
+                zip.generateAsync({ type: 'blob' }).then(content => {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(content);
+                    link.download = 'vinnesia-bulk-qrcodes.zip';
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                    this.showToast('Bulk QR codes downloaded as ZIP!');
+                    this.closeAllModals();
+                });
+            } catch (error) {
+                console.error("Bulk generation error:", error);
+                this.showToast('Error during bulk generation. Check your data format.', 'danger');
+            } finally {
+                bulkGenerateButton.innerHTML = '<i class="fas fa-file-archive"></i> Generate & Download ZIP';
+                bulkGenerateButton.disabled = false;
+            }
         },
 
         openModal(modalId) {
@@ -554,46 +1506,571 @@
                 this.html5QrCode = new Html5Qrcode("qr-scanner-container");
             }
             const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+            const scannerResultElement = document.getElementById('scanner-result');
+            scannerResultElement.textContent = "Align QR code within the frame.";
+
             this.html5QrCode.start({ facingMode: "environment" }, config, 
                 (decodedText, decodedResult) => {
-                    document.getElementById('scanner-result').textContent = decodedText;
+                    scannerResultElement.textContent = decodedText;
                     this.stopScanner();
+                    this.showToast('QR Code scanned successfully!');
                 },
-                (errorMessage) => {}
+                (errorMessage) => {
+                    // console.warn(`QR Code scanning error: ${errorMessage}`);
+                }
             ).catch(err => {
-                document.getElementById('scanner-result').textContent = "Scanner Error. Please grant camera permission.";
+                scannerResultElement.textContent = "Scanner Error. Please grant camera permission.";
+                this.showToast('Camera permission denied or scanner error.', 'danger');
             });
         },
 
         stopScanner() {
             if (this.html5QrCode && this.html5QrCode.isScanning) {
-                this.html5QrCode.stop().catch(err => {});
+                this.html5QrCode.stop().catch(err => {
+                    console.error("Failed to stop scanner:", err);
+                });
             }
         },
         
         openTab(evt, tabName) {
+            this.saveStateForUndo(); // Save state before tab change
+            
+            const prevTabIndex = this.state.currentTabIndex;
             this.state.currentTab = tabName;
-            this.state.currentTabIndex = parseInt(evt.currentTarget.dataset.tabIndex, 10);
+            this.state.currentTabIndex = parseInt(evt ? evt.currentTarget.dataset.tabIndex : document.querySelector(`.tab-button[data-tab-name="${tabName}"]`).dataset.tabIndex, 10);
             
             document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-            evt.currentTarget.classList.add('active');
+            if (evt) {
+                evt.currentTarget.classList.add('active');
+            } else {
+                document.querySelector(`.tab-button[data-tab-name="${tabName}"]`).classList.add('active');
+            }
 
             const wrapper = document.querySelector('.tabs-content-wrapper');
             wrapper.style.transform = `translateX(-${this.state.currentTabIndex * 100}%)`;
 
             this.generateQrCode();
+            
+            // Start typing animation for the new tab's primary input
+            const currentTabElement = document.getElementById(tabName);
+            const primaryInput = currentTabElement ? currentTabElement.querySelector('.qr-input') : null;
+            if (primaryInput && this.placeholderTexts[tabName]) {
+                this.startTypingAnimation(primaryInput.id, this.placeholderTexts[tabName]);
+            }
         },
 
-        // Utility
+        // Utility: Convert RGB to Hex
         rgbToHex(rgbStr) {
             const match = rgbStr.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
             if (!match) return '#000000';
             const toHex = (c) => ('0' + parseInt(c, 10).toString(16)).slice(-2);
             return `#${toHex(match[1])}${toHex(match[2])}${toHex(match[3])}`;
+        },
+
+        // Advanced Visual Animations: Typing effect for placeholders
+        startTypingAnimation(elementId, placeholderText) {
+            const inputElement = document.getElementById(elementId);
+            if (!inputElement || inputElement.value.length > 0) return; // Only animate if input is empty
+
+            clearInterval(this.typingAnimationInterval); // Clear previous animation
+
+            let i = 0;
+            inputElement.placeholder = '';
+            this.typingAnimationInterval = setInterval(() => {
+                inputElement.placeholder += placeholderText[i];
+                i++;
+                if (i > placeholderText.length - 1) {
+                    clearInterval(this.typingAnimationInterval);
+                }
+            }, 50); // Typing speed
+        },
+
+        // Smart Input Features: Validation
+        validateInput(inputElement, showAlert = false) {
+            const formGroup = inputElement.closest('.form-group');
+            if (!formGroup) return true; // No validation needed if not in a form-group
+
+            const validationMessage = formGroup.querySelector('.validation-message');
+            let isValid = true;
+            let message = '';
+
+            // Common validations
+            if (inputElement.required && inputElement.value.trim() === '') {
+                isValid = false;
+                message = `${inputElement.previousElementSibling?.textContent || inputElement.placeholder} is required.`;
+            } else if (inputElement.type === 'email' && inputElement.value.trim() !== '' && !/\S+@\S+\.\S+/.test(inputElement.value)) {
+                isValid = false;
+                message = 'Please enter a valid email address.';
+            } else if (inputElement.type === 'url' && inputElement.value.trim() !== '' && !/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/.test(inputElement.value)) {
+                isValid = false;
+                message = 'Please enter a valid URL (e.g., https://example.com).';
+            } else if (inputElement.id === 'file-upload' && inputElement.files[0] && inputElement.files[0].size > 1024 * 1024) { // Max 1MB
+                isValid = false;
+                message = 'File size exceeds 1MB.';
+            } else if (inputElement.id === 'location-lat' && (isNaN(inputElement.value) || parseFloat(inputElement.value) < -90 || parseFloat(inputElement.value) > 90)) {
+                isValid = false;
+                message = 'Latitude must be between -90 and 90.';
+            } else if (inputElement.id === 'location-lon' && (isNaN(inputElement.value) || parseFloat(inputElement.value) < -180 || parseFloat(inputElement.value) > 180)) {
+                isValid = false;
+                message = 'Longitude must be between -180 and 180.';
+            }
+
+            if (isValid) {
+                formGroup.classList.remove('invalid');
+                if (validationMessage) validationMessage.style.display = 'none';
+            } else {
+                formGroup.classList.add('invalid');
+                if (validationMessage) {
+                    validationMessage.textContent = message;
+                    validationMessage.style.display = 'block';
+                }
+                if (showAlert) {
+                    this.showToast(message, 'danger');
+                }
+            }
+            return isValid;
+        },
+
+        // Character counter
+        updateCharacterCounter(inputElement) {
+            const counterElement = document.getElementById(`${inputElement.id}-counter`);
+            if (counterElement) {
+                const maxLength = inputElement.maxLength || 250; // Default or specified
+                const currentLength = inputElement.value.length;
+                counterElement.textContent = `${currentLength}/${maxLength}`;
+
+                if (currentLength > maxLength * 0.9) {
+                    counterElement.classList.add('danger');
+                    counterElement.classList.remove('warning');
+                } else if (currentLength > maxLength * 0.7) {
+                    counterElement.classList.add('warning');
+                    counterElement.classList.remove('danger');
+                } else {
+                    counterElement.classList.remove('warning', 'danger');
+                }
+            }
+        },
+
+        // Copy to clipboard with feedback
+        copyToClipboard(text) {
+            document.execCommand('copy'); // Fallback for older browsers
+            navigator.clipboard.writeText(text).then(() => {
+                this.showToast('Copied to clipboard!');
+            }).catch(err => {
+                this.showToast('Failed to copy to clipboard.', 'danger');
+                console.error('Failed to copy text: ', err);
+            });
+        },
+
+        // Toast notifications
+        showToast(message, type = 'success', duration = 3000) {
+            const toast = document.getElementById('toast-notification');
+            toast.textContent = message;
+            toast.className = `toast-notification show ${type}`; // Add type for styling (success, danger, primary, etc.)
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        },
+
+        // File upload handler for 'file' tab
+        handleFileUpload(file) {
+            if (!file) {
+                document.getElementById('file-upload-name').textContent = '';
+                document.getElementById('file').classList.remove('invalid');
+                document.querySelector('#file .validation-message').style.display = 'none';
+                return;
+            };
+
+            const fileNameDisplay = document.getElementById('file-upload-name');
+            const formGroup = document.getElementById('file').querySelector('.form-group');
+            const validationMessage = formGroup.querySelector('.validation-message');
+
+            if (file.size > 1024 * 1024) { // Max 1MB
+                fileNameDisplay.textContent = `File: ${file.name} (Too large!)`;
+                formGroup.classList.add('invalid');
+                validationMessage.textContent = 'File size exceeds 1MB.';
+                validationMessage.style.display = 'block';
+                this.showToast('File size too large (max 1MB).', 'danger');
+                document.getElementById('file-upload-name').dataset.fileContent = ''; // Clear content
+                return;
+            } else {
+                formGroup.classList.remove('invalid');
+                validationMessage.style.display = 'none';
+            }
+
+            fileNameDisplay.textContent = `File: ${file.name}`;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                // Store base64 content in a dataset for retrieval by getQrData
+                fileNameDisplay.dataset.fileContent = e.target.result;
+                this.generateQrCode();
+                this.showToast('File uploaded and ready for QR generation!');
+            };
+            reader.readAsDataURL(file); // Read file as Base64
+        },
+
+        // History Management
+        addQrToHistory(data) {
+            const timestamp = new Date().toLocaleString();
+            const newEntry = { data, timestamp, type: this.state.currentTab };
+            
+            // Remove duplicate if already exists
+            this.state.qrHistory = this.state.qrHistory.filter(item => item.data !== data);
+
+            this.state.qrHistory.unshift(newEntry); // Add to the beginning
+            if (this.state.qrHistory.length > this.maxHistoryItems) {
+                this.state.qrHistory.pop(); // Remove oldest if exceeding max items
+            }
+            localStorage.setItem('qrHistory', JSON.stringify(this.state.qrHistory));
+            this.renderHistory();
+        },
+
+        loadHistory() {
+            this.renderHistory();
+        },
+
+        renderHistory() {
+            const historyList = document.getElementById('qr-history-list');
+            historyList.innerHTML = '';
+            if (this.state.qrHistory.length === 0) {
+                historyList.innerHTML = '<li class="text-gray-500">No recent QR codes.</li>';
+                return;
+            }
+            this.state.qrHistory.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.className = 'flex justify-between items-center py-2 px-3 bg-gray-800 rounded-lg mb-2 hover:bg-gray-700 transition-colors duration-200';
+                li.innerHTML = `
+                    <span class="text-sm text-gray-300 overflow-hidden whitespace-nowrap overflow-ellipsis max-w-[calc(100%-100px)]">
+                        <strong>${item.type.charAt(0).toUpperCase() + item.type.slice(1)}:</strong> ${item.data.substring(0, 50)}...
+                        <span class="text-xs text-gray-500 block">${item.timestamp}</span>
+                    </span>
+                    <div>
+                        <button class="btn btn-outline btn-sm mr-2" onclick="App.loadQrFromHistory(${index})"><i class="fas fa-redo"></i> Load</button>
+                        <button class="btn btn-danger btn-sm" onclick="App.removeQrFromHistory(${index})"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                `;
+                historyList.appendChild(li);
+            });
+        },
+
+        loadQrFromHistory(index) {
+            const item = this.state.qrHistory[index];
+            if (item) {
+                // Restore current settings before loading history
+                this.saveStateForUndo(); 
+
+                // Find the corresponding tab and update its primary input
+                const targetTabButton = document.querySelector(`.tab-button[data-tab-name="${item.type}"]`);
+                if (targetTabButton) {
+                    this.openTab(null, item.type); // Switch to the correct tab
+
+                    // Find the main input for that tab and set its value
+                    const targetInputId = this.findMainInputIdForTab(item.type);
+                    const targetInput = document.getElementById(targetInputId);
+                    if (targetInput) {
+                        targetInput.value = item.data;
+                        this.generateQrCode();
+                        this.showToast(`Loaded QR from history (${item.type})!`);
+                    } else {
+                        console.error(`Main input not found for tab: ${item.type}`);
+                        this.showToast('Could not load QR. Input field not found.', 'danger');
+                    }
+                } else {
+                    this.showToast('Could not load QR. Tab not found.', 'danger');
+                }
+            }
+        },
+
+        findMainInputIdForTab(tabName) {
+            switch (tabName) {
+                case 'text': return 'text-input';
+                case 'wifi': return 'wifi-ssid';
+                case 'vcard': return 'vcard-name';
+                case 'email': return 'email-to';
+                case 'sms': return 'sms-number';
+                case 'location': return 'location-lat';
+                case 'file': return 'file-upload-name'; // This is a display, actual content is in dataset
+                case 'event': return 'event-summary';
+                case 'crypto': return 'crypto-address';
+                case 'phone': return 'phone-number';
+                case 'whatsapp': return 'whatsapp-number';
+                case 'social': return 'social-url';
+                case 'appstore': return 'appstore-url';
+                case 'multilang': return 'multilang-default';
+                case 'html': return 'html-content';
+                default: return 'text-input'; // Fallback
+            }
+        },
+
+        removeQrFromHistory(index) {
+            this.state.qrHistory.splice(index, 1);
+            localStorage.setItem('qrHistory', JSON.stringify(this.state.qrHistory));
+            this.renderHistory();
+            this.showToast('QR code removed from history.', 'danger');
+        },
+
+        clearHistory() {
+            if (confirm('Are you sure you want to clear all QR history?')) {
+                this.state.qrHistory = [];
+                localStorage.setItem('qrHistory', JSON.stringify(this.state.qrHistory));
+                this.renderHistory();
+                this.showToast('QR history cleared.', 'danger');
+            }
+        },
+
+        // Auto-save settings
+        saveAppSettings() {
+            // Collect all current settings from inputs
+            const settings = {};
+            document.querySelectorAll('.qr-input').forEach(input => {
+                if (input.id) {
+                    if (input.type === 'color' || input.type === 'range' || input.type === 'number') {
+                        settings[input.id] = input.value;
+                    } else if (input.type === 'checkbox') {
+                        settings[input.id] = input.checked;
+                    } else {
+                        settings[input.id] = input.value;
+                    }
+                }
+            });
+            // Handle gradient colors specifically
+            settings.dotGradientColors = this.getGradientColors('dot');
+            settings.bgGradientColors = this.getGradientColors('bg');
+            settings.currentTab = this.state.currentTab;
+            settings.currentTabIndex = this.state.currentTabIndex;
+            settings.theme = this.state.appSettings.theme; // Preserve theme setting
+
+            this.state.appSettings = settings;
+            localStorage.setItem('appSettings', JSON.stringify(this.state.appSettings));
+            // console.log("App settings saved.", this.state.appSettings);
+        },
+
+        applyInitialSettings() {
+            const savedSettings = this.state.appSettings;
+            if (!savedSettings) return;
+
+            // Apply theme first
+            this.loadTheme();
+
+            // Apply other settings
+            for (const id in savedSettings) {
+                const inputElement = document.getElementById(id);
+                if (inputElement && id !== 'dotGradientColors' && id !== 'bgGradientColors' && id !== 'currentTab' && id !== 'currentTabIndex' && id !== 'theme') {
+                    if (inputElement.type === 'color' || inputElement.type === 'text' || inputElement.type === 'textarea' || inputElement.type === 'select-one' || inputElement.type === 'number' || inputElement.type === 'range') {
+                        inputElement.value = savedSettings[id];
+                        this.updateCharacterCounter(inputElement); // Update counter for textareas
+                        if (inputElement.type === 'range') {
+                            // Update associated span for range inputs
+                            const valueSpan = document.getElementById(`${id}-value`);
+                            if (valueSpan) valueSpan.textContent = savedSettings[id];
+                        }
+                    } else if (inputElement.type === 'checkbox') {
+                        inputElement.checked = savedSettings[id];
+                    }
+                }
+            }
+
+            // Recreate gradient color pickers and apply saved colors
+            this.renderGradientColors('dot', savedSettings.dotGradientColors);
+            this.renderGradientColors('bg', savedSettings.bgGradientColors);
+
+            // Reopen collapsibles if they were open (need to store their state)
+            // For simplicity, we assume they start closed for now.
+
+            // Restore tab
+            if (savedSettings.currentTab) {
+                const targetTabButton = document.querySelector(`.tab-button[data-tab-name="${savedSettings.currentTab}"]`);
+                if (targetTabButton) {
+                    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                    targetTabButton.classList.add('active');
+                    this.state.currentTab = savedSettings.currentTab;
+                    this.state.currentTabIndex = savedSettings.currentTabIndex;
+                    const wrapper = document.querySelector('.tabs-content-wrapper');
+                    wrapper.style.transform = `translateX(-${this.state.currentTabIndex * 100}%)`;
+                }
+            }
+            
+            // Re-generate QR code with loaded settings
+            this.generateQrCode();
+        },
+
+        renderGradientColors(prefix, colorsArray) {
+            const container = document.getElementById(`${prefix}-gradient-colors`);
+            container.innerHTML = ''; // Clear existing
+
+            if (!colorsArray || colorsArray.length === 0) {
+                colorsArray = (prefix === 'dot') ? ['#3b82f6', '#8b5cf6'] : ['#0d0d1a', '#1a1a2e'];
+            }
+
+            colorsArray.forEach((color, index) => {
+                const newPicker = document.createElement('div');
+                newPicker.className = 'gradient-picker';
+                let removeButton = '';
+                if (colorsArray.length > 1) { // Only show remove button if more than one color
+                    removeButton = `<button onclick="App.removeGradientColor(this, '${prefix}')"><i class="fas fa-minus-circle"></i></button>`;
+                }
+                newPicker.innerHTML = `
+                    <input type="color" class="qr-input" data-gradient-stop="${index}" value="${color}">
+                    ${removeButton}
+                `;
+                container.appendChild(newPicker);
+                newPicker.querySelector('input[type="color"]').addEventListener('input', () => {
+                    this.saveStateForUndo();
+                    clearTimeout(this.debounceTimer);
+                    this.debounceTimer = setTimeout(() => this.generateQrCode(), 250);
+                    this.saveAppSettings();
+                });
+            });
+            // Add the "add" button back
+            const addButton = document.createElement('button');
+            addButton.className = 'btn btn-outline btn-sm mt-2';
+            addButton.innerHTML = '<i class="fas fa-plus-circle"></i> Add Color';
+            addButton.onclick = () => this.addGradientColor(prefix);
+            container.appendChild(addButton);
+        },
+
+        // Undo/Redo
+        saveStateForUndo() {
+            const currentState = this.getCurrentAppState();
+            // Only push if the state is different from the last one
+            if (this.state.undoStack.length === 0 || JSON.stringify(this.state.undoStack[this.state.undoStack.length - 1]) !== JSON.stringify(currentState)) {
+                this.state.undoStack.push(currentState);
+                this.state.redoStack = []; // Clear redo stack on new action
+                if (this.state.undoStack.length > 50) { // Limit undo history
+                    this.state.undoStack.shift();
+                }
+            }
+        },
+
+        getCurrentAppState() {
+            const state = {};
+            // Capture all input values
+            document.querySelectorAll('.qr-input').forEach(input => {
+                if (input.id) {
+                    state[input.id] = input.type === 'checkbox' ? input.checked : input.value;
+                }
+            });
+            // Capture current tab
+            state.currentTab = this.state.currentTab;
+            state.currentTabIndex = this.state.currentTabIndex;
+            // Capture logo image state
+            state.logoImage = this.logoImage;
+            // Capture gradient colors
+            state.dotGradientColors = this.getGradientColors('dot');
+            state.bgGradientColors = this.getGradientColors('bg');
+            return state;
+        },
+
+        applyAppState(state) {
+            // Restore all input values
+            for (const id in state) {
+                const inputElement = document.getElementById(id);
+                if (inputElement) {
+                    if (inputElement.type === 'checkbox') {
+                        inputElement.checked = state[id];
+                    } else if (inputElement.id !== 'file-upload-name') { // Skip file display element
+                        inputElement.value = state[id];
+                        this.updateCharacterCounter(inputElement);
+                        if (inputElement.type === 'range') {
+                            const valueSpan = document.getElementById(`${id}-value`);
+                            if (valueSpan) valueSpan.textContent = state[id];
+                        }
+                    }
+                }
+            }
+            // Restore tab
+            this.openTab(null, state.currentTab);
+            // Restore logo image
+            this.logoImage = state.logoImage;
+            // Restore gradient colors (re-render pickers)
+            this.renderGradientColors('dot', state.dotGradientColors);
+            this.renderGradientColors('bg', state.bgGradientColors);
+
+            this.generateQrCode();
+        },
+
+        undo() {
+            if (this.state.undoStack.length > 1) { // Need at least two states to undo (current + previous)
+                const currentState = this.state.undoStack.pop();
+                this.state.redoStack.push(currentState);
+                const previousState = this.state.undoStack[this.state.undoStack.length - 1];
+                this.applyAppState(previousState);
+                this.showToast('Undo successful!');
+            } else {
+                this.showToast('Nothing to undo.', 'warning');
+            }
+        },
+
+        redo() {
+            if (this.state.redoStack.length > 0) {
+                const nextState = this.state.redoStack.pop();
+                this.state.undoStack.push(nextState);
+                this.applyAppState(nextState);
+                this.showToast('Redo successful!');
+            } else {
+                this.showToast('Nothing to redo.', 'warning');
+            }
         }
     };
 
     document.addEventListener('DOMContentLoaded', () => App.init());
+
+    // Service Worker for PWA (service-worker.js needs to be in root)
+    // Create a service-worker.js file in the same directory as your HTML:
+    /*
+        // service-worker.js
+        const CACHE_NAME = 'qr-generator-cache-v1';
+        const urlsToCache = [
+            '/',
+            '/index.html',
+            '/style.css', // If you have external CSS
+            '/script.js', // If you have external JS
+            'https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js',
+            'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js',
+            'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap',
+            'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+            // Add other assets like logo.png, favicon.ico if they exist
+        ];
+
+        self.addEventListener('install', (event) => {
+            event.waitUntil(
+                caches.open(CACHE_NAME)
+                    .then((cache) => {
+                        console.log('Opened cache');
+                        return cache.addAll(urlsToCache);
+                    })
+            );
+        });
+
+        self.addEventListener('fetch', (event) => {
+            event.respondWith(
+                caches.match(event.request)
+                    .then((response) => {
+                        if (response) {
+                            return response;
+                        }
+                        return fetch(event.request);
+                    })
+            );
+        });
+
+        self.addEventListener('activate', (event) => {
+            const cacheWhitelist = [CACHE_NAME];
+            event.waitUntil(
+                caches.keys().then((cacheNames) => {
+                    return Promise.all(
+                        cacheNames.map((cacheName) => {
+                            if (cacheWhitelist.indexOf(cacheName) === -1) {
+                                return caches.delete(cacheName);
+                            }
+                        })
+                    );
+                })
+            );
+        });
+    */
 
     // --- [END] ADVANCED JAVASCRIPT ---
     </script>
