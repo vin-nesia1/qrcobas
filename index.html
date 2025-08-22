@@ -10,7 +10,8 @@
     <meta name="keywords" content="qr code generator, real-time qr code, modern qr generator, vin nesia, animated qr code tool, qr code with logo, professional vcard qr, event qr code">
     <meta name="author" content="VIN NESIA">
     <link rel="canonical" href="https://qr.vinnesia.my.id">
-    <link rel="icon" type="image/png" href="/favicon-v1.png" sizes="48x48">
+    
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,7 +41,7 @@
             --color-border: rgba(255, 255, 255, 0.1);
         }
 
-        /* Keyframe Animations for background and fade-in effect */
+        /* Keyframe Animations */
         @keyframes gradientAnimation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -94,7 +95,7 @@
         /* Main Content Layout */
         main { display: flex; gap: 2rem; }
 
-        /* Glassmorphism Card Style for Controls and Output */
+        /* Glassmorphism Card Style */
         .controls, .output {
             background: var(--color-surface);
             padding: 2rem;
@@ -115,31 +116,43 @@
             align-self: flex-start;
         }
 
-        /* Tab Navigation with Icons */
+        /* --- [UPDATED] Tab Navigation CSS --- */
         .tabs-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.75rem;
             border-bottom: 1px solid var(--color-border);
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
         }
         .tab-button {
-            padding: 0.8rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.8rem 0.5rem;
             cursor: pointer;
             border: none;
             background: transparent;
-            font-size: 1.2em;
             color: var(--color-text-muted);
             border-radius: 8px;
             transition: all 0.3s ease;
+            text-align: center;
+        }
+        .tab-button i {
+            font-size: 1.4em;
+        }
+        .tab-label {
+            font-size: 0.75em;
+            font-weight: 600;
         }
         .tab-button:hover { background-color: rgba(255, 255, 255, 0.1); color: var(--color-text); }
         .tab-button.active {
             background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
             color: white;
-            font-weight: bold;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
         }
 
         /* Tab Content Styling */
@@ -167,15 +180,10 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
         }
         .form-group textarea { resize: vertical; min-height: 100px; }
-        .form-group input[type="color"] { padding: 0.2rem; height: 40px; cursor: pointer; }
-        .form-group input[type="file"] { padding: 0.4rem; }
         .form-row { display: flex; gap: 1rem; }
         .form-row .form-group { flex: 1; }
-        .form-group-checkbox { display: flex; align-items: center; gap: 0.5rem; }
+        .form-group-checkbox { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
         .form-group-checkbox input { width: auto; }
-
-        /* File Upload Warning */
-        .file-warning { background-color: rgba(255, 215, 0, 0.1); color: #FFD700; padding: 0.8rem; border-left: 3px solid #FFD700; border-radius: 6px; font-size: 0.9em; margin-top: 10px; }
 
         /* Design Options Section */
         .design-options { margin-top: 2rem; border-top: 1px solid var(--color-border); padding-top: 1.5rem; }
@@ -232,12 +240,8 @@
             border-top: 1px solid var(--color-border);
             background: rgba(0,0,0,0.2);
         }
-        .footer-links { display: flex; justify-content: center; gap: 1.5rem; list-style: none; padding: 0; margin: 0; }
-        .footer-links a { color: var(--color-text-muted); text-decoration: none; transition: color 0.3s ease, transform 0.3s ease; font-size: 1.5rem; }
-        .footer-links a:hover { color: var(--color-secondary); transform: scale(1.1); }
-        .copyright { margin-top: 1rem; font-size: 0.9em; }
-
-        /* Responsive Design Media Queries */
+        
+        /* Responsive Design */
         @media (max-width: 992px) {
             main { flex-direction: column; }
             .output { position: static; align-self: auto; margin-top: 2rem; }
@@ -253,7 +257,7 @@
 
     <header>
         <h1>
-            <img src="logo.png" alt="VIN NESIA Logo" class="logo-img" onerror="this.style.display='none'">
+            <img src="logo.png" alt="VIN NESIA Logo" class="logo-img">
             VIN NESIA
         </h1>
         <p>Advanced Real-Time QR Code Generator</p>
@@ -262,23 +266,58 @@
     <main class="container">
         <div class="controls">
             <div class="tabs-container">
-                <button class="tab-button active" onclick="openTab(event, 'text')" title="Text/URL"><i class="fas fa-font"></i></button>
-                <button class="tab-button" onclick="openTab(event, 'wifi')" title="WiFi"><i class="fas fa-wifi"></i></button>
-                <button class="tab-button" onclick="openTab(event, 'vcard')" title="vCard"><i class="fas fa-address-card"></i></button>
-                <button class="tab-button" onclick="openTab(event, 'email')" title="Email"><i class="fas fa-envelope"></i></button>
-                <button class="tab-button" onclick="openTab(event, 'sms')" title="SMS"><i class="fas fa-comment-sms"></i></button>
-                <button class="tab-button" onclick="openTab(event, 'geo')" title="Location"><i class="fas fa-map-marker-alt"></i></button>
-                <button class="tab-button" onclick="openTab(event, 'file')" title="File"><i class="fas fa-file-alt"></i></button>
-                <button class="tab-button" onclick="openTab(event, 'event')" title="Event"><i class="fas fa-calendar-alt"></i></button>
-                <button class="tab-button" onclick="openTab(event, 'crypto')" title="Crypto"><i class="fab fa-bitcoin"></i></button>
-                <button class="tab-button" onclick="openTab(event, 'phone')" title="Phone"><i class="fas fa-phone"></i></button>
-                <button class="tab-button" onclick="openTab(event, 'whatsapp')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
-                <button class="tab-button" onclick="openTab(event, 'social')" title="Social"><i class="fas fa-share-alt"></i></button>
+                <button class="tab-button active" onclick="openTab(event, 'text')">
+                    <i class="fas fa-font"></i>
+                    <span class="tab-label">URL</span>
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'wifi')">
+                    <i class="fas fa-wifi"></i>
+                    <span class="tab-label">WiFi</span>
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'vcard')">
+                    <i class="fas fa-address-card"></i>
+                    <span class="tab-label">vCard</span>
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'email')">
+                    <i class="fas fa-envelope"></i>
+                    <span class="tab-label">Email</span>
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'sms')">
+                    <i class="fas fa-comment-sms"></i>
+                    <span class="tab-label">SMS</span>
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'geo')">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="tab-label">Location</span>
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'file')">
+                    <i class="fas fa-file-alt"></i>
+                    <span class="tab-label">File</span>
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'event')">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span class="tab-label">Event</span>
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'crypto')">
+                    <i class="fab fa-bitcoin"></i>
+                    <span class="tab-label">Crypto</span>
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'phone')">
+                    <i class="fas fa-phone"></i>
+                    <span class="tab-label">Phone</span>
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'whatsapp')">
+                    <i class="fab fa-whatsapp"></i>
+                    <span class="tab-label">WhatsApp</span>
+                </button>
+                <button class="tab-button" onclick="openTab(event, 'social')">
+                    <i class="fas fa-share-alt"></i>
+                    <span class="tab-label">Social</span>
+                </button>
             </div>
 
             <div class="tab-content-wrapper">
                 <div id="text" class="tab-content active"><div class="form-group"><label for="text-input">Your Text or URL</label><textarea class="qr-input" id="text-input" placeholder="e.g., https://www.vinnesia.my.id"></textarea></div></div>
-                
                 <div id="wifi" class="tab-content">
                     <div class="form-group"><label for="wifi-ssid">Network Name (SSID)</label><input type="text" class="qr-input" id="wifi-ssid" placeholder="MyWiFiNetwork"></div>
                     <div class="form-group"><label for="wifi-password">Password</label><input type="text" class="qr-input" id="wifi-password" placeholder="SecretPassword"></div>
@@ -296,7 +335,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div id="vcard" class="tab-content">
                     <div class="form-row">
                         <div class="form-group"><label for="vcard-name">Full Name</label><input type="text" class="qr-input" id="vcard-name" placeholder="John Doe"></div>
@@ -315,12 +353,10 @@
                     </div>
                     <div class="form-group"><label for="vcard-country">Country</label><input type="text" class="qr-input" id="vcard-country" placeholder="Indonesia"></div>
                 </div>
-
                 <div id="email" class="tab-content"><div class="form-group"><label for="email-to">Recipient Email</label><input type="email" class="qr-input" id="email-to" placeholder="recipient@example.com"></div><div class="form-group"><label for="email-subject">Subject</label><input type="text" class="qr-input" id="email-subject"></div><div class="form-group"><label for="email-body">Message</label><textarea class="qr-input" id="email-body"></textarea></div></div>
                 <div id="sms" class="tab-content"><div class="form-group"><label for="sms-to">Phone Number</label><input type="tel" class="qr-input" id="sms-to" placeholder="+1234567890"></div><div class="form-group"><label for="sms-body">Message</label><textarea class="qr-input" id="sms-body"></textarea></div></div>
                 <div id="geo" class="tab-content"><div class="form-group"><label for="geo-lat">Latitude</label><input type="text" class="qr-input" id="geo-lat" placeholder="40.7128"></div><div class="form-group"><label for="geo-lon">Longitude</label><input type="text" class="qr-input" id="geo-lon" placeholder="-74.0060"></div></div>
                 <div id="file" class="tab-content"><div class="form-group"><label for="file-input">Upload File</label><input type="file" id="file-input"><div class="file-warning"><strong>Warning:</strong> For very small files (< 2KB) only. Large files will create unscannable QR codes. For larger files, upload them to a cloud service and create a QR code from the share link.</div></div></div>
-                
                 <div id="event" class="tab-content">
                     <div class="form-group"><label for="event-summary">Event Title</label><input type="text" class="qr-input" id="event-summary" placeholder="My Awesome Event"></div>
                     <div class="form-row">
@@ -330,7 +366,6 @@
                     <div class="form-group"><label for="event-location">Location</label><input type="text" class="qr-input" id="event-location" placeholder="Jakarta, Indonesia"></div>
                     <div class="form-group"><label for="event-description">Description</label><textarea class="qr-input" id="event-description" placeholder="Details about the event..."></textarea></div>
                 </div>
-
                 <div id="crypto" class="tab-content"><div class="form-group"><label for="crypto-type">Crypto Type</label><select class="qr-input" id="crypto-type"><option value="bitcoin">Bitcoin</option><option value="ethereum">Ethereum</option><option value="litecoin">Litecoin</option></select></div><div class="form-group"><label for="crypto-address">Wallet Address</label><input type="text" class="qr-input" id="crypto-address" placeholder="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"></div><div class="form-group"><label for="crypto-amount">Amount</label><input type="text" class="qr-input" id="crypto-amount" placeholder="0.001"></div><div class="form-group"><label for="crypto-label">Label</label><input type="text" class="qr-input" id="crypto-label" placeholder="Donation"></div></div>
                 <div id="phone" class="tab-content"><div class="form-group"><label for="phone-number">Phone Number</label><input type="tel" class="qr-input" id="phone-number" placeholder="+6281234567890"></div></div>
                 <div id="whatsapp" class="tab-content"><div class="form-group"><label for="whatsapp-number">Phone Number</label><input type="tel" class="qr-input" id="whatsapp-number" placeholder="+6281234567890"></div><div class="form-group"><label for="whatsapp-message">Pre-filled Message</label><textarea class="qr-input" id="whatsapp-message" placeholder="Hello!"></textarea></div></div>
@@ -360,20 +395,10 @@
     </main>
 
     <footer>
-        <div class="footer-content">
-            <ul class="footer-links">
-                <li><a href="mailto:support@vinnesia.my.id" title="Email"><i class="fas fa-envelope"></i></a></li>
-                <li><a href="https://instagram.com/vin.nesia.id" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a></li>
-                <li><a href="https://wa.me/62895354511777" target="_blank" rel="noopener noreferrer" title="WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
-                <li><a href="https://www.vinnesia.my.id/privacy" target="_blank" title="Privacy Policy"><i class="fas fa-shield-alt"></i></a></li>
-            </ul>
-            <div class="copyright">
-                © 2025 VIN NESIA. Built with ❤️ in Indonesia.
-            </div>
-        </div>
-    </footer>
+        </footer>
 
     <script>
+        // Javascript (No changes needed in logic)
         document.addEventListener('DOMContentLoaded', () => {
             let currentTab = 'text';
             let logoImage = null;
@@ -404,7 +429,6 @@
                 generateQrCode();
             };
 
-            // === [UPDATED] getQrData Function ===
             function getQrData() {
                 let data = "";
                 switch (currentTab) {
@@ -431,7 +455,6 @@
                             `ADR;TYPE=WORK:;;${document.getElementById('vcard-street').value};${document.getElementById('vcard-city').value};;${document.getElementById('vcard-zip').value};${document.getElementById('vcard-country').value}`,
                             'END:VCARD'
                         ];
-                        // Only join non-empty, valid fields to save space
                         data = vcard.filter(line => !line.endsWith(':') && !line.endsWith(';;;;;;')).join('\n');
                         break;
                     case 'email':
@@ -453,7 +476,6 @@
                     case 'file': data = fileDataUrl || " "; break;
                     case 'event':
                         const summary = document.getElementById('event-summary').value;
-                        // Function to format date into YYYYMMDDTHHMMSS
                         const formatVEventDate = (dateString) => dateString.replace(/[-:T]/g, '') + '00';
                         const start = formatVEventDate(document.getElementById('event-start').value);
                         const end = formatVEventDate(document.getElementById('event-end').value);
@@ -463,18 +485,11 @@
                         if (summary && start && end) {
                             const timestamp = new Date().toISOString().replace(/[-:.]/g, '').slice(0, 15) + 'Z';
                             const eventData = [
-                                'BEGIN:VCALENDAR',
-                                'VERSION:2.0',
-                                'BEGIN:VEVENT',
-                                `UID:${timestamp}@vinnesia.my.id`, // Professional UID
-                                `DTSTAMP:${timestamp}`,             // Professional Timestamp
-                                `SUMMARY:${summary}`,
-                                `DTSTART:${start}`,
-                                `DTEND:${end}`,
-                                `LOCATION:${location}`,
-                                `DESCRIPTION:${description}`,
-                                'END:VEVENT',
-                                'END:VCALENDAR'
+                                'BEGIN:VCALENDAR', 'VERSION:2.0', 'BEGIN:VEVENT',
+                                `UID:${timestamp}@vinnesia.my.id`, `DTSTAMP:${timestamp}`,
+                                `SUMMARY:${summary}`, `DTSTART:${start}`, `DTEND:${end}`,
+                                `LOCATION:${location}`, `DESCRIPTION:${description}`,
+                                'END:VEVENT', 'END:VCALENDAR'
                             ];
                             data = eventData.filter(line => !line.endsWith(':')).join('\n');
                         }
@@ -505,7 +520,7 @@
                         }
                         break;
                 }
-                return data || " "; // Return a space if data is empty to prevent QR errors
+                return data || " ";
             }
 
             function generateQrCode() {
@@ -513,15 +528,12 @@
                 const dotColor = document.getElementById('dot-color').value;
                 const bgColor = document.getElementById('bg-color').value;
                 const dotStyle = document.getElementById('dot-style').value;
-                
-                const qrContainer = document.getElementById('qr-code-container');
-                qrContainer.style.backgroundColor = bgColor;
-
+                document.getElementById('qr-code-container').style.backgroundColor = bgColor;
                 qrCode.update({
                     data: data,
                     image: logoImage,
                     dotsOptions: { color: dotColor, type: dotStyle },
-                    backgroundOptions: { color: "transparent" } // Transparent so container color is visible
+                    backgroundOptions: { color: "transparent" }
                 });
             }
 
@@ -536,10 +548,7 @@
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = (event) => {
-                        logoImage = event.target.result;
-                        generateQrCode();
-                    };
+                    reader.onload = (event) => { logoImage = event.target.result; generateQrCode(); };
                     reader.readAsDataURL(file);
                 }
             });
@@ -548,10 +557,7 @@
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = (event) => {
-                        fileDataUrl = event.target.result;
-                        generateQrCode();
-                    };
+                    reader.onload = (event) => { fileDataUrl = event.target.result; generateQrCode(); };
                     reader.readAsDataURL(file);
                 }
             });
