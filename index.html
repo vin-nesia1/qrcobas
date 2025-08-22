@@ -108,29 +108,37 @@
             --color-action: #00796B;
         }
         body {
-            background-color: var(--color-background);
+            background: linear-gradient(135deg, var(--color-background), #1a1a1a);
             color: var(--color-text);
             transition: background-color 0.5s ease, color 0.5s ease;
         }
         .controls, .output {
-            background-color: var(--color-surface);
+            background: rgba(var(--color-surface), 0.9);
             border-color: var(--color-border);
+            backdrop-filter: blur(10px);
         }
         .tab-button {
             color: var(--color-text-muted);
+            transition: all 0.3s ease;
         }
         .tab-button:hover {
             color: var(--color-text);
+            box-shadow: 0 0 10px var(--color-secondary);
         }
         .tab-button.active {
             color: var(--color-secondary);
-            border-bottom-color: var(--color-secondary);
+            border-bottom: 3px solid var(--color-secondary);
+            background: rgba(255, 215, 0, 0.1);
         }
         .form-group input, .form-group textarea, .form-group select {
-            background-color: rgba(44,44,44,0.5); /* Glassmorphism */
+            background: rgba(44,44,44,0.5);
             backdrop-filter: blur(10px);
             border-color: var(--color-border);
             color: var(--color-text);
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            box-shadow: 0 0 10px var(--color-primary);
         }
         /* Canggih Animations */
         .fade-in {
@@ -142,25 +150,43 @@
         }
         .tab-button:hover {
             transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 0 10px var(--color-secondary);
+            box-shadow: 0 0 15px var(--color-secondary);
         }
         .btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255,215,0,0.5); /* Neon glow */
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
         }
         /* QR Animation */
         #qr-code-container {
+            width: 100%;
+            max-width: 300px;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 12px;
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
         }
         #qr-code-container:hover {
             transform: scale(1.1) rotate(2deg);
-            box-shadow: 0 0 20px var(--color-primary);
+            box-shadow: 0 0 25px var(--color-primary);
+        }
+        #qr-code canvas, #qr-code svg {
+            width: 100% !important;
+            height: auto !important;
+            border-radius: 8px;
         }
         /* Loading Spinner Premium */
         .loading-spinner {
-            border-top-color: var(--color-secondary);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--color-secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
             animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
         }
         @keyframes spin {
@@ -187,18 +213,24 @@
             position: absolute;
             bottom: 100%;
             left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--color-surface);
+            transform: translateX(-50%) translateY(-10px);
+            background: var(--color-surface);
             color: var(--color-text);
             padding: 5px 10px;
             border-radius: 4px;
             white-space: nowrap;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s ease;
             pointer-events: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         .tooltip:hover::after {
             opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
@@ -209,18 +241,29 @@
             VIN NESIA
         </h1>
         <p class="text-text-muted text-lg mt-2">QR Code Generator</p>
-        <!-- Toggle Theme Button with Animasi -->
-        <button id="theme-toggle" class="absolute top-4 right-4 bg-action text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition-all">Toggle Theme</button>
+        <button id="theme-toggle" class="absolute top-4 right-4 bg-action text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition-all focus:ring-2 focus:ring-primary">Toggle Theme</button>
     </header>
 
     <main class="container mx-auto px-4 py-8 flex-1 flex flex-col lg:flex-row gap-8">
         <section class="controls p-6 rounded-xl border border-border flex flex-col lg:flex-2 backdrop-blur-md">
             <div class="tabs-grid-container grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mb-6">
-                <button class="tab-button active px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'text')" aria-selected="true">📝 Text/URL</button>
-                <!-- Semua tab button lainnya sama seperti sebelumnya, untuk ringkas, saya skip di sini, tambahkan dari kode sebelumnya -->
+                <button class="tab-button active px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'text')" aria-selected="true" tabindex="0">📝 Text/URL</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'wifi')" aria-selected="false" tabindex="0">📶 WiFi</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'vcard')" aria-selected="false" tabindex="0">👤 vCard</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'email')" aria-selected="false" tabindex="0">📧 Email</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'sms')" aria-selected="false" tabindex="0">📱 SMS</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'geo')" aria-selected="false" tabindex="0">📍 Location</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'file')" aria-selected="false" tabindex="0">📁 File</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'event')" aria-selected="false" tabindex="0">🗓️ Event</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'crypto')" aria-selected="false" tabindex="0">💰 Crypto</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'phone')" aria-selected="false" tabindex="0">☎️ Phone</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'whatsapp')" aria-selected="false" tabindex="0">💬 WhatsApp</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'social')" aria-selected="false" tabindex="0">🌐 Social</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'appstore')" aria-selected="false" tabindex="0">📱 App Store</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'multilang')" aria-selected="false" tabindex="0">🌍 Multi-Lang</button>
+                <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'htmlcustom')" aria-selected="false" tabindex="0">📄 HTML</button>
             </div>
 
-            <!-- Semua tab content sama seperti sebelumnya, dengan tambahan class 'tooltip' pada label untuk premium feel, dan data-tooltip="Deskripsi" -->
             <div id="text" class="tab-content active fade-in">
                 <div class="form-group mb-4 tooltip" data-tooltip="Enter your text or URL here">
                     <label for="text-input" class="block font-bold mb-2">Your Text or URL</label>
@@ -228,14 +271,234 @@
                     <p id="text-error" class="text-red-500 text-sm hidden">Please enter a valid text or URL</p>
                 </div>
             </div>
-            <!-- Tambahkan semua tab content lainnya dari kode sebelumnya, dengan error p tag untuk validasi -->
+            <div id="wifi" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your WiFi network name">
+                    <label for="wifi-ssid" class="block font-bold mb-2">Network Name (SSID)</label>
+                    <input type="text" id="wifi-ssid" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="MyWiFiNetwork" aria-label="WiFi SSID">
+                    <p id="wifi-error" class="text-red-500 text-sm hidden">Please enter a valid SSID</p>
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your WiFi password">
+                    <label for="wifi-password" class="block font-bold mb-2">Password</label>
+                    <input type="text" id="wifi-password" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="SecretPassword" aria-label="WiFi Password">
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Select WiFi encryption type">
+                    <label for="wifi-encryption" class="block font-bold mb-2">Encryption</label>
+                    <select id="wifi-encryption" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="WiFi Encryption">
+                        <option value="WPA">WPA/WPA2</option>
+                        <option value="WEP">WEP</option>
+                        <option value="nopass">None</option>
+                    </select>
+                </div>
+            </div>
+            <div id="vcard" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your full name">
+                    <label for="vcard-name" class="block font-bold mb-2">Full Name</label>
+                    <input type="text" id="vcard-name" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Full Name">
+                    <p id="vcard-error" class="text-red-500 text-sm hidden">Please enter a valid name</p>
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your phone number">
+                    <label for="vcard-phone" class="block font-bold mb-2">Phone</label>
+                    <input type="tel" id="vcard-phone" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Phone Number">
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your email address">
+                    <label for="vcard-email" class="block font-bold mb-2">Email</label>
+                    <input type="email" id="vcard-email" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Email Address">
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your organization">
+                    <label for="vcard-org" class="block font-bold mb-2">Organization</label>
+                    <input type="text" id="vcard-org" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Organization">
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your website URL">
+                    <label for="vcard-url" class="block font-bold mb-2">Website</label>
+                    <input type="url" id="vcard-url" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Website URL">
+                </div>
+            </div>
+            <div id="email" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter recipient email">
+                    <label for="email-to" class="block font-bold mb-2">Recipient Email</label>
+                    <input type="email" id="email-to" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="recipient@example.com" aria-label="Recipient Email">
+                    <p id="email-error" class="text-red-500 text-sm hidden">Please enter a valid email</p>
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter email subject">
+                    <label for="email-subject" class="block font-bold mb-2">Subject</label>
+                    <input type="text" id="email-subject" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Email Subject">
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter email message">
+                    <label for="email-body" class="block font-bold mb-2">Message</label>
+                    <textarea id="email-body" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Email Message"></textarea>
+                </div>
+            </div>
+            <div id="sms" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter phone number for SMS">
+                    <label for="sms-to" class="block font-bold mb-2">Phone Number</label>
+                    <input type="tel" id="sms-to" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="+1234567890" aria-label="SMS Phone Number">
+                    <p id="sms-error" class="text-red-500 text-sm hidden">Please enter a valid phone number</p>
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter SMS message">
+                    <label for="sms-body" class="block font-bold mb-2">Message</label>
+                    <textarea id="sms-body" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="SMS Message"></textarea>
+                </div>
+            </div>
+            <div id="geo" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter latitude coordinate">
+                    <label for="geo-lat" class="block font-bold mb-2">Latitude</label>
+                    <input type="text" id="geo-lat" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="40.7128" aria-label="Latitude">
+                    <p id="geo-error" class="text-red-500 text-sm hidden">Please enter valid coordinates</p>
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter longitude coordinate">
+                    <label for="geo-lon" class="block font-bold mb-2">Longitude</label>
+                    <input type="text" id="geo-lon" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="-74.0060" aria-label="Longitude">
+                </div>
+            </div>
+            <div id="file" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Upload a small file (< 2KB)">
+                    <label for="file-input" class="block font-bold mb-2">Upload File</label>
+                    <input type="file" id="file-input" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="File Upload">
+                    <div class="file-warning bg-yellow-500/10 text-secondary p-3 border border-secondary rounded-md text-sm mt-2">
+                        <strong>Warning:</strong> For very small files (< 2KB) only. Large files will create unscannable QR codes. For larger files, upload them to a cloud service and create a QR code from the share link.
+                    </div>
+                </div>
+            </div>
+            <div id="event" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter event title">
+                    <label for="event-summary" class="block font-bold mb-2">Event Title</label>
+                    <input type="text" id="event-summary" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="My Event" aria-label="Event Title">
+                    <p id="event-error" class="text-red-500 text-sm hidden">Please enter a valid event title</p>
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter start date (YYYY-MM-DDTHH:MM)">
+                    <label for="event-start" class="block font-bold mb-2">Start Date (YYYY-MM-DDTHH:MM)</label>
+                    <input type="text" id="event-start" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="2023-12-31T23:59" aria-label="Event Start Date">
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter end date (YYYY-MM-DDTHH:MM)">
+                    <label for="event-end" class="block font-bold mb-2">End Date (YYYY-MM-DDTHH:MM)</label>
+                    <input type="text" id="event-end" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="2024-01-01T00:01" aria-label="Event End Date">
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter event location">
+                    <label for="event-location" class="block font-bold mb-2">Location</label>
+                    <input type="text" id="event-location" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="Jakarta, Indonesia" aria-label="Event Location">
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter event description">
+                    <label for="event-description" class="block font-bold mb-2">Description</label>
+                    <textarea id="event-description" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="Event details..." aria-label="Event Description"></textarea>
+                </div>
+            </div>
+            <div id="crypto" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Select cryptocurrency type">
+                    <label for="crypto-type" class="block font-bold mb-2">Crypto Type</label>
+                    <select id="crypto-type" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Crypto Type">
+                        <option value="bitcoin">Bitcoin</option>
+                        <option value="ethereum">Ethereum</option>
+                        <option value="litecoin">Litecoin</option>
+                    </select>
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter wallet address">
+                    <label for="crypto-address" class="block font-bold mb-2">Wallet Address</label>
+                    <input type="text" id="crypto-address" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" aria-label="Crypto Wallet Address">
+                    <p id="crypto-error" class="text-red-500 text-sm hidden">Please enter a valid wallet address</p>
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter amount (optional)">
+                    <label for="crypto-amount" class="block font-bold mb-2">Amount</label>
+                    <input type="text" id="crypto-amount" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="0.001" aria-label="Crypto Amount">
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter label (optional)">
+                    <label for="crypto-label" class="block font-bold mb-2">Label</label>
+                    <input type="text" id="crypto-label" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="Donation" aria-label="Crypto Label">
+                </div>
+            </div>
+            <div id="phone" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter phone number">
+                    <label for="phone-number" class="block font-bold mb-2">Phone Number</label>
+                    <input type="tel" id="phone-number" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="+6281234567890" aria-label="Phone Number">
+                    <p id="phone-error" class="text-red-500 text-sm hidden">Please enter a valid phone number</p>
+                </div>
+            </div>
+            <div id="whatsapp" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter WhatsApp number">
+                    <label for="whatsapp-number" class="block font-bold mb-2">Phone Number</label>
+                    <input type="tel" id="whatsapp-number" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="+6281234567890" aria-label="WhatsApp Number">
+                    <p id="whatsapp-error" class="text-red-500 text-sm hidden">Please enter a valid WhatsApp number</p>
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter pre-filled message (optional)">
+                    <label for="whatsapp-message" class="block font-bold mb-2">Pre-filled Message</label>
+                    <textarea id="whatsapp-message" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="Hello!" aria-label="WhatsApp Message"></textarea>
+                </div>
+            </div>
+            <div id="social" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Select social media platform">
+                    <label for="social-platform" class="block font-bold mb-2">Platform</label>
+                    <select id="social-platform" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Social Platform">
+                        <option value="instagram">Instagram</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="tiktok">TikTok</option>
+                    </select>
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter username">
+                    <label for="social-username" class="block font-bold mb-2">Username</label>
+                    <input type="text" id="social-username" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="username" aria-label="Social Username">
+                    <p id="social-error" class="text-red-500 text-sm hidden">Please enter a valid username</p>
+                </div>
+            </div>
+            <div id="appstore" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Select app store platform">
+                    <label for="appstore-platform" class="block font-bold mb-2">Platform</label>
+                    <select id="appstore-platform" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="App Store Platform">
+                        <option value="playstore">Google Play Store</option>
+                        <option value="appstore">Apple App Store</option>
+                    </select>
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter app ID or URL">
+                    <label for="appstore-id" class="block font-bold mb-2">App ID or URL</label>
+                    <input type="text" id="appstore-id" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="com.example.app or full URL" aria-label="App ID or URL">
+                    <p id="appstore-error" class="text-red-500 text-sm hidden">Please enter a valid app ID or URL</p>
+                </div>
+            </div>
+            <div id="multilang" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter base URL">
+                    <label for="multilang-baseurl" class="block font-bold mb-2">Base URL</label>
+                    <input type="url" id="multilang-baseurl" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="https://example.com" aria-label="Base URL">
+                    <p id="multilang-error" class="text-red-500 text-sm hidden">Please enter a valid URL</p>
+                </div>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter language parameter (e.g., lang=en)">
+                    <label for="multilang-langparam" class="block font-bold mb-2">Language Parameter</label>
+                    <input type="text" id="multilang-langparam" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="lang=en" aria-label="Language Parameter">
+                </div>
+            </div>
+            <div id="htmlcustom" class="tab-content hidden">
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter custom HTML content">
+                    <label for="htmlcustom-content" class="block font-bold mb-2">HTML Content</label>
+                    <textarea id="htmlcustom-content" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="<h1>Hello World</h1>" aria-label="HTML Content"></textarea>
+                    <p id="htmlcustom-error" class="text-red-500 text-sm hidden">Please enter valid HTML content</p>
+                </div>
+            </div>
 
             <h3 class="mt-6 border-t border-border pt-4 text-secondary text-xl font-semibold">Design Options</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <!-- Form groups sama, tambah tooltip -->
+                <div class="form-group tooltip" data-tooltip="Choose QR dot color">
+                    <label for="dot-color" class="block font-bold mb-2">Dot Color</label>
+                    <input type="color" id="dot-color" value="#000000" class="w-full h-10 p-1 border border-border rounded-md" aria-label="QR Dot Color">
+                </div>
+                <div class="form-group tooltip" data-tooltip="Choose QR background color">
+                    <label for="bg-color" class="block font-bold mb-2">Background Color</label>
+                    <input type="color" id="bg-color" value="#ffffff" class="w-full h-10 p-1 border border-border rounded-md" aria-label="QR Background Color">
+                </div>
+                <div class="form-group tooltip" data-tooltip="Select QR dot style">
+                    <label for="dot-style" class="block font-bold mb-2">Dot Style</label>
+                    <select id="dot-style" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="QR Dot Style">
+                        <option value="square">Square</option>
+                        <option value="dots">Dots</option>
+                        <option value="rounded">Rounded</option>
+                        <option value="extra-rounded">Extra Rounded</option>
+                        <option value="classy">Classy</option>
+                        <option value="classy-rounded">Classy Rounded</option>
+                    </select>
+                </div>
+                <div class="form-group tooltip" data-tooltip="Upload a logo for the QR code">
+                    <label for="logo-upload" class="block font-bold mb-2">Upload Logo</label>
+                    <input type="file" id="logo-upload" accept="image/*" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Upload Logo">
+                </div>
             </div>
 
-            <button id="generate-btn" class="btn bg-action text-white font-bold py-4 rounded-md hover:bg-[#00695C] transition-all mt-auto">Generate QR Code</button>
+            <button id="generate-btn" class="btn bg-action text-white font-bold py-4 rounded-md hover:bg-[#00695C] transition-all mt-auto focus:ring-2 focus:ring-primary" tabindex="0">Generate QR Code</button>
         </section>
 
         <section class="output flex flex-col items-center justify-center p-6 rounded-xl border border-border lg:flex-1 lg:sticky lg:top-8 backdrop-blur-md">
@@ -244,14 +507,25 @@
                 <div id="qr-code"></div>
             </div>
             <div class="download-buttons flex flex-col sm:flex-row gap-4 w-full">
-                <button id="download-png" class="btn bg-primary text-white font-bold py-3 rounded-md hover:bg-[#9932CC] transition-all">Download PNG</button>
-                <button id="download-svg" class="btn bg-secondary text-background font-bold py-3 rounded-md hover:bg-[#FFC700] transition-all">Download SVG</button>
+                <button id="download-png" class="btn bg-primary text-white font-bold py-3 rounded-md hover:bg-[#9932CC] transition-all focus:ring-2 focus:ring-primary" tabindex="0">Download PNG</button>
+                <button id="download-svg" class="btn bg-secondary text-background font-bold py-3 rounded-md hover:bg-[#FFC700] transition-all focus:ring-2 focus:ring-primary" tabindex="0">Download SVG</button>
             </div>
         </section>
     </main>
 
     <footer class="bg-[#0a0a0a] text-text-muted text-center py-10 border-t border-border">
-        <!-- Footer sama -->
+        <div class="footer-content flex flex-col items-center gap-6">
+            <a href="https://www.vinnesia.my.id" class="btn bg-transparent border border-secondary text-secondary font-bold py-3 px-6 rounded-md hover:bg-secondary hover:text-background transition-all focus:ring-2 focus:ring-primary" tabindex="0">Back to Homepage</a>
+            <ul class="footer-links flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-8 list-none p-0 m-0">
+                <li><a href="mailto:support@vinnesia.my.id" class="text-text-muted hover:text-secondary transition-colors" tabindex="0">📧 Email</a></li>
+                <li><a href="https://instagram.com/vin.nesia.id" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-secondary transition-colors" tabindex="0">🧑‍💻 Instagram</a></li>
+                <li><a href="https://wa.me/62895354511777" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-secondary transition-colors" tabindex="0">📱 WhatsApp</a></li>
+                <li><a href="https://www.vinnesia.my.id/privacy" target="_blank" class="text-text-muted hover:text-secondary transition-colors" tabindex="0">Privacy Policy</a></li>
+            </ul>
+            <div class="copyright text-sm mt-4">
+                © 2025 VIN NESIA. All rights reserved. <br> 📍 Indonesia
+            </div>
+        </div>
     </footer>
 
     <script>
@@ -273,49 +547,209 @@
             });
 
             qrCode.append(document.getElementById("qr-code"));
+            console.log('QR Code initialized');
 
-            // Toggle Theme with GSAP Animasi
+            // Toggle Theme with GSAP Animation
             document.getElementById('theme-toggle').addEventListener('click', () => {
                 const html = document.documentElement;
-                if (html.dataset.theme === 'dark') {
-                    html.dataset.theme = 'light';
-                } else {
-                    html.dataset.theme = 'dark';
-                }
-                gsap.to('body', { backgroundColor: html.dataset.theme === 'dark' ? '#121212' : '#f0f0f0', duration: 0.5 });
+                const newTheme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+                html.dataset.theme = newTheme;
+                gsap.to('body', { 
+                    backgroundColor: newTheme === 'dark' ? '#121212' : '#f0f0f0', 
+                    duration: 0.5, 
+                    ease: 'power2.out' 
+                });
+                gsap.to('.controls, .output', { 
+                    backgroundColor: newTheme === 'dark' ? 'rgba(30,30,30,0.9)' : 'rgba(255,255,255,0.9)', 
+                    duration: 0.5 
+                });
             });
 
             window.openTab = function(evt, tabName) {
-                gsap.to('.tab-content:not(.hidden)', { x: -50, opacity: 0, duration: 0.3, onComplete: () => {
-                    currentTab = tabName;
-                    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.add('hidden'));
-                    document.querySelectorAll('.tab-button').forEach(tb => tb.classList.remove('active'));
-                    const newTab = document.getElementById(tabName);
-                    newTab.classList.remove('hidden');
-                    gsap.fromTo(newTab, { x: 50, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' });
-                    evt.currentTarget.classList.add('active');
-                    evt.currentTarget.setAttribute('aria-selected', 'true');
-                    document.querySelectorAll('.tab-button').forEach(tb => {
-                        if (tb !== evt.currentTarget) tb.setAttribute('aria-selected', 'false');
-                    });
-                }});
+                gsap.to('.tab-content:not(.hidden)', { 
+                    x: -50, 
+                    opacity: 0, 
+                    duration: 0.3, 
+                    ease: 'power2.in', 
+                    onComplete: () => {
+                        currentTab = tabName;
+                        document.querySelectorAll('.tab-content').forEach(tc => tc.classList.add('hidden'));
+                        document.querySelectorAll('.tab-button').forEach(tb => tb.classList.remove('active'));
+                        const newTab = document.getElementById(tabName);
+                        newTab.classList.remove('hidden');
+                        gsap.fromTo(newTab, 
+                            { x: 50, opacity: 0 }, 
+                            { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
+                        );
+                        evt.currentTarget.classList.add('active');
+                        evt.currentTarget.setAttribute('aria-selected', 'true');
+                        document.querySelectorAll('.tab-button').forEach(tb => {
+                            if (tb !== evt.currentTarget) tb.setAttribute('aria-selected', 'false');
+                        });
+                    }
+                });
             };
 
             function validateInput(tab) {
                 let isValid = true;
-                // Contoh validasi sederhana untuk tab 'text'
+                const errorMessages = {
+                    text: 'text-error',
+                    wifi: 'wifi-error',
+                    vcard: 'vcard-error',
+                    email: 'email-error',
+                    sms: 'sms-error',
+                    geo: 'geo-error',
+                    event: 'event-error',
+                    crypto: 'crypto-error',
+                    phone: 'phone-error',
+                    whatsapp: 'whatsapp-error',
+                    social: 'social-error',
+                    appstore: 'appstore-error',
+                    multilang: 'multilang-error',
+                    htmlcustom: 'htmlcustom-error'
+                };
                 if (tab === 'text') {
                     const input = document.getElementById('text-input').value.trim();
-                    if (input === '') {
+                    if (!input) {
                         isValid = false;
                         const error = document.getElementById('text-error');
                         error.classList.remove('hidden');
-                        gsap.to(error, { duration: 0.5, className: 'error-shake' });
+                        gsap.to('#text-input', { duration: 0.5, className: '+=error-shake' });
                     } else {
                         document.getElementById('text-error').classList.add('hidden');
                     }
+                } else if (tab === 'wifi') {
+                    const ssid = document.getElementById('wifi-ssid').value.trim();
+                    if (!ssid) {
+                        isValid = false;
+                        const error = document.getElementById('wifi-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#wifi-ssid', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('wifi-error').classList.add('hidden');
+                    }
+                } else if (tab === 'vcard') {
+                    const name = document.getElementById('vcard-name').value.trim();
+                    if (!name) {
+                        isValid = false;
+                        const error = document.getElementById('vcard-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#vcard-name', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('vcard-error').classList.add('hidden');
+                    }
+                } else if (tab === 'email') {
+                    const to = document.getElementById('email-to').value.trim();
+                    if (!to || !to.includes('@')) {
+                        isValid = false;
+                        const error = document.getElementById('email-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#email-to', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('email-error').classList.add('hidden');
+                    }
+                } else if (tab === 'sms') {
+                    const to = document.getElementById('sms-to').value.trim();
+                    if (!to) {
+                        isValid = false;
+                        const error = document.getElementById('sms-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#sms-to', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('sms-error').classList.add('hidden');
+                    }
+                } else if (tab === 'geo') {
+                    const lat = document.getElementById('geo-lat').value.trim();
+                    const lon = document.getElementById('geo-lon').value.trim();
+                    if (!lat || !lon || isNaN(lat) || isNaN(lon)) {
+                        isValid = false;
+                        const error = document.getElementById('geo-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#geo-lat, #geo-lon', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('geo-error').classList.add('hidden');
+                    }
+                } else if (tab === 'event') {
+                    const summary = document.getElementById('event-summary').value.trim();
+                    if (!summary) {
+                        isValid = false;
+                        const error = document.getElementById('event-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#event-summary', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('event-error').classList.add('hidden');
+                    }
+                } else if (tab === 'crypto') {
+                    const address = document.getElementById('crypto-address').value.trim();
+                    if (!address) {
+                        isValid = false;
+                        const error = document.getElementById('crypto-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#crypto-address', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('crypto-error').classList.add('hidden');
+                    }
+                } else if (tab === 'phone') {
+                    const phone = document.getElementById('phone-number').value.trim();
+                    if (!phone) {
+                        isValid = false;
+                        const error = document.getElementById('phone-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#phone-number', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('phone-error').classList.add('hidden');
+                    }
+                } else if (tab === 'whatsapp') {
+                    const whatsapp = document.getElementById('whatsapp-number').value.trim();
+                    if (!whatsapp) {
+                        isValid = false;
+                        const error = document.getElementById('whatsapp-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#whatsapp-number', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('whatsapp-error').classList.add('hidden');
+                    }
+                } else if (tab === 'social') {
+                    const username = document.getElementById('social-username').value.trim();
+                    if (!username) {
+                        isValid = false;
+                        const error = document.getElementById('social-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#social-username', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('social-error').classList.add('hidden');
+                    }
+                } else if (tab === 'appstore') {
+                    const appId = document.getElementById('appstore-id').value.trim();
+                    if (!appId) {
+                        isValid = false;
+                        const error = document.getElementById('appstore-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#appstore-id', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('appstore-error').classList.add('hidden');
+                    }
+                } else if (tab === 'multilang') {
+                    const baseUrl = document.getElementById('multilang-baseurl').value.trim();
+                    if (!baseUrl) {
+                        isValid = false;
+                        const error = document.getElementById('multilang-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#multilang-baseurl', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('multilang-error').classList.add('hidden');
+                    }
+                } else if (tab === 'htmlcustom') {
+                    const htmlContent = document.getElementById('htmlcustom-content').value.trim();
+                    if (!htmlContent) {
+                        isValid = false;
+                        const error = document.getElementById('htmlcustom-error');
+                        error.classList.remove('hidden');
+                        gsap.to('#htmlcustom-content', { duration: 0.5, className: '+=error-shake' });
+                    } else {
+                        document.getElementById('htmlcustom-error').classList.add('hidden');
+                    }
                 }
-                // Tambahkan validasi untuk tab lain jika perlu
                 return isValid;
             }
 
@@ -326,9 +760,103 @@
                 loading.classList.remove('hidden');
 
                 let data = "";
-                // Switch case sama seperti sebelumnya
+                switch (currentTab) {
+                    case 'text':
+                        data = document.getElementById('text-input').value || "https://qr.vinnesia.my.id";
+                        break;
+                    case 'wifi':
+                        const ssid = document.getElementById('wifi-ssid').value;
+                        const password = document.getElementById('wifi-password').value;
+                        const encryption = document.getElementById('wifi-encryption').value;
+                        if (ssid) data = `WIFI:T:${encryption};S:${ssid};P:${password};;`;
+                        break;
+                    case 'vcard':
+                        const name = document.getElementById('vcard-name').value;
+                        const phone = document.getElementById('vcard-phone').value;
+                        const email = document.getElementById('vcard-email').value;
+                        const org = document.getElementById('vcard-org').value;
+                        const url = document.getElementById('vcard-url').value;
+                        if (name) data = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${org}\nURL:${url}\nEND:VCARD`;
+                        break;
+                    case 'email':
+                        const to = document.getElementById('email-to').value;
+                        const subject = document.getElementById('email-subject').value;
+                        const body = document.getElementById('email-body').value;
+                        if (to) data = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                        break;
+                    case 'sms':
+                        const smsTo = document.getElementById('sms-to').value;
+                        const smsBody = document.getElementById('sms-body').value;
+                        if (smsTo) data = `SMSTO:${smsTo}:${encodeURIComponent(smsBody)}`;
+                        break;
+                    case 'geo':
+                        const lat = document.getElementById('geo-lat').value;
+                        const lon = document.getElementById('geo-lon').value;
+                        if (lat && lon) data = `geo:${lat},${lon}`;
+                        break;
+                    case 'file':
+                        data = fileDataUrl || " ";
+                        break;
+                    case 'event':
+                        const summary = document.getElementById('event-summary').value;
+                        const start = document.getElementById('event-start').value.replace(/[-:]/g, '');
+                        const end = document.getElementById('event-end').value.replace(/[-:]/g, '');
+                        const location = document.getElementById('event-location').value;
+                        const description = document.getElementById('event-description').value;
+                        if (summary && start && end) {
+                            data = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${summary}\nDTSTART:${start}\nDTEND:${end}\nLOCATION:${location}\nDESCRIPTION:${description}\nEND:VEVENT\nEND:VCALENDAR`;
+                        }
+                        break;
+                    case 'crypto':
+                        const cryptoType = document.getElementById('crypto-type').value;
+                        const address = document.getElementById('crypto-address').value;
+                        const amount = document.getElementById('crypto-amount').value;
+                        const label = document.getElementById('crypto-label').value;
+                        if (address) data = `${cryptoType}:${address}${amount ? `?amount=${amount}` : ''}${label ? `&label=${encodeURIComponent(label)}` : ''}`;
+                        break;
+                    case 'phone':
+                        const phoneNumber = document.getElementById('phone-number').value;
+                        if (phoneNumber) data = `tel:${phoneNumber}`;
+                        break;
+                    case 'whatsapp':
+                        const whatsappNumber = document.getElementById('whatsapp-number').value;
+                        const whatsappMessage = document.getElementById('whatsapp-message').value;
+                        if (whatsappNumber) data = `https://wa.me/${whatsappNumber.replace('+', '')}${whatsappMessage ? `?text=${encodeURIComponent(whatsappMessage)}` : ''}`;
+                        break;
+                    case 'social':
+                        const platform = document.getElementById('social-platform').value;
+                        const username = document.getElementById('social-username').value;
+                        if (username) {
+                            if (platform === 'instagram') data = `https://instagram.com/${username}`;
+                            else if (platform === 'telegram') data = `https://t.me/${username}`;
+                            else if (platform === 'tiktok') data = `https://tiktok.com/@${username}`;
+                        }
+                        break;
+                    case 'appstore':
+                        const appPlatform = document.getElementById('appstore-platform').value;
+                        const appId = document.getElementById('appstore-id').value;
+                        if (appId) {
+                            if (appPlatform === 'playstore') data = appId.startsWith('http') ? appId : `https://play.google.com/store/apps/details?id=${appId}`;
+                            else if (appPlatform === 'appstore') data = appId.startsWith('http') ? appId : `https://apps.apple.com/app/id${appId}`;
+                        }
+                        break;
+                    case 'multilang':
+                        const baseUrl = document.getElementById('multilang-baseurl').value;
+                        const langParam = document.getElementById('multilang-langparam').value;
+                        if (baseUrl && langParam) data = `${baseUrl}?${langParam}`;
+                        break;
+                    case 'htmlcustom':
+                        const htmlContent = document.getElementById('htmlcustom-content').value;
+                        if (htmlContent) data = `data:text/html;base64,${btoa(htmlContent)}`;
+                        break;
+                }
 
-                if (!data) data = "Welcome to VIN NESIA QR Generator!";
+                if (!data) {
+                    data = "Welcome to VIN NESIA QR Generator!";
+                    console.log('Data kosong, menggunakan default');
+                } else {
+                    console.log('Data QR: ', data);
+                }
 
                 const dotColor = document.getElementById('dot-color').value;
                 const bgColor = document.getElementById('bg-color').value;
@@ -336,16 +864,29 @@
                 const qrContainer = document.getElementById('qr-code-container');
                 qrContainer.style.backgroundColor = bgColor;
 
-                gsap.to(qrContainer, { opacity: 0, rotation: -10, scale: 0.8, duration: 0.5, ease: 'back.in', onComplete: () => {
-                    qrCode.update({
-                        data: data,
-                        image: logoImage,
-                        dotsOptions: { color: dotColor, type: dotStyle },
-                        backgroundOptions: { color: "transparent" }
-                    });
-                    gsap.to(qrContainer, { opacity: 1, rotation: 0, scale: 1, duration: 1, ease: 'back.out' });
-                    loading.classList.add('hidden');
-                }});
+                gsap.to(qrContainer, { 
+                    opacity: 0, 
+                    rotation: -10, 
+                    scale: 0.8, 
+                    duration: 0.5, 
+                    ease: 'back.in', 
+                    onComplete: () => {
+                        qrCode.update({
+                            data: data,
+                            image: logoImage,
+                            dotsOptions: { color: dotColor, type: dotStyle },
+                            backgroundOptions: { color: "transparent" }
+                        });
+                        gsap.to(qrContainer, { 
+                            opacity: 1, 
+                            rotation: 0, 
+                            scale: 1, 
+                            duration: 1, 
+                            ease: 'back.out' 
+                        });
+                        document.getElementById('qr-loading').classList.add('hidden');
+                    }
+                });
             }
 
             // Real-time Preview dengan Debounce
@@ -361,10 +902,53 @@
                 generateQrCode();
             });
 
-            // Event listener lainnya sama
+            document.getElementById('logo-upload').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => { 
+                        logoImage = event.target.result; 
+                        console.log('Logo uploaded');
+                        generateQrCode();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.getElementById('file-input').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => { 
+                        fileDataUrl = event.target.result; 
+                        console.log('File uploaded for QR');
+                        generateQrCode();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            document.getElementById('download-png').addEventListener('click', () => {
+                gsap.to('#download-png', { scale: 1.1, duration: 0.2, repeat: 1, yoyo: true });
+                qrCode.download({ name: "vinnesia-qr", extension: "png" });
+            });
+            document.getElementById('download-svg').addEventListener('click', () => {
+                gsap.to('#download-svg', { scale: 1.1, duration: 0.2, repeat: 1, yoyo: true });
+                qrCode.download({ name: "vinnesia-qr", extension: "svg" });
+            });
+
+            // Keyboard Navigation
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openTab({ currentTarget: button }, button.getAttribute('onclick').match(/'([^']+)'/)[1]);
+                    }
+                });
+            });
 
             // Initial setup
-            openTab({currentTarget: document.querySelector('.tab-button')}, 'text');
+            openTab({ currentTarget: document.querySelector('.tab-button') }, 'text');
             generateQrCode();
         });
     </script>
