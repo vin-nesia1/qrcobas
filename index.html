@@ -88,7 +88,7 @@
         }
         #qr-code-container:hover {
             transform: perspective(1000px) rotateY(5deg) rotateX(2deg) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 0 8px rgba(var(--color-primary), 0.2); /* Adjusted for var() */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 0 8px rgba(var(--color-primary), 0.2);
         }
 
         .typing-placeholder::placeholder {
@@ -132,6 +132,9 @@
             overflow-x: hidden;
             transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
         }
+        body.modal-open {
+            overflow: hidden; /* Prevent scrolling when modal is open */
+        }
         body::before {
             content: '';
             position: fixed;
@@ -154,7 +157,7 @@
 
         /* 4. LAYOUT & HEADER */
         .container { 
-            width: 95%; /* More fluid width for all devices */
+            width: 95%;
             max-width: 1200px; 
             margin: 2rem auto; 
             animation: fadeIn 1s ease-out forwards; 
@@ -162,7 +165,7 @@
         header { text-align: center; padding: 2rem 1rem; }
         header h1 { 
             margin: 0; 
-            font-size: clamp(2em, 5vw, 3em); /* Responsive font size */
+            font-size: clamp(2em, 5vw, 3em);
             font-weight: 700; 
             display: flex; 
             align-items: center; 
@@ -171,13 +174,13 @@
         }
         header p { 
             color: var(--color-text-muted); 
-            font-size: clamp(1em, 2vw, 1.2em); /* Responsive font size */
+            font-size: clamp(1em, 2vw, 1.2em);
             margin-top: 0.5rem; 
             max-width: 600px; 
             margin-left: auto; 
             margin-right: auto; 
         }
-        .logo-img { height: clamp(40px, 8vw, 50px); } /* Responsive logo size */
+        .logo-img { height: clamp(40px, 8vw, 50px); }
         main { 
             display: grid; 
             grid-template-columns: 2fr 1fr; 
@@ -197,32 +200,49 @@
         }
         .output { position: sticky; top: 2rem; }
 
-        /* 6. ENHANCED TABS */
+        /* 6. ENHANCED TABS (Using Flexbox for better mobile scrollability) */
         .tabs-container { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
+            display: flex; /* Changed to flexbox */
             gap: 0.5rem; 
             border-bottom: 1px solid var(--color-border); 
             padding-bottom: 1.5rem; 
             margin-bottom: 1.5rem; 
-            overflow-x: auto;
+            overflow-x: auto; /* Enable horizontal scrolling */
             -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory; /* For smoother scroll experience */
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
         }
-        .tabs-container::-webkit-scrollbar { height: 0; display: none; } /* Hide scrollbar */
+        .tabs-container::-webkit-scrollbar { display: none; } /* Hide scrollbar for Webkit browsers */
+
         .tab-button {
+            flex-shrink: 0; /* Prevent buttons from shrinking */
+            /* Default width: try to show about 3 on mobile, then let min-width handle it */
+            width: calc(33.333% - (0.5rem * 2 / 3)); /* Calculate for 3 columns including gap */
+            min-width: 120px; /* Minimum sensible width for a tab */
+
             display: flex; align-items: center; justify-content: center; gap: 0.5rem; 
             padding: 0.6rem 0.8rem;
-            min-height: var(--touch-target-min-size); /* Ensure touch-friendly size */
-            box-sizing: border-box; /* Include padding in min-height */
+            min-height: var(--touch-target-min-size);
+            box-sizing: border-box;
             cursor: pointer; border: 1px solid transparent; background: transparent; color: var(--color-text-muted);
             border-radius: var(--border-radius); transition: all 0.2s ease;
             font-size: 0.9em; font-weight: 600; white-space: nowrap;
+            scroll-snap-align: start; /* Align tabs to the start of the scroll container */
         }
         .tab-button:hover { background-color: rgba(255, 255, 255, 0.05); color: var(--color-text); }
         .tab-button.active {
             background: var(--color-primary); color: white; border-color: var(--color-primary);
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transform: translateY(-2px);
         }
+        /* Override default tab button width for larger screens to let them grow */
+        @media (min-width: 769px) {
+            .tab-button {
+                width: auto; /* Let buttons take their natural width */
+                flex-grow: 1; /* Allow them to grow to fill space if there are few tabs */
+                max-width: 180px; /* Optional: cap max width to prevent overly wide tabs */
+            }
+        }
+
         .tabs-content-viewport { overflow: hidden; position: relative; min-height: 280px; }
         .tabs-content-wrapper { display: flex; transition: transform var(--transition-speed) cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .tab-content { width: 100%; flex-shrink: 0; display: block; padding-top: 0.5rem; }
@@ -242,7 +262,7 @@
         }
         .form-row { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid for form rows */
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem; 
         }
 
@@ -252,8 +272,6 @@
             color: var(--color-danger);
             margin-top: 0.4rem;
             display: none;
-            /* position: absolute; - Removed for better flow on smaller screens, let it be static */
-            /* bottom: -1.5rem; */
             left: 0;
         }
         .form-group.invalid input, .form-group.invalid textarea {
@@ -300,11 +318,11 @@
         .collapsible-content { 
             max-height: 0; 
             overflow: hidden; 
-            transition: max-height var(--transition-speed) ease-out, padding-top var(--transition-speed) ease-out; /* Include padding for smooth collapse */
+            transition: max-height var(--transition-speed) ease-out, padding-top var(--transition-speed) ease-out;
             padding-top: 0;
         }
         .collapsible-content.open { 
-            max-height: 2000px; /* Arbitrary large value */ 
+            max-height: 2000px;
             padding-top: 1rem;
         }
         .collapsible.open .fa-chevron-down { transform: rotate(180deg); }
@@ -317,12 +335,12 @@
         
         #logo-palette { display: flex; gap: 0.5rem; margin-top: 0.8rem; flex-wrap: wrap; }
         .palette-color { 
-            width: 36px; height: 36px; /* Slightly larger touch target */
+            width: 36px; height: 36px;
             border-radius: 50%; cursor: pointer; 
             border: 2px solid var(--color-border); transition: transform 0.2s ease, border-color 0.2s ease; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            min-width: var(--touch-target-min-size); /* Ensure minimum touch size */
-            min-height: var(--touch-target-min-size); /* Ensure minimum touch size */
+            min-width: var(--touch-target-min-size);
+            min-height: var(--touch-target-min-size);
         }
         .palette-color:hover { transform: scale(1.2); border-color: var(--color-primary); }
 
@@ -332,8 +350,8 @@
             margin-bottom: 0.5rem;
         }
         .gradient-picker input[type="color"] {
-            width: 44px; /* Larger touch target */
-            height: 44px; /* Larger touch target */
+            width: 44px;
+            height: 44px;
             padding: 2px;
             border-radius: 50%;
             border: 2px solid var(--color-border);
@@ -347,11 +365,11 @@
             color: var(--color-danger);
             cursor: pointer;
             font-size: 1.2em;
-            padding: 8px; /* For touch target */
+            padding: 8px;
             min-width: var(--touch-target-min-size);
             min-height: var(--touch-target-min-size);
             box-sizing: border-box;
-            border-radius: var(--border-radius); /* Soften corners */
+            border-radius: var(--border-radius);
             transition: color 0.2s ease, background-color 0.2s ease;
         }
         .gradient-picker button:hover {
@@ -360,7 +378,7 @@
         }
         .gradient-options {
             display: flex;
-            flex-wrap: wrap; /* Allow wrapping on small screens */
+            flex-wrap: wrap;
             gap: 1rem;
             margin-top: 0.5rem;
             align-items: center;
@@ -401,7 +419,7 @@
             transition: all var(--transition-speed) ease; text-decoration: none; border: none;
             display: flex; align-items: center; justify-content: center; gap: 0.5rem;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            min-height: var(--touch-target-min-size); /* Ensure touch-friendly size */
+            min-height: var(--touch-target-min-size);
             box-sizing: border-box;
         }
         .btn-primary { background: var(--color-primary); color: white; }
@@ -418,7 +436,7 @@
 
         .download-buttons { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive buttons */
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 1rem; 
             width: 100%; 
         }
@@ -436,15 +454,15 @@
             border-radius: var(--border-radius); padding: 2rem;
             width: 90%; max-width: 600px;
             animation: modal-fade-in var(--transition-speed) ease forwards;
-            max-height: 90vh; /* Limit modal height */
-            overflow-y: auto; /* Allow scrolling within modal */
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
         .modal-header h2 { margin: 0; }
         .modal-close-btn { 
             background: none; border: none; color: var(--color-text-muted); 
             font-size: 1.5rem; cursor: pointer; 
-            min-width: var(--touch-target-min-size); /* Ensure touch-friendly size */
+            min-width: var(--touch-target-min-size);
             min-height: var(--touch-target-min-size);
             box-sizing: border-box;
             border-radius: 50%;
@@ -468,7 +486,7 @@
             background: var(--color-surface);
             border: 1px solid var(--color-border);
             border-radius: 50%;
-            width: var(--touch-target-min-size); /* Ensure touch-friendly size */
+            width: var(--touch-target-min-size);
             height: var(--touch-target-min-size);
             display: flex;
             justify-content: center;
@@ -490,28 +508,6 @@
         @media (max-width: 992px) {
             main { grid-template-columns: 1fr; }
             .output { position: static; margin-top: 2rem; }
-            .tabs-container {
-                grid-auto-flow: column; /* Allow items to flow in columns for horizontal scroll */
-                grid-auto-columns: minmax(100px, 1fr); /* Ensure columns take up available space */
-                overflow-x: auto; /* Enable horizontal scrolling */
-                padding-bottom: 1rem; /* Add some padding for scrollbar visibility */
-            }
-            .tabs-container::-webkit-scrollbar {
-                display: block; /* Show scrollbar for horizontal scrolling */
-                height: 8px;
-            }
-            .tabs-container::-webkit-scrollbar-track {
-                background: rgba(255, 255, 255, 0.1);
-                border-radius: 10px;
-            }
-            .tabs-container::-webkit-scrollbar-thumb {
-                background: var(--color-primary);
-                border-radius: 10px;
-            }
-            .tabs-container[data-mobile-grid="3"] {
-                grid-template-columns: repeat(3, minmax(100px, 1fr)); /* Keep 3-grid for mobile portrait, but still allow scroll */
-                grid-auto-flow: unset; /* Override column flow for explicit 3-column grid */
-            }
         }
         
         @media (max-width: 768px) {
@@ -519,14 +515,11 @@
             header { padding: 1rem 0.5rem; }
             header h1 { font-size: 1.8em; }
             header p { font-size: 0.9em; }
-            .tabs-container { 
-                grid-template-columns: repeat(3, 1fr); /* Enforce 3 columns as requested */
-                justify-content: start;
-            }
+            /* Tab buttons will automatically adjust due to flexbox rules above */
             .tab-button {
                 font-size: 0.8em;
                 padding: 0.6rem 0.5rem;
-                min-height: 44px; /* Explicit minimum touch target for smaller screens */
+                min-height: 44px;
             }
             .form-row { grid-template-columns: 1fr; }
             .download-buttons { grid-template-columns: 1fr; }
@@ -553,7 +546,7 @@
 
     <main class="container">
         <div class="controls" role="region" aria-label="QR Code Generator Controls">
-            <div class="tabs-container" role="tablist" aria-label="QR Code Types" data-mobile-grid="3">
+            <div class="tabs-container" role="tablist" aria-label="QR Code Types">
                 <button class="tab-button active" role="tab" aria-selected="true" id="tab-text" data-tab-index="0" data-tab-name="text" onclick="App.openTab(event, 'text')"><i class="fas fa-font" aria-hidden="true"></i> Text/URL</button>
                 <button class="tab-button" role="tab" aria-selected="false" id="tab-wifi" data-tab-index="1" data-tab-name="wifi" onclick="App.openTab(event, 'wifi')"><i class="fas fa-wifi" aria-hidden="true"></i> WiFi</button>
                 <button class="tab-button" role="tab" aria-selected="false" id="tab-vcard" data-tab-index="2" data-tab-name="vcard" onclick="App.openTab(event, 'vcard')"><i class="fas fa-address-card" aria-hidden="true"></i> vCard</button>
@@ -620,8 +613,7 @@
                             <div class="gradient-options">
                                 <label for="dot-gradient-type">Type:</label>
                                 <select class="qr-input" id="dot-gradient-type" aria-label="Dot gradient type">
-                                    <option value="radial">Radial</option>
-                                    <option value="linear">Linear</option>
+                                    <option value="radial">Radial</option><option value="linear">Linear</option>
                                 </select>
                                 <label for="dot-gradient-rotation">Rotation:</label>
                                 <input type="range" class="qr-input" id="dot-gradient-rotation" min="0" max="360" value="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="360" aria-label="Dot gradient rotation">
@@ -822,7 +814,6 @@
         typingAnimationInterval: null,
         maxHistoryItems: 50,
 
-        // Moved loadInitialContent definition before init
         loadInitialContent() {
             const content = {
                 wifi: `<div class="form-group"><label for="wifi-ssid">Network Name (SSID)</label><input type="text" class="qr-input" id="wifi-ssid" placeholder="MyWiFiNetwork"><span class="validation-message" role="alert" aria-live="polite">SSID cannot be empty.</span></div><div class="form-group"><label for="wifi-password">Password</label><input type="password" class="qr-input" id="wifi-password" placeholder="Password (leave blank for open network)"></div><div class="form-group"><label for="wifi-encryption">Encryption</label><select class="qr-input" id="wifi-encryption"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">No Encryption</option></select></div>`,
@@ -852,7 +843,7 @@
             this.loadTheme();
             this.setupQRCode();
             this.attachEventListeners();
-            this.loadInitialContent(); // This method is now defined earlier
+            this.loadInitialContent();
             this.loadHistory();
             this.applyInitialSettings();
             this.startTypingAnimation('text-input', this.placeholderTexts.text);
@@ -1566,7 +1557,7 @@
             this.closeAllModals();
             const modal = document.getElementById(modalId);
             modal.classList.add('show');
-            document.body.classList.add('modal-open');
+            document.body.classList.add('modal-open'); // Prevent background scroll
             modal.focus();
 
             if (modalId === 'scanner-modal') this.startScanner();
@@ -1574,7 +1565,7 @@
 
         closeAllModals() {
             document.querySelectorAll('.modal-overlay.show').forEach(m => m.classList.remove('show'));
-            document.body.classList.remove('modal-open');
+            document.body.classList.remove('modal-open'); // Re-enable background scroll
             this.stopScanner();
             if (this.lastFocusedElement) {
                 this.lastFocusedElement.focus();
@@ -2117,7 +2108,6 @@
 
     document.addEventListener('DOMContentLoaded', () => App.init());
 
-    document.body.classList.add('modal-open'); 
     </script>
 </body>
 </html>
