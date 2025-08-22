@@ -200,47 +200,33 @@
         }
         .output { position: sticky; top: 2rem; }
 
-        /* 6. ENHANCED TABS (Using Flexbox for better mobile scrollability) */
+        /* 6. ENHANCED TABS (Strict 3-column grid for all screens) */
         .tabs-container { 
-            display: flex; /* Changed to flexbox */
+            display: grid; /* Changed to grid */
+            grid-template-columns: repeat(3, 1fr); /* Enforce 3 columns across all screens */
             gap: 0.5rem; 
             border-bottom: 1px solid var(--color-border); 
             padding-bottom: 1.5rem; 
             margin-bottom: 1.5rem; 
-            overflow-x: auto; /* Enable horizontal scrolling */
-            -webkit-overflow-scrolling: touch;
-            scroll-snap-type: x mandatory; /* For smoother scroll experience */
-            scrollbar-width: none; /* Hide scrollbar for Firefox */
+            /* Removed overflow-x: auto and scroll-related properties for strict grid */
         }
-        .tabs-container::-webkit-scrollbar { display: none; } /* Hide scrollbar for Webkit browsers */
 
         .tab-button {
-            flex-shrink: 0; /* Prevent buttons from shrinking */
-            /* Default width: try to show about 3 on mobile, then let min-width handle it */
-            width: calc(33.333% - (0.5rem * 2 / 3)); /* Calculate for 3 columns including gap */
-            min-width: 120px; /* Minimum sensible width for a tab */
-
+            /* No flex-shrink, width, min-width, scroll-snap-align needed for grid items */
             display: flex; align-items: center; justify-content: center; gap: 0.5rem; 
             padding: 0.6rem 0.8rem;
             min-height: var(--touch-target-min-size);
             box-sizing: border-box;
             cursor: pointer; border: 1px solid transparent; background: transparent; color: var(--color-text-muted);
             border-radius: var(--border-radius); transition: all 0.2s ease;
-            font-size: 0.9em; font-weight: 600; white-space: nowrap;
-            scroll-snap-align: start; /* Align tabs to the start of the scroll container */
+            font-size: 0.9em; font-weight: 600; white-space: nowrap; /* Keep text on single line */
+            text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+            overflow: hidden; /* Hide overflowing text */
         }
         .tab-button:hover { background-color: rgba(255, 255, 255, 0.05); color: var(--color-text); }
         .tab-button.active {
             background: var(--color-primary); color: white; border-color: var(--color-primary);
             box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transform: translateY(-2px);
-        }
-        /* Override default tab button width for larger screens to let them grow */
-        @media (min-width: 769px) {
-            .tab-button {
-                width: auto; /* Let buttons take their natural width */
-                flex-grow: 1; /* Allow them to grow to fill space if there are few tabs */
-                max-width: 180px; /* Optional: cap max width to prevent overly wide tabs */
-            }
         }
 
         .tabs-content-viewport { overflow: hidden; position: relative; min-height: 280px; }
@@ -515,7 +501,6 @@
             header { padding: 1rem 0.5rem; }
             header h1 { font-size: 1.8em; }
             header p { font-size: 0.9em; }
-            /* Tab buttons will automatically adjust due to flexbox rules above */
             .tab-button {
                 font-size: 0.8em;
                 padding: 0.6rem 0.5rem;
