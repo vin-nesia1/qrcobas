@@ -827,16 +827,21 @@
             this.generateQrCode();
         },
         setupQRCode() {
-            this.qrCode = new QRCodeStyling({
-                width: 300, height: 300, data: "https://qr.vinnesia.my.id",
-                dotsOptions: { color: "#3b82f6", type: "rounded" },
-                backgroundOptions: { color: "#0d0d1a" },
-                imageOptions: { crossOrigin: "anonymous", margin: 8, imageSize: 0.4 },
-                cornersSquareOptions: { color: "#3b82f6", type: "square" },
-                cornersDotOptions: { color: "#3b82f6", type: "dot" },
-                qrOptions: { errorCorrectionLevel: 'H' }
-            });
-            this.qrCode.append(document.getElementById("qr-code"));
+            // Check if qrCode is already initialized to avoid re-appending
+            if (this.qrCode) {
+                this.qrCode.clear();
+            } else {
+                this.qrCode = new QRCodeStyling({
+                    width: 300, height: 300, data: "https://qr.vinnesia.my.id",
+                    dotsOptions: { color: "#3b82f6", type: "rounded" },
+                    backgroundOptions: { color: "#0d0d1a" },
+                    imageOptions: { crossOrigin: "anonymous", margin: 8, imageSize: 0.4 },
+                    cornersSquareOptions: { color: "#3b82f6", type: "square" },
+                    cornersDotOptions: { color: "#3b82f6", type: "dot" },
+                    qrOptions: { errorCorrectionLevel: 'H' }
+                });
+                this.qrCode.append(document.getElementById("qr-code"));
+            }
         },
         attachEventListeners() {
             document.querySelectorAll('.qr-input').forEach(input => {
