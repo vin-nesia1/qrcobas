@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth transition-colors duration-500" data-theme="dark">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -86,59 +86,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
     <style>
-        /* Theme Variables */
-        :root {
-            --color-background: #121212;
-            --color-surface: #1e1e1e;
-            --color-primary: #8A2BE2;
-            --color-secondary: #FFD700;
-            --color-text: #EAEAEA;
-            --color-text-muted: #A0A0A0;
-            --color-border: #333333;
-            --color-action: #00897B;
-        }
-        [data-theme="light"] {
-            --color-background: #f0f0f0;
-            --color-surface: #ffffff;
-            --color-primary: #6A1B9A;
-            --color-secondary: #FFA000;
-            --color-text: #333333;
-            --color-text-muted: #666666;
-            --color-border: #dddddd;
-            --color-action: #00796B;
-        }
+        /* Fixed Dark Theme */
         body {
-            background: linear-gradient(135deg, var(--color-background), #1a1a1a);
-            color: var(--color-text);
-            transition: background-color 0.5s ease, color 0.5s ease;
+            background: linear-gradient(135deg, #121212, #1a1a1a);
+            color: #EAEAEA;
         }
         .controls, .output {
-            background: rgba(var(--color-surface), 0.9);
-            border-color: var(--color-border);
+            background: rgba(30,30,30,0.9);
+            border-color: #333333;
             backdrop-filter: blur(10px);
         }
         .tab-button {
-            color: var(--color-text-muted);
+            color: #A0A0A0;
             transition: all 0.3s ease;
         }
         .tab-button:hover {
-            color: var(--color-text);
-            box-shadow: 0 0 10px var(--color-secondary);
+            color: #EAEAEA;
+            box-shadow: 0 0 10px #FFD700;
         }
         .tab-button.active {
-            color: var(--color-secondary);
-            border-bottom: 3px solid var(--color-secondary);
+            color: #FFD700;
+            border-bottom: 3px solid #FFD700;
             background: rgba(255, 215, 0, 0.1);
         }
         .form-group input, .form-group textarea, .form-group select {
             background: rgba(44,44,44,0.5);
             backdrop-filter: blur(10px);
-            border-color: var(--color-border);
-            color: var(--color-text);
+            border-color: #333333;
+            color: #EAEAEA;
             transition: all 0.3s ease;
         }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-            box-shadow: 0 0 10px var(--color-primary);
+            box-shadow: 0 0 10px #8A2BE2;
         }
         /* Canggih Animations */
         .fade-in {
@@ -150,7 +129,7 @@
         }
         .tab-button:hover {
             transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 0 15px var(--color-secondary);
+            box-shadow: 0 0 15px #FFD700;
         }
         .btn:hover {
             transform: scale(1.05);
@@ -173,7 +152,7 @@
         }
         #qr-code-container:hover {
             transform: scale(1.1) rotate(2deg);
-            box-shadow: 0 0 25px var(--color-primary);
+            box-shadow: 0 0 25px #8A2BE2;
         }
         #qr-code canvas, #qr-code svg {
             width: 100% !important;
@@ -183,7 +162,7 @@
         /* Loading Spinner Premium */
         .loading-spinner {
             border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid var(--color-secondary);
+            border-top: 4px solid #FFD700;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -214,8 +193,8 @@
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%) translateY(-10px);
-            background: var(--color-surface);
-            color: var(--color-text);
+            background: #1e1e1e;
+            color: #EAEAEA;
             padding: 5px 10px;
             border-radius: 4px;
             white-space: nowrap;
@@ -241,7 +220,6 @@
             VIN NESIA
         </h1>
         <p class="text-text-muted text-lg mt-2">QR Code Generator</p>
-        <button id="theme-toggle" class="absolute top-4 right-4 bg-action text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition-all focus:ring-2 focus:ring-primary">Toggle Theme</button>
     </header>
 
     <main class="container mx-auto px-4 py-8 flex-1 flex flex-col lg:flex-row gap-8">
@@ -548,22 +526,6 @@
 
             qrCode.append(document.getElementById("qr-code"));
             console.log('QR Code initialized');
-
-            // Toggle Theme with GSAP Animation
-            document.getElementById('theme-toggle').addEventListener('click', () => {
-                const html = document.documentElement;
-                const newTheme = html.dataset.theme === 'dark' ? 'light' : 'dark';
-                html.dataset.theme = newTheme;
-                gsap.to('body', { 
-                    backgroundColor: newTheme === 'dark' ? '#121212' : '#f0f0f0', 
-                    duration: 0.5, 
-                    ease: 'power2.out' 
-                });
-                gsap.to('.controls, .output', { 
-                    backgroundColor: newTheme === 'dark' ? 'rgba(30,30,30,0.9)' : 'rgba(255,255,255,0.9)', 
-                    duration: 0.5 
-                });
-            });
 
             window.openTab = function(evt, tabName) {
                 gsap.to('.tab-content:not(.hidden)', { 
