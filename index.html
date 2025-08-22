@@ -49,7 +49,7 @@
             --color-border: rgba(255, 255, 255, 0.1);
             --transition-speed: 0.4s;
             --border-radius: 12px;
-            --touch-target-min-size: 48px; /* Increased touch target size */
+            --touch-target-min-size: 48px;
             --glass-blur: 16px;
             --spring-easing: cubic-bezier(0.34, 1.56, 0.64, 1);
             --perspective: 1000px;
@@ -74,6 +74,7 @@
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
         @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); } 50% { box-shadow: 0 0 10px 5px rgba(59, 130, 246, 0.1); } }
 
+        /* Mobile-first base styles */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -139,7 +140,7 @@
             max-width: 600px; 
             margin-left: auto; 
             margin-right: auto; 
-            font-size: clamp(0.85rem, 2.5vw, 1rem); /* Fluid typography */
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
             line-height: 1.4;
         }
         .logo-img { 
@@ -163,14 +164,16 @@
         }
 
         .tabs-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Adaptive grid for tabs */
-            gap: 0.3rem;
+            display: flex; /* Menggunakan flexbox untuk scrollable tabs */
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             padding-bottom: 1rem;
             margin-bottom: 1rem;
             border-bottom: 1px solid var(--color-border);
+            gap: 0.3rem;
         }
         .tab-button {
+            flex-shrink: 0; /* Mencegah tab mengecil */
             display: flex;
             flex-direction: column;
             align-items: center; 
@@ -178,6 +181,7 @@
             gap: 2px;
             padding: 0.5rem 0.2rem;
             min-height: var(--touch-target-min-size);
+            min-width: 80px;
             box-sizing: border-box; 
             cursor: pointer; 
             border: 1px solid transparent; 
@@ -214,7 +218,7 @@
             border: 1px solid var(--color-border);
             border-radius: 8px; 
             box-sizing: border-box; 
-            font-size: 1rem;
+            font-size: 1rem; /* Mencegah auto-zoom di iOS */
             background-color: rgba(0,0,0,0.3); 
             color: var(--color-text);
             transition: all 0.2s ease;
@@ -255,12 +259,23 @@
         
         .collapsible-header { font-size: 1rem; padding: 0.8rem 0; }
         .design-grid { grid-template-columns: 1fr; gap: 0.8rem; }
-        .templates-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+        .templates-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; } /* Compact layout untuk mobile */
         .template-btn { padding: 0.5rem; aspect-ratio: 1; }
         .template-btn i { font-size: 1.5rem; }
         .template-btn span { font-size: 0.7rem; }
 
-        .modal-content { width: 95%; max-height: 95vh; padding: 1rem; margin: auto; }
+        .modal-content { 
+            width: 95%; 
+            max-height: 95vh; 
+            padding: 1rem; 
+            margin: auto; 
+        }
+        .modal-overlay.show .modal-content {
+            width: 95%;
+            height: 95vh;
+            max-height: none;
+            overflow-y: auto;
+        }
         .modal-header h2 { font-size: 1.2rem; }
         #qr-scanner-container { max-width: 100%; aspect-ratio: 1; }
 
@@ -292,6 +307,7 @@
             border-color: var(--color-primary);
         }
 
+        /* Desktop and Tablet Overrides */
         @media (min-width: 769px) {
             .container { margin: 2rem auto; }
             .controls, .output, .modal-content { padding: 2rem; }
@@ -303,7 +319,12 @@
             }
             header p { font-size: clamp(1rem, 2.8vw, 1.1rem); line-height: 1.6; }
             .logo-img { height: 50px; }
-            .tabs-container { grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+            .tabs-container { 
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.5rem; 
+                overflow-x: unset;
+            }
             .tab-button {
                 flex-direction: row;
                 font-size: 0.8rem;
@@ -318,12 +339,16 @@
             .design-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
             .templates-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
             .toast-notification { bottom: 20px; right: 20px; left: auto; width: auto; }
+            .modal-overlay.show .modal-content {
+                width: 95%;
+                height: auto;
+            }
         }
         
         @media (min-width: 992px) {
             main { grid-template-columns: 2fr 1fr; }
             .output { position: sticky; top: 2rem; }
-            .tabs-container { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); } /* Optimized for larger screens */
+            .tabs-container { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
             .tab-button { font-size: 0.9rem; }
         }
 
@@ -653,7 +678,6 @@
     </div>
     
     <script>
-    // Minified and optimized JavaScript
     const App = {
         qrCode: null,
         html5QrCode: null,
