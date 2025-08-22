@@ -5,24 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="h4xG5XuTjoTcM8fRui_yj0Dzy2go3ZTa3RfZBGwZmBg" />
     
-    <!-- SEO Meta Tags -->
     <title>Advanced QR Code Generator - VIN NESIA</title>
     <meta name="description" content="A modern, real-time QR Code Generator. Create custom QR Codes with your logo for free, supporting Text, URL, WiFi, vCard, and more with a sleek, animated interface.">
-    <meta name="keywords" content="qr code generator, real-time qr code, modern qr generator, vin nesia, animated qr code tool, qr code with logo">
+    <meta name="keywords" content="qr code generator, real-time qr code, modern qr generator, vin nesia, animated qr code tool, qr code with logo, professional vcard qr, event qr code">
     <meta name="author" content="VIN NESIA">
     <link rel="canonical" href="https://qr.vinnesia.my.id">
     <link rel="icon" type="image/png" href="/favicon-v1.png" sizes="48x48">
     
-    <!-- Google Fonts & Font Awesome for Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- QR Code Styling Library -->
     <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
     
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6MQ8QLENDT"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -173,6 +169,10 @@
         .form-group textarea { resize: vertical; min-height: 100px; }
         .form-group input[type="color"] { padding: 0.2rem; height: 40px; cursor: pointer; }
         .form-group input[type="file"] { padding: 0.4rem; }
+        .form-row { display: flex; gap: 1rem; }
+        .form-row .form-group { flex: 1; }
+        .form-group-checkbox { display: flex; align-items: center; gap: 0.5rem; }
+        .form-group-checkbox input { width: auto; }
 
         /* File Upload Warning */
         .file-warning { background-color: rgba(255, 215, 0, 0.1); color: #FFD700; padding: 0.8rem; border-left: 3px solid #FFD700; border-radius: 6px; font-size: 0.9em; margin-top: 10px; }
@@ -245,6 +245,7 @@
         @media (max-width: 576px) {
             header h1 { font-size: 2.2em; }
             .download-buttons { flex-direction: column; }
+            .form-row { flex-direction: column; gap: 0; }
         }
     </style>
 </head>
@@ -259,7 +260,6 @@
     </header>
 
     <main class="container">
-        <!-- Bagian Kontrol (Input Pengguna) -->
         <div class="controls">
             <div class="tabs-container">
                 <button class="tab-button active" onclick="openTab(event, 'text')" title="Text/URL"><i class="fas fa-font"></i></button>
@@ -277,22 +277,66 @@
             </div>
 
             <div class="tab-content-wrapper">
-                <!-- Konten untuk setiap tab -->
                 <div id="text" class="tab-content active"><div class="form-group"><label for="text-input">Your Text or URL</label><textarea class="qr-input" id="text-input" placeholder="e.g., https://www.vinnesia.my.id"></textarea></div></div>
-                <div id="wifi" class="tab-content"><div class="form-group"><label for="wifi-ssid">Network Name (SSID)</label><input type="text" class="qr-input" id="wifi-ssid" placeholder="MyWiFiNetwork"></div><div class="form-group"><label for="wifi-password">Password</label><input type="text" class="qr-input" id="wifi-password" placeholder="SecretPassword"></div><div class="form-group"><label for="wifi-encryption">Encryption</label><select class="qr-input" id="wifi-encryption"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">None</option></select></div></div>
-                <div id="vcard" class="tab-content"><div class="form-group"><label for="vcard-name">Full Name</label><input type="text" class="qr-input" id="vcard-name"></div><div class="form-group"><label for="vcard-phone">Phone</label><input type="tel" class="qr-input" id="vcard-phone"></div><div class="form-group"><label for="vcard-email">Email</label><input type="email" class="qr-input" id="vcard-email"></div><div class="form-group"><label for="vcard-org">Organization</label><input type="text" class="qr-input" id="vcard-org"></div><div class="form-group"><label for="vcard-url">Website</label><input type="url" class="qr-input" id="vcard-url"></div></div>
+                
+                <div id="wifi" class="tab-content">
+                    <div class="form-group"><label for="wifi-ssid">Network Name (SSID)</label><input type="text" class="qr-input" id="wifi-ssid" placeholder="MyWiFiNetwork"></div>
+                    <div class="form-group"><label for="wifi-password">Password</label><input type="text" class="qr-input" id="wifi-password" placeholder="SecretPassword"></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="wifi-encryption">Encryption</label>
+                            <select class="qr-input" id="wifi-encryption"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">None</option></select>
+                        </div>
+                         <div class="form-group">
+                            <label>&nbsp;</label>
+                            <div class="form-group-checkbox">
+                                <input type="checkbox" class="qr-input" id="wifi-hidden">
+                                <label for="wifi-hidden">Hidden Network</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="vcard" class="tab-content">
+                    <div class="form-row">
+                        <div class="form-group"><label for="vcard-name">Full Name</label><input type="text" class="qr-input" id="vcard-name" placeholder="John Doe"></div>
+                        <div class="form-group"><label for="vcard-title">Title / Position</label><input type="text" class="qr-input" id="vcard-title" placeholder="CEO"></div>
+                    </div>
+                    <div class="form-group"><label for="vcard-org">Organization</label><input type="text" class="qr-input" id="vcard-org" placeholder="VIN NESIA"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label for="vcard-phone">Phone</label><input type="tel" class="qr-input" id="vcard-phone" placeholder="+62 812 3456 7890"></div>
+                        <div class="form-group"><label for="vcard-email">Email</label><input type="email" class="qr-input" id="vcard-email" placeholder="email@example.com"></div>
+                    </div>
+                    <div class="form-group"><label for="vcard-url">Website</label><input type="url" class="qr-input" id="vcard-url" placeholder="https://www.vinnesia.my.id"></div>
+                    <div class="form-group"><label for="vcard-street">Street Address</label><input type="text" class="qr-input" id="vcard-street" placeholder="123 Main Street"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label for="vcard-city">City</label><input type="text" class="qr-input" id="vcard-city" placeholder="Jakarta"></div>
+                        <div class="form-group"><label for="vcard-zip">ZIP Code</label><input type="text" class="qr-input" id="vcard-zip" placeholder="12345"></div>
+                    </div>
+                    <div class="form-group"><label for="vcard-country">Country</label><input type="text" class="qr-input" id="vcard-country" placeholder="Indonesia"></div>
+                </div>
+
                 <div id="email" class="tab-content"><div class="form-group"><label for="email-to">Recipient Email</label><input type="email" class="qr-input" id="email-to" placeholder="recipient@example.com"></div><div class="form-group"><label for="email-subject">Subject</label><input type="text" class="qr-input" id="email-subject"></div><div class="form-group"><label for="email-body">Message</label><textarea class="qr-input" id="email-body"></textarea></div></div>
                 <div id="sms" class="tab-content"><div class="form-group"><label for="sms-to">Phone Number</label><input type="tel" class="qr-input" id="sms-to" placeholder="+1234567890"></div><div class="form-group"><label for="sms-body">Message</label><textarea class="qr-input" id="sms-body"></textarea></div></div>
                 <div id="geo" class="tab-content"><div class="form-group"><label for="geo-lat">Latitude</label><input type="text" class="qr-input" id="geo-lat" placeholder="40.7128"></div><div class="form-group"><label for="geo-lon">Longitude</label><input type="text" class="qr-input" id="geo-lon" placeholder="-74.0060"></div></div>
                 <div id="file" class="tab-content"><div class="form-group"><label for="file-input">Upload File</label><input type="file" id="file-input"><div class="file-warning"><strong>Warning:</strong> For very small files (< 2KB) only. Large files will create unscannable QR codes. For larger files, upload them to a cloud service and create a QR code from the share link.</div></div></div>
-                <div id="event" class="tab-content"><div class="form-group"><label for="event-summary">Event Title</label><input type="text" class="qr-input" id="event-summary" placeholder="My Event"></div><div class="form-group"><label for="event-start">Start Date (YYYY-MM-DDTHH:MM)</label><input type="text" class="qr-input" id="event-start" placeholder="2023-12-31T23:59"></div><div class="form-group"><label for="event-end">End Date (YYYY-MM-DDTHH:MM)</label><input type="text" class="qr-input" id="event-end" placeholder="2024-01-01T00:01"></div><div class="form-group"><label for="event-location">Location</label><input type="text" class="qr-input" id="event-location" placeholder="Jakarta, Indonesia"></div><div class="form-group"><label for="event-description">Description</label><textarea class="qr-input" id="event-description" placeholder="Event details..."></textarea></div></div>
+                
+                <div id="event" class="tab-content">
+                    <div class="form-group"><label for="event-summary">Event Title</label><input type="text" class="qr-input" id="event-summary" placeholder="My Awesome Event"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label for="event-start">Start Date (YYYY-MM-DDTHH:MM)</label><input type="text" class="qr-input" id="event-start" placeholder="2025-12-31T20:00"></div>
+                        <div class="form-group"><label for="event-end">End Date (YYYY-MM-DDTHH:MM)</label><input type="text" class="qr-input" id="event-end" placeholder="2025-12-31T23:59"></div>
+                    </div>
+                    <div class="form-group"><label for="event-location">Location</label><input type="text" class="qr-input" id="event-location" placeholder="Jakarta, Indonesia"></div>
+                    <div class="form-group"><label for="event-description">Description</label><textarea class="qr-input" id="event-description" placeholder="Details about the event..."></textarea></div>
+                </div>
+
                 <div id="crypto" class="tab-content"><div class="form-group"><label for="crypto-type">Crypto Type</label><select class="qr-input" id="crypto-type"><option value="bitcoin">Bitcoin</option><option value="ethereum">Ethereum</option><option value="litecoin">Litecoin</option></select></div><div class="form-group"><label for="crypto-address">Wallet Address</label><input type="text" class="qr-input" id="crypto-address" placeholder="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"></div><div class="form-group"><label for="crypto-amount">Amount</label><input type="text" class="qr-input" id="crypto-amount" placeholder="0.001"></div><div class="form-group"><label for="crypto-label">Label</label><input type="text" class="qr-input" id="crypto-label" placeholder="Donation"></div></div>
                 <div id="phone" class="tab-content"><div class="form-group"><label for="phone-number">Phone Number</label><input type="tel" class="qr-input" id="phone-number" placeholder="+6281234567890"></div></div>
                 <div id="whatsapp" class="tab-content"><div class="form-group"><label for="whatsapp-number">Phone Number</label><input type="tel" class="qr-input" id="whatsapp-number" placeholder="+6281234567890"></div><div class="form-group"><label for="whatsapp-message">Pre-filled Message</label><textarea class="qr-input" id="whatsapp-message" placeholder="Hello!"></textarea></div></div>
                 <div id="social" class="tab-content"><div class="form-group"><label for="social-platform">Platform</label><select class="qr-input" id="social-platform"><option value="instagram">Instagram</option><option value="telegram">Telegram</option><option value="tiktok">TikTok</option></select></div><div class="form-group"><label for="social-username">Username</label><input type="text" class="qr-input" id="social-username" placeholder="username"></div></div>
             </div>
 
-            <!-- Opsi Desain QR Code -->
             <div class="design-options">
                 <h3><i class="fas fa-palette"></i> Design Options</h3>
                 <div class="design-grid">
@@ -304,7 +348,6 @@
             </div>
         </div>
 
-        <!-- Bagian Output (Hasil QR Code) -->
         <div class="output">
             <div id="qr-code-container">
                 <div id="qr-code"></div>
@@ -331,14 +374,12 @@
     </footer>
 
     <script>
-        // Menunggu hingga seluruh halaman HTML dimuat sebelum menjalankan script
         document.addEventListener('DOMContentLoaded', () => {
             let currentTab = 'text';
             let logoImage = null;
             let fileDataUrl = null;
-            let debounceTimer; // Timer untuk menunda eksekusi agar tidak terlalu sering
+            let debounceTimer;
 
-            // Inisialisasi library QR Code Styling
             const qrCode = new QRCodeStyling({
                 width: 300,
                 height: 300,
@@ -352,20 +393,18 @@
 
             qrCode.append(document.getElementById("qr-code"));
             
-            // Membuat QR Code default saat halaman pertama kali dimuat
             generateQrCode();
 
-            // Fungsi untuk berpindah tab
             window.openTab = function(evt, tabName) {
                 currentTab = tabName;
                 document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
                 document.querySelectorAll('.tab-button').forEach(tb => tb.classList.remove('active'));
                 document.getElementById(tabName).classList.add('active');
                 evt.currentTarget.classList.add('active');
-                generateQrCode(); // Perbarui QR code saat tab diganti
+                generateQrCode();
             };
 
-            // Fungsi untuk mengambil data dari input sesuai tab yang aktif
+            // === [UPDATED] getQrData Function ===
             function getQrData() {
                 let data = "";
                 switch (currentTab) {
@@ -374,15 +413,26 @@
                         const ssid = document.getElementById('wifi-ssid').value;
                         const password = document.getElementById('wifi-password').value;
                         const encryption = document.getElementById('wifi-encryption').value;
-                        if (ssid) data = `WIFI:T:${encryption};S:${ssid};P:${password};;`;
+                        const hidden = document.getElementById('wifi-hidden').checked;
+                        if (ssid) {
+                            data = `WIFI:T:${encryption};S:${ssid};P:${password};${hidden ? 'H:true;' : ''};`;
+                        }
                         break;
                     case 'vcard':
-                        const name = document.getElementById('vcard-name').value;
-                        const phone = document.getElementById('vcard-phone').value;
-                        const email = document.getElementById('vcard-email').value;
-                        const org = document.getElementById('vcard-org').value;
-                        const url = document.getElementById('vcard-url').value;
-                        if (name) data = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${org}\nURL:${url}\nEND:VCARD`;
+                        const vcard = [
+                            'BEGIN:VCARD',
+                            'VERSION:3.0',
+                            `FN:${document.getElementById('vcard-name').value}`,
+                            `ORG:${document.getElementById('vcard-org').value}`,
+                            `TITLE:${document.getElementById('vcard-title').value}`,
+                            `TEL;TYPE=WORK,VOICE:${document.getElementById('vcard-phone').value}`,
+                            `EMAIL:${document.getElementById('vcard-email').value}`,
+                            `URL:${document.getElementById('vcard-url').value}`,
+                            `ADR;TYPE=WORK:;;${document.getElementById('vcard-street').value};${document.getElementById('vcard-city').value};;${document.getElementById('vcard-zip').value};${document.getElementById('vcard-country').value}`,
+                            'END:VCARD'
+                        ];
+                        // Only join non-empty, valid fields to save space
+                        data = vcard.filter(line => !line.endsWith(':') && !line.endsWith(';;;;;;')).join('\n');
                         break;
                     case 'email':
                         const to = document.getElementById('email-to').value;
@@ -403,12 +453,30 @@
                     case 'file': data = fileDataUrl || " "; break;
                     case 'event':
                         const summary = document.getElementById('event-summary').value;
-                        const start = document.getElementById('event-start').value.replace(/[-:]/g, '');
-                        const end = document.getElementById('event-end').value.replace(/[-:]/g, '');
+                        // Function to format date into YYYYMMDDTHHMMSS
+                        const formatVEventDate = (dateString) => dateString.replace(/[-:T]/g, '') + '00';
+                        const start = formatVEventDate(document.getElementById('event-start').value);
+                        const end = formatVEventDate(document.getElementById('event-end').value);
                         const location = document.getElementById('event-location').value;
                         const description = document.getElementById('event-description').value;
+                        
                         if (summary && start && end) {
-                            data = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${summary}\nDTSTART:${start}\nDTEND:${end}\nLOCATION:${location}\nDESCRIPTION:${description}\nEND:VEVENT\nEND:VCALENDAR`;
+                            const timestamp = new Date().toISOString().replace(/[-:.]/g, '').slice(0, 15) + 'Z';
+                            const eventData = [
+                                'BEGIN:VCALENDAR',
+                                'VERSION:2.0',
+                                'BEGIN:VEVENT',
+                                `UID:${timestamp}@vinnesia.my.id`, // Professional UID
+                                `DTSTAMP:${timestamp}`,             // Professional Timestamp
+                                `SUMMARY:${summary}`,
+                                `DTSTART:${start}`,
+                                `DTEND:${end}`,
+                                `LOCATION:${location}`,
+                                `DESCRIPTION:${description}`,
+                                'END:VEVENT',
+                                'END:VCALENDAR'
+                            ];
+                            data = eventData.filter(line => !line.endsWith(':')).join('\n');
                         }
                         break;
                     case 'crypto':
@@ -425,7 +493,7 @@
                     case 'whatsapp':
                         const whatsappNumber = document.getElementById('whatsapp-number').value;
                         const whatsappMessage = document.getElementById('whatsapp-message').value;
-                        if (whatsappNumber) data = `https://wa.me/${whatsappNumber.replace('+', '')}${whatsappMessage ? `?text=${encodeURIComponent(whatsappMessage)}` : ''}`;
+                        if (whatsappNumber) data = `https://wa.me/${whatsappNumber.replace(/\+/g, '')}${whatsappMessage ? `?text=${encodeURIComponent(whatsappMessage)}` : ''}`;
                         break;
                     case 'social':
                         const platform = document.getElementById('social-platform').value;
@@ -437,10 +505,9 @@
                         }
                         break;
                 }
-                return data || " "; // Mengembalikan spasi jika data kosong agar QR tidak error
+                return data || " "; // Return a space if data is empty to prevent QR errors
             }
 
-            // Fungsi utama untuk memperbarui tampilan QR Code
             function generateQrCode() {
                 const data = getQrData();
                 const dotColor = document.getElementById('dot-color').value;
@@ -454,47 +521,41 @@
                     data: data,
                     image: logoImage,
                     dotsOptions: { color: dotColor, type: dotStyle },
-                    backgroundOptions: { color: "transparent" } // Dibuat transparan agar warna kontainer terlihat
+                    backgroundOptions: { color: "transparent" } // Transparent so container color is visible
                 });
             }
 
-            // *** FITUR UTAMA: GENERASI REAL-TIME ***
-            // Menambahkan event listener ke semua input yang relevan
             document.querySelectorAll('.qr-input').forEach(input => {
                 input.addEventListener('input', () => {
                     clearTimeout(debounceTimer);
-                    // Menunda pembaruan selama 250ms untuk performa yang lebih baik
                     debounceTimer = setTimeout(generateQrCode, 250); 
                 });
             });
 
-            // Event listener untuk upload logo
             document.getElementById('logo-upload').addEventListener('change', (e) => {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = (event) => {
                         logoImage = event.target.result;
-                        generateQrCode(); // Langsung perbarui setelah logo dipilih
+                        generateQrCode();
                     };
                     reader.readAsDataURL(file);
                 }
             });
 
-            // Event listener untuk upload file (untuk tab File)
             document.getElementById('file-input').addEventListener('change', (e) => {
                 const file = e.target.files[0];
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = (event) => {
                         fileDataUrl = event.target.result;
-                        generateQrCode(); // Langsung perbarui setelah file dipilih
+                        generateQrCode();
                     };
                     reader.readAsDataURL(file);
                 }
             });
 
-            // Event listener untuk tombol download
             document.getElementById('download-png').addEventListener('click', () => qrCode.download({ name: "vinnesia-qr", extension: "png" }));
             document.getElementById('download-svg').addEventListener('click', () => qrCode.download({ name: "vinnesia-qr", extension: "svg" }));
         });
