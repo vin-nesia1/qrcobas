@@ -134,7 +134,7 @@
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             box-shadow: 0 0 10px #8A2BE2;
         }
-        /* Canggih Animations */
+        /* Animations */
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
@@ -175,7 +175,7 @@
             height: auto !important;
             border-radius: 8px;
         }
-        /* Loading Spinner Premium */
+        /* Loading Spinner */
         .loading-spinner {
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-top: 4px solid #FFD700;
@@ -199,7 +199,7 @@
             60% { transform: translateX(-10px); }
             80% { transform: translateX(10px); }
         }
-        /* Tooltip Premium */
+        /* Tooltip */
         .tooltip {
             position: relative;
         }
@@ -241,33 +241,6 @@
             color: #FFD700;
             font-weight: bold;
         }
-        /* High-Contrast Mode */
-        .high-contrast .form-group input, .high-contrast .form-group textarea, .high-contrast .form-group select {
-            background: #000;
-            color: #FFFF00;
-            border-color: #FFFF00;
-        }
-        .high-contrast body {
-            background: #000;
-            color: #FFFF00;
-        }
-        .high-contrast .tab-button {
-            color: #FFFF00;
-            border-color: #FFFF00;
-        }
-        .high-contrast .tab-button.active {
-            border-bottom-color: #FFFF00;
-            background: rgba(255, 255, 0, 0.2);
-        }
-        .high-contrast .btn {
-            background: #000;
-            border-color: #FFFF00;
-            color: #FFFF00;
-        }
-        .high-contrast .controls, .high-contrast .output {
-            background: rgba(0, 0, 0, 0.9);
-            border-color: #FFFF00;
-        }
         /* Particles Container */
         #particles-js {
             position: absolute;
@@ -298,11 +271,11 @@
             border-radius: 8px;
             background: linear-gradient(45deg, #1e1e1e, #2a2a2a);
         }
-        /* Language Toggle */
-        .lang-toggle {
-            position: absolute;
-            top: 4rem;
-            right: 4rem;
+        /* Grid Layout for Mobile */
+        @media (max-width: 640px) {
+            .tabs-grid-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
     </style>
 </head>
@@ -313,18 +286,11 @@
             VIN NESIA
         </h1>
         <p class="text-text-muted text-lg mt-2">QR Code Generator</p>
-        <!-- Toggle High-Contrast Mode -->
-        <button id="high-contrast-toggle" class="absolute top-4 right-12 bg-action text-white px-4 py-2 rounded-md hover:bg-[#00695C] transition-all focus:ring-2 focus:ring-primary" aria-label="Toggle High-Contrast Mode">Toggle High-Contrast</button>
-        <!-- Language Toggle -->
-        <select id="language-toggle" class="lang-toggle p-2 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Select Language">
-            <option value="en">English</option>
-            <option value="id">Bahasa Indonesia</option>
-        </select>
     </header>
 
     <main class="container mx-auto px-4 py-8 flex-1 flex flex-col lg:flex-row gap-8">
         <section class="controls p-6 rounded-xl border border-border flex flex-col lg:flex-2 backdrop-blur-md">
-            <div class="tabs-grid-container grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mb-6">
+            <div class="tabs-grid-container grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-2 mb-6">
                 <button class="tab-button active px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'text')" aria-selected="true" tabindex="0">📝 Text/URL</button>
                 <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'wifi')" aria-selected="false" tabindex="0">📶 WiFi</button>
                 <button class="tab-button px-4 py-2 text-text-muted font-medium rounded-md border border-border hover:text-text hover:bg-surface transition-all" onclick="openTab(event, 'vcard')" aria-selected="false" tabindex="0">👤 vCard</button>
@@ -343,24 +309,24 @@
             </div>
 
             <div id="text" class="tab-content active fade-in">
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter your text or URL here" data-lang="Enter your text or URL here">
-                    <label for="text-input" class="block font-bold mb-2" data-lang="Your Text or URL">Your Text or URL</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your text or URL here">
+                    <label for="text-input" class="block font-bold mb-2">Your Text or URL</label>
                     <textarea id="text-input" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="e.g., https://www.vinnesia.my.id" aria-label="Text or URL input"></textarea>
                     <p id="text-error" class="text-red-500 text-sm hidden">Please enter a valid text or URL</p>
                 </div>
             </div>
             <div id="wifi" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter your WiFi network name" data-lang="Enter your WiFi network name">
-                    <label for="wifi-ssid" class="block font-bold mb-2" data-lang="Network Name (SSID)">Network Name (SSID)</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your WiFi network name">
+                    <label for="wifi-ssid" class="block font-bold mb-2">Network Name (SSID)</label>
                     <input type="text" id="wifi-ssid" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="MyWiFiNetwork" aria-label="WiFi SSID">
                     <p id="wifi-error" class="text-red-500 text-sm hidden">Please enter a valid SSID</p>
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter your WiFi password" data-lang="Enter your WiFi password">
-                    <label for="wifi-password" class="block font-bold mb-2" data-lang="Password">Password</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your WiFi password">
+                    <label for="wifi-password" class="block font-bold mb-2">Password</label>
                     <input type="text" id="wifi-password" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="SecretPassword" aria-label="WiFi Password">
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Select WiFi encryption type" data-lang="Select WiFi encryption type">
-                    <label for="wifi-encryption" class="block font-bold mb-2" data-lang="Encryption">Encryption</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Select WiFi encryption type">
+                    <label for="wifi-encryption" class="block font-bold mb-2">Encryption</label>
                     <select id="wifi-encryption" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="WiFi Encryption">
                         <option value="WPA">WPA/WPA2</option>
                         <option value="WEP">WEP</option>
@@ -369,198 +335,198 @@
                 </div>
             </div>
             <div id="vcard" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter your full name" data-lang="Enter your full name">
-                    <label for="vcard-name" class="block font-bold mb-2" data-lang="Full Name">Full Name</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your full name">
+                    <label for="vcard-name" class="block font-bold mb-2">Full Name</label>
                     <input type="text" id="vcard-name" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Full Name">
                     <p id="vcard-error" class="text-red-500 text-sm hidden">Please enter a valid name</p>
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter your phone number" data-lang="Enter your phone number">
-                    <label for="vcard-phone" class="block font-bold mb-2" data-lang="Phone">Phone</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your phone number">
+                    <label for="vcard-phone" class="block font-bold mb-2">Phone</label>
                     <input type="tel" id="vcard-phone" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Phone Number">
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter your email address" data-lang="Enter your email address">
-                    <label for="vcard-email" class="block font-bold mb-2" data-lang="Email">Email</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your email address">
+                    <label for="vcard-email" class="block font-bold mb-2">Email</label>
                     <input type="email" id="vcard-email" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Email Address">
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter your organization" data-lang="Enter your organization">
-                    <label for="vcard-org" class="block font-bold mb-2" data-lang="Organization">Organization</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your organization">
+                    <label for="vcard-org" class="block font-bold mb-2">Organization</label>
                     <input type="text" id="vcard-org" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Organization">
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter your website URL" data-lang="Enter your website URL">
-                    <label for="vcard-url" class="block font-bold mb-2" data-lang="Website">Website</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter your website URL">
+                    <label for="vcard-url" class="block font-bold mb-2">Website</label>
                     <input type="url" id="vcard-url" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Website URL">
                 </div>
             </div>
             <div id="email" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter recipient email" data-lang="Enter recipient email">
-                    <label for="email-to" class="block font-bold mb-2" data-lang="Recipient Email">Recipient Email</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter recipient email">
+                    <label for="email-to" class="block font-bold mb-2">Recipient Email</label>
                     <input type="email" id="email-to" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="recipient@example.com" aria-label="Recipient Email">
                     <p id="email-error" class="text-red-500 text-sm hidden">Please enter a valid email</p>
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter email subject" data-lang="Enter email subject">
-                    <label for="email-subject" class="block font-bold mb-2" data-lang="Subject">Subject</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter email subject">
+                    <label for="email-subject" class="block font-bold mb-2">Subject</label>
                     <input type="text" id="email-subject" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Email Subject">
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter email message" data-lang="Enter email message">
-                    <label for="email-body" class="block font-bold mb-2" data-lang="Message">Message</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter email message">
+                    <label for="email-body" class="block font-bold mb-2">Message</label>
                     <textarea id="email-body" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Email Message"></textarea>
                 </div>
             </div>
             <div id="sms" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter phone number for SMS" data-lang="Enter phone number for SMS">
-                    <label for="sms-to" class="block font-bold mb-2" data-lang="Phone Number">Phone Number</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter phone number for SMS">
+                    <label for="sms-to" class="block font-bold mb-2">Phone Number</label>
                     <input type="tel" id="sms-to" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="+1234567890" aria-label="SMS Phone Number">
                     <p id="sms-error" class="text-red-500 text-sm hidden">Please enter a valid phone number</p>
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter SMS message" data-lang="Enter SMS message">
-                    <label for="sms-body" class="block font-bold mb-2" data-lang="Message">Message</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter SMS message">
+                    <label for="sms-body" class="block font-bold mb-2">Message</label>
                     <textarea id="sms-body" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="SMS Message"></textarea>
                 </div>
             </div>
             <div id="geo" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter latitude coordinate" data-lang="Enter latitude coordinate">
-                    <label for="geo-lat" class="block font-bold mb-2" data-lang="Latitude">Latitude</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter latitude coordinate">
+                    <label for="geo-lat" class="block font-bold mb-2">Latitude</label>
                     <input type="text" id="geo-lat" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="40.7128" aria-label="Latitude">
                     <p id="geo-error" class="text-red-500 text-sm hidden">Please enter valid coordinates</p>
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter longitude coordinate" data-lang="Enter longitude coordinate">
-                    <label for="geo-lon" class="block font-bold mb-2" data-lang="Longitude">Longitude</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter longitude coordinate">
+                    <label for="geo-lon" class="block font-bold mb-2">Longitude</label>
                     <input type="text" id="geo-lon" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="-74.0060" aria-label="Longitude">
                 </div>
             </div>
             <div id="file" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Upload a small file (< 2KB)" data-lang="Upload a small file (< 2KB)">
-                    <label for="file-input" class="block font-bold mb-2" data-lang="Upload File">Upload File</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Upload a small file (< 2KB)">
+                    <label for="file-input" class="block font-bold mb-2">Upload File</label>
                     <input type="file" id="file-input" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="File Upload">
                     <div class="file-warning bg-yellow-500/10 text-secondary p-3 border border-secondary rounded-md text-sm mt-2">
-                        <strong data-lang="Warning">Warning:</strong> <span data-lang="For very small files">For very small files (< 2KB) only. Large files will create unscannable QR codes. For larger files, upload them to a cloud service and create a QR code from the share link.</span>
+                        <strong>Warning:</strong> For very small files (< 2KB) only. Large files will create unscannable QR codes. For larger files, upload them to a cloud service and create a QR code from the share link.
                     </div>
                 </div>
             </div>
             <div id="event" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter event title" data-lang="Enter event title">
-                    <label for="event-summary" class="block font-bold mb-2" data-lang="Event Title">Event Title</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter event title">
+                    <label for="event-summary" class="block font-bold mb-2">Event Title</label>
                     <input type="text" id="event-summary" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="My Event" aria-label="Event Title">
                     <p id="event-error" class="text-red-500 text-sm hidden">Please enter a valid event title</p>
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter start date (YYYY-MM-DDTHH:MM)" data-lang="Enter start date (YYYY-MM-DDTHH:MM)">
-                    <label for="event-start" class="block font-bold mb-2" data-lang="Start Date (YYYY-MM-DDTHH:MM)">Start Date (YYYY-MM-DDTHH:MM)</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter start date (YYYY-MM-DDTHH:MM)">
+                    <label for="event-start" class="block font-bold mb-2">Start Date (YYYY-MM-DDTHH:MM)</label>
                     <input type="text" id="event-start" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="2023-12-31T23:59" aria-label="Event Start Date">
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter end date (YYYY-MM-DDTHH:MM)" data-lang="Enter end date (YYYY-MM-DDTHH:MM)">
-                    <label for="event-end" class="block font-bold mb-2" data-lang="End Date (YYYY-MM-DDTHH:MM)">End Date (YYYY-MM-DDTHH:MM)</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter end date (YYYY-MM-DDTHH:MM)">
+                    <label for="event-end" class="block font-bold mb-2">End Date (YYYY-MM-DDTHH:MM)</label>
                     <input type="text" id="event-end" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="2024-01-01T00:01" aria-label="Event End Date">
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter event location" data-lang="Enter event location">
-                    <label for="event-location" class="block font-bold mb-2" data-lang="Location">Location</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter event location">
+                    <label for="event-location" class="block font-bold mb-2">Location</label>
                     <input type="text" id="event-location" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="Jakarta, Indonesia" aria-label="Event Location">
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter event description" data-lang="Enter event description">
-                    <label for="event-description" class="block font-bold mb-2" data-lang="Description">Description</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter event description">
+                    <label for="event-description" class="block font-bold mb-2">Description</label>
                     <textarea id="event-description" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="Event details..." aria-label="Event Description"></textarea>
                 </div>
             </div>
             <div id="crypto" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Select cryptocurrency type" data-lang="Select cryptocurrency type">
-                    <label for="crypto-type" class="block font-bold mb-2" data-lang="Crypto Type">Crypto Type</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Select cryptocurrency type">
+                    <label for="crypto-type" class="block font-bold mb-2">Crypto Type</label>
                     <select id="crypto-type" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Crypto Type">
                         <option value="bitcoin">Bitcoin</option>
                         <option value="ethereum">Ethereum</option>
                         <option value="litecoin">Litecoin</option>
                     </select>
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter wallet address" data-lang="Enter wallet address">
-                    <label for="crypto-address" class="block font-bold mb-2" data-lang="Wallet Address">Wallet Address</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter wallet address">
+                    <label for="crypto-address" class="block font-bold mb-2">Wallet Address</label>
                     <input type="text" id="crypto-address" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" aria-label="Crypto Wallet Address">
                     <p id="crypto-error" class="text-red-500 text-sm hidden">Please enter a valid wallet address</p>
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter amount (optional)" data-lang="Enter amount (optional)">
-                    <label for="crypto-amount" class="block font-bold mb-2" data-lang="Amount">Amount</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter amount (optional)">
+                    <label for="crypto-amount" class="block font-bold mb-2">Amount</label>
                     <input type="text" id="crypto-amount" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="0.001" aria-label="Crypto Amount">
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter label (optional)" data-lang="Enter label (optional)">
-                    <label for="crypto-label" class="block font-bold mb-2" data-lang="Label">Label</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter label (optional)">
+                    <label for="crypto-label" class="block font-bold mb-2">Label</label>
                     <input type="text" id="crypto-label" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="Donation" aria-label="Crypto Label">
                 </div>
             </div>
             <div id="phone" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter phone number" data-lang="Enter phone number">
-                    <label for="phone-number" class="block font-bold mb-2" data-lang="Phone Number">Phone Number</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter phone number">
+                    <label for="phone-number" class="block font-bold mb-2">Phone Number</label>
                     <input type="tel" id="phone-number" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="+6281234567890" aria-label="Phone Number">
                     <p id="phone-error" class="text-red-500 text-sm hidden">Please enter a valid phone number</p>
                 </div>
             </div>
             <div id="whatsapp" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter WhatsApp number" data-lang="Enter WhatsApp number">
-                    <label for="whatsapp-number" class="block font-bold mb-2" data-lang="Phone Number">Phone Number</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter WhatsApp number">
+                    <label for="whatsapp-number" class="block font-bold mb-2">Phone Number</label>
                     <input type="tel" id="whatsapp-number" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="+6281234567890" aria-label="WhatsApp Number">
                     <p id="whatsapp-error" class="text-red-500 text-sm hidden">Please enter a valid WhatsApp number</p>
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter pre-filled message (optional)" data-lang="Enter pre-filled message (optional)">
-                    <label for="whatsapp-message" class="block font-bold mb-2" data-lang="Pre-filled Message">Pre-filled Message</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter pre-filled message (optional)">
+                    <label for="whatsapp-message" class="block font-bold mb-2">Pre-filled Message</label>
                     <textarea id="whatsapp-message" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="Hello!" aria-label="WhatsApp Message"></textarea>
                 </div>
             </div>
             <div id="social" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Select social media platform" data-lang="Select social media platform">
-                    <label for="social-platform" class="block font-bold mb-2" data-lang="Platform">Platform</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Select social media platform">
+                    <label for="social-platform" class="block font-bold mb-2">Platform</label>
                     <select id="social-platform" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Social Platform">
                         <option value="instagram">Instagram</option>
                         <option value="telegram">Telegram</option>
                         <option value="tiktok">TikTok</option>
                     </select>
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter username" data-lang="Enter username">
-                    <label for="social-username" class="block font-bold mb-2" data-lang="Username">Username</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter username">
+                    <label for="social-username" class="block font-bold mb-2">Username</label>
                     <input type="text" id="social-username" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="username" aria-label="Social Username">
                     <p id="social-error" class="text-red-500 text-sm hidden">Please enter a valid username</p>
                 </div>
             </div>
             <div id="appstore" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Select app store platform" data-lang="Select app store platform">
-                    <label for="appstore-platform" class="block font-bold mb-2" data-lang="Platform">Platform</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Select app store platform">
+                    <label for="appstore-platform" class="block font-bold mb-2">Platform</label>
                     <select id="appstore-platform" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="App Store Platform">
                         <option value="playstore">Google Play Store</option>
                         <option value="appstore">Apple App Store</option>
                     </select>
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter app ID or URL" data-lang="Enter app ID or URL">
-                    <label for="appstore-id" class="block font-bold mb-2" data-lang="App ID or URL">App ID or URL</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter app ID or URL">
+                    <label for="appstore-id" class="block font-bold mb-2">App ID or URL</label>
                     <input type="text" id="appstore-id" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="com.example.app or full URL" aria-label="App ID or URL">
                     <p id="appstore-error" class="text-red-500 text-sm hidden">Please enter a valid app ID or URL</p>
                 </div>
             </div>
             <div id="multilang" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter base URL" data-lang="Enter base URL">
-                    <label for="multilang-baseurl" class="block font-bold mb-2" data-lang="Base URL">Base URL</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter base URL">
+                    <label for="multilang-baseurl" class="block font-bold mb-2">Base URL</label>
                     <input type="url" id="multilang-baseurl" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="https://example.com" aria-label="Base URL">
                     <p id="multilang-error" class="text-red-500 text-sm hidden">Please enter a valid URL</p>
                 </div>
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter language parameter (e.g., lang=en)" data-lang="Enter language parameter (e.g., lang=en)">
-                    <label for="multilang-langparam" class="block font-bold mb-2" data-lang="Language Parameter">Language Parameter</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter language parameter (e.g., lang=en)">
+                    <label for="multilang-langparam" class="block font-bold mb-2">Language Parameter</label>
                     <input type="text" id="multilang-langparam" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="lang=en" aria-label="Language Parameter">
                 </div>
             </div>
             <div id="htmlcustom" class="tab-content hidden">
-                <div class="form-group mb-4 tooltip" data-tooltip="Enter custom HTML content" data-lang="Enter custom HTML content">
-                    <label for="htmlcustom-content" class="block font-bold mb-2" data-lang="HTML Content">HTML Content</label>
+                <div class="form-group mb-4 tooltip" data-tooltip="Enter custom HTML content">
+                    <label for="htmlcustom-content" class="block font-bold mb-2">HTML Content</label>
                     <textarea id="htmlcustom-content" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" placeholder="<h1>Hello World</h1>" aria-label="HTML Content"></textarea>
                     <p id="htmlcustom-error" class="text-red-500 text-sm hidden">Please enter valid HTML content</p>
                 </div>
             </div>
 
-            <h3 class="mt-6 border-t border-border pt-4 text-secondary text-xl font-semibold" data-lang="Design Options">Design Options</h3>
+            <h3 class="mt-6 border-t border-border pt-4 text-secondary text-xl font-semibold">Design Options</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <div class="form-group tooltip" data-tooltip="Choose QR dot color" data-lang="Choose QR dot color">
-                    <label for="dot-color" class="block font-bold mb-2" data-lang="Dot Color">Dot Color</label>
+                <div class="form-group tooltip" data-tooltip="Choose QR dot color">
+                    <label for="dot-color" class="block font-bold mb-2">Dot Color</label>
                     <input type="color" id="dot-color" value="#000000" class="w-full h-10 p-1 border border-border rounded-md" aria-label="QR Dot Color">
                 </div>
-                <div class="form-group tooltip" data-tooltip="Choose QR background color" data-lang="Choose QR background color">
-                    <label for="bg-color" class="block font-bold mb-2" data-lang="Background Color">Background Color</label>
+                <div class="form-group tooltip" data-tooltip="Choose QR background color">
+                    <label for="bg-color" class="block font-bold mb-2">Background Color</label>
                     <input type="color" id="bg-color" value="#ffffff" class="w-full h-10 p-1 border border-border rounded-md" aria-label="QR Background Color">
                 </div>
-                <div class="form-group tooltip" data-tooltip="Select QR dot style" data-lang="Select QR dot style">
-                    <label for="dot-style" class="block font-bold mb-2" data-lang="Dot Style">Dot Style</label>
+                <div class="form-group tooltip" data-tooltip="Select QR dot style">
+                    <label for="dot-style" class="block font-bold mb-2">Dot Style</label>
                     <select id="dot-style" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="QR Dot Style">
                         <option value="square">Square</option>
                         <option value="dots">Dots</option>
@@ -570,16 +536,16 @@
                         <option value="classy-rounded">Classy Rounded</option>
                     </select>
                 </div>
-                <div class="form-group tooltip" data-tooltip="Upload a logo for the QR code" data-lang="Upload a logo for the QR code">
-                    <label for="logo-upload" class="block font-bold mb-2" data-lang="Upload Logo">Upload Logo</label>
+                <div class="form-group tooltip" data-tooltip="Upload a logo for the QR code">
+                    <label for="logo-upload" class="block font-bold mb-2">Upload Logo</label>
                     <input type="file" id="logo-upload" accept="image/*" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Upload Logo">
                 </div>
             </div>
 
-            <h3 class="mt-6 border-t border-border pt-4 text-secondary text-xl font-semibold" data-lang="Shape Editor">Shape Editor</h3>
+            <h3 class="mt-6 border-t border-border pt-4 text-secondary text-xl font-semibold">Shape Editor</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <div class="form-group tooltip" data-tooltip="Select QR shape" data-lang="Select QR shape">
-                    <label for="qr-shape" class="block font-bold mb-2" data-lang="QR Shape">QR Shape</label>
+                <div class="form-group tooltip" data-tooltip="Select QR shape">
+                    <label for="qr-shape" class="block font-bold mb-2">QR Shape</label>
                     <select id="qr-shape" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="QR Shape">
                         <option value="square">Square</option>
                         <option value="circle">Circle</option>
@@ -587,23 +553,23 @@
                         <option value="star">Star</option>
                     </select>
                 </div>
-                <div class="form-group tooltip" data-tooltip="Adjust logo size" data-lang="Adjust logo size">
-                    <label for="logo-size" class="block font-bold mb-2" data-lang="Logo Size">Logo Size</label>
+                <div class="form-group tooltip" data-tooltip="Adjust logo size">
+                    <label for="logo-size" class="block font-bold mb-2">Logo Size</label>
                     <input type="range" id="logo-size" min="0.2" max="0.6" step="0.05" value="0.4" class="w-full" aria-label="Logo Size">
                 </div>
             </div>
 
-            <h3 class="mt-6 border-t border-border pt-4 text-secondary text-xl font-semibold" data-lang="Batch Processing">Batch Processing</h3>
-            <div class="form-group mb-4 tooltip" data-tooltip="Upload CSV file with QR data" data-lang="Upload CSV file with QR data">
-                <label for="csv-input" class="block font-bold mb-2" data-lang="Upload CSV">Upload CSV</label>
+            <h3 class="mt-6 border-t border-border pt-4 text-secondary text-xl font-semibold">Batch Processing</h3>
+            <div class="form-group mb-4 tooltip" data-tooltip="Upload CSV file with QR data">
+                <label for="csv-input" class="block font-bold mb-2">Upload CSV</label>
                 <input type="file" id="csv-input" accept=".csv" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary" aria-label="Upload CSV for Batch">
-                <p class="text-text-muted text-sm mt-2" data-lang="CSV Format">CSV Format: One column with QR data (e.g., URLs)</p>
+                <p class="text-text-muted text-sm mt-2">CSV Format: One column with QR data (e.g., URLs)</p>
             </div>
-            <button id="batch-generate" class="btn bg-action text-white font-bold py-4 rounded-md hover:bg-[#00695C] transition-all mb-6" data-lang="Generate Batch QR">Generate Batch QR</button>
+            <button id="batch-generate" class="btn bg-action text-white font-bold py-4 rounded-md hover:bg-[#00695C] transition-all mb-6">Generate Batch QR</button>
 
-            <h3 class="mt-6 border-t border-border pt-4 text-secondary text-xl font-semibold" data-lang="Frame Options">Frame Options</h3>
-            <div class="form-group tooltip" data-tooltip="Select QR frame style" data-lang="Select QR frame style">
-                <label for="qr-frame" class="block font-bold mb-2" data-lang="Frame Style">Frame Style</label>
+            <h3 class="mt-6 border-t border-border pt-4 text-secondary text-xl font-semibold">Frame Options</h3>
+            <div class="form-group tooltip" data-tooltip="Select QR frame style">
+                <label for="qr-frame" class="block font-bold mb-2">Frame Style</label>
                 <select id="qr-frame" class="w-full p-3 border border-border rounded-md text-text focus:ring-2 focus:ring-primary mb-4" aria-label="QR Frame">
                     <option value="none">None</option>
                     <option value="minimal">Minimal</option>
@@ -612,7 +578,7 @@
                 </select>
             </div>
 
-            <button id="generate-btn" class="btn bg-action text-white font-bold py-4 rounded-md hover:bg-[#00695C] transition-all mt-auto" tabindex="0" data-lang="Generate QR Code">Generate QR Code</button>
+            <button id="generate-btn" class="btn bg-action text-white font-bold py-4 rounded-md hover:bg-[#00695C] transition-all mt-auto" tabindex="0">Generate QR Code</button>
         </section>
 
         <section class="output flex flex-col items-center justify-center p-6 rounded-xl border border-border lg:flex-1 lg:sticky lg:top-8 backdrop-blur-md">
@@ -623,350 +589,119 @@
             </div>
             <div id="konva-container"></div>
             <div class="download-buttons flex flex-col sm:flex-row gap-4 w-full">
-                <button id="download-png" class="btn bg-primary text-white font-bold py-3 rounded-md hover:bg-[#9932CC] transition-all focus:ring-2 focus:ring-primary" tabindex="0" data-lang="Download PNG">Download PNG</button>
-                <button id="download-svg" class="btn bg-secondary text-background font-bold py-3 rounded-md hover:bg-[#FFC700] transition-all focus:ring-2 focus:ring-primary" tabindex="0" data-lang="Download SVG">Download SVG</button>
-                <button id="download-pdf" class="btn bg-primary text-white font-bold py-3 rounded-md hover:bg-[#9932CC] transition-all focus:ring-2 focus:ring-primary" tabindex="0" data-lang="Download PDF">Download PDF</button>
-                <button id="download-eps" class="btn bg-secondary text-background font-bold py-3 rounded-md hover:bg-[#FFC700] transition-all focus:ring-2 focus:ring-primary" tabindex="0" data-lang="Download EPS">Download EPS</button>
+                <button id="download-png" class="btn bg-primary text-white font-bold py-3 rounded-md hover:bg-[#9932CC] transition-all focus:ring-2 focus:ring-primary" tabindex="0">Download PNG</button>
+                <button id="download-svg" class="btn bg-secondary text-background font-bold py-3 rounded-md hover:bg-[#FFC700] transition-all focus:ring-2 focus:ring-primary" tabindex="0">Download SVG</button>
+                <button id="download-pdf" class="btn bg-primary text-white font-bold py-3 rounded-md hover:bg-[#9932CC] transition-all focus:ring-2 focus:ring-primary" tabindex="0">Download PDF</button>
+                <button id="download-eps" class="btn bg-secondary text-background font-bold py-3 rounded-md hover:bg-[#FFC700] transition-all focus:ring-2 focus:ring-primary" tabindex="0">Download EPS</button>
             </div>
-            <button id="voice-input-btn" class="btn bg-action text-white font-bold py-3 rounded-md hover:bg-[#00695C] transition-all mt-4" data-lang="Voice Input">Voice Input</button>
+            <button id="voice-input-btn" class="btn bg-action text-white font-bold py-3 rounded-md hover:bg-[#00695C] transition-all mt-4">Voice Input</button>
         </section>
     </main>
 
     <footer class="bg-[#0a0a0a] text-text-muted text-center py-10 border-t border-border">
         <div class="footer-content flex flex-col items-center gap-6">
-            <a href="https://www.vinnesia.my.id" class="btn bg-transparent border border-secondary text-secondary font-bold py-3 px-6 rounded-md hover:bg-secondary hover:text-background transition-all focus:ring-2 focus:ring-primary" tabindex="0" data-lang="Back to Homepage">Back to Homepage</a>
+            <a href="https://www.vinnesia.my.id" class="btn bg-transparent border border-secondary text-secondary font-bold py-3 px-6 rounded-md hover:bg-secondary hover:text-background transition-all focus:ring-2 focus:ring-primary" tabindex="0">Back to Homepage</a>
             <ul class="footer-links flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-8 list-none p-0 m-0">
                 <li><a href="mailto:support@vinnesia.my.id" class="text-text-muted hover:text-secondary transition-colors" tabindex="0">📧 Email</a></li>
                 <li><a href="https://instagram.com/vin.nesia.id" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-secondary transition-colors" tabindex="0">🧑‍💻 Instagram</a></li>
                 <li><a href="https://wa.me/62895354511777" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-secondary transition-colors" tabindex="0">📱 WhatsApp</a></li>
-                <li><a href="https://www.vinnesia.my.id/privacy" target="_blank" class="text-text-muted hover:text-secondary transition-colors" tabindex="0" data-lang="Privacy Policy">Privacy Policy</a></li>
+                <li><a href="https://www.vinnesia.my.id/privacy" target="_blank" class="text-text-muted hover:text-secondary transition-colors" tabindex="0">Privacy Policy</a></li>
             </ul>
             <div class="copyright text-sm mt-4">
-                © 2025 VIN NESIA. All rights reserved. <br> 📍 Indonesia
+                © 2025 VIN NESIA. All rights reserved. <
+             <span class="mt-2 block">Made with ❤️ in Indonesia</span>
             </div>
         </div>
     </footer>
 
-    <div id="badge-popup" class="text-secondary">Badge Unlocked: QR Master!</div>
+    <div id="badge-popup" class="hidden">Badge Unlocked: QR Master!</div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let currentTab = 'text';
-            let logoImage = null;
-            let fileDataUrl = null;
-            let debounceTimer;
-            let gamificationPoints = parseInt(localStorage.getItem('gamificationPoints') || 0);
-            let stage, layer; // For Konva editor
-            let currentLang = navigator.language.startsWith('id') ? 'id' : 'en';
+        let currentTab = 'text';
+        let logoImage = null;
+        let fileDataUrl = null;
+        let stage = null;
+        let layer = null;
+        let gamificationPoints = parseInt(localStorage.getItem('gamificationPoints')) || 0;
+        let debounceTimer;
 
-            const qrCode = new QRCodeStyling({
-                width: 300,
-                height: 300,
-                data: "Welcome to VIN NESIA QR Generator!",
-                image: "",
-                dotsOptions: { color: "#000000", type: "square" },
-                backgroundOptions: { color: "#ffffff" },
-                imageOptions: { crossOrigin: "anonymous", margin: 5, imageSize: 0.4 },
-                qrOptions: { errorCorrectionLevel: 'H' }
-            });
+        // Initialize QR Code
+        const qrCode = new QRCodeStyling({
+            width: 300,
+            height: 300,
+            type: 'canvas',
+            data: 'Welcome to VIN NESIA QR Generator!',
+            image: '/logo.png',
+            dotsOptions: { color: '#000000', type: 'square' },
+            backgroundOptions: { color: '#ffffff' },
+            imageOptions: { crossOrigin: 'anonymous', margin: 5, imageSize: 0.4 }
+        });
 
-            qrCode.append(document.getElementById("qr-code"));
-            console.log('QR Code initialized');
+        // Append QR Code to container
+        function initializeQrCode() {
+            const qrContainer = document.getElementById('qr-code');
+            qrContainer.innerHTML = ''; // Clear previous content
+            qrCode.append(qrContainer);
+            console.log('QR Code initialized and appended to #qr-code');
+        }
 
-            // Particles.js for Animated Transitions
-            particlesJS('particles-js', {
-                particles: {
-                    number: { value: 80, density: { enable: true, value_area: 800 } },
-                    color: { value: "#FFD700" },
-                    shape: { type: "circle" },
-                    opacity: { value: 0.5 },
-                    size: { value: 3 },
-                    line_linked: { enable: true, distance: 150, color: "#FFD700", opacity: 0.4, width: 1 },
-                    move: { enable: true, speed: 6 }
-                },
-                interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "repulse" } } },
-                retina_detect: true
-            });
-
-            // Multi-Language JSON
-            const languages = {
-                en: {
-                    'Your Text or URL': 'Your Text or URL',
-                    'Network Name (SSID)': 'Network Name (SSID)',
-                    'Password': 'Password',
-                    'Encryption': 'Encryption',
-                    'Full Name': 'Full Name',
-                    'Phone': 'Phone',
-                    'Email': 'Email',
-                    'Organization': 'Organization',
-                    'Website': 'Website',
-                    'Recipient Email': 'Recipient Email',
-                    'Subject': 'Subject',
-                    'Message': 'Message',
-                    'Phone Number': 'Phone Number',
-                    'Latitude': 'Latitude',
-                    'Longitude': 'Longitude',
-                    'Upload File': 'Upload File',
-                    'Warning': 'Warning',
-                    'For very small files': 'For very small files (< 2KB) only. Large files will create unscannable QR codes. For larger files, upload them to a cloud service and create a QR code from the share link.',
-                    'Event Title': 'Event Title',
-                    'Start Date (YYYY-MM-DDTHH:MM)': 'Start Date (YYYY-MM-DDTHH:MM)',
-                    'End Date (YYYY-MM-DDTHH:MM)': 'End Date (YYYY-MM-DDTHH:MM)',
-                    'Location': 'Location',
-                    'Description': 'Description',
-                    'Crypto Type': 'Crypto Type',
-                    'Wallet Address': 'Wallet Address',
-                    'Amount': 'Amount',
-                    'Label': 'Label',
-                    'Platform': 'Platform',
-                    'Username': 'Username',
-                    'App ID or URL': 'App ID or URL',
-                    'Base URL': 'Base URL',
-                    'Language Parameter': 'Language Parameter',
-                    'HTML Content': 'HTML Content',
-                    'Design Options': 'Design Options',
-                    'Dot Color': 'Dot Color',
-                    'Background Color': 'Background Color',
-                    'Dot Style': 'Dot Style',
-                    'Upload Logo': 'Upload Logo',
-                    'Shape Editor': 'Shape Editor',
-                    'QR Shape': 'QR Shape',
-                    'Logo Size': 'Logo Size',
-                    'Batch Processing': 'Batch Processing',
-                    'Upload CSV': 'Upload CSV',
-                    'CSV Format': 'CSV Format: One column with QR data (e.g., URLs)',
-                    'Generate Batch QR': 'Generate Batch QR',
-                    'Frame Options': 'Frame Options',
-                    'Frame Style': 'Frame Style',
-                    'Generate QR Code': 'Generate QR Code',
-                    'Download PNG': 'Download PNG',
-                    'Download SVG': 'Download SVG',
-                    'Download PDF': 'Download PDF',
-                    'Download EPS': 'Download EPS',
-                    'Voice Input': 'Voice Input',
-                    'Back to Homepage': 'Back to Homepage',
-                    'Privacy Policy': 'Privacy Policy',
-                    'Enter your text or URL here': 'Enter your text or URL here',
-                    'Enter your WiFi network name': 'Enter your WiFi network name',
-                    'Enter your WiFi password': 'Enter your WiFi password',
-                    'Select WiFi encryption type': 'Select WiFi encryption type',
-                    'Enter your full name': 'Enter your full name',
-                    'Enter your phone number': 'Enter your phone number',
-                    'Enter your email address': 'Enter your email address',
-                    'Enter your organization': 'Enter your organization',
-                    'Enter your website URL': 'Enter your website URL',
-                    'Enter recipient email': 'Enter recipient email',
-                    'Enter email subject': 'Enter email subject',
-                    'Enter email message': 'Enter email message',
-                    'Enter phone number for SMS': 'Enter phone number for SMS',
-                    'Enter SMS message': 'Enter SMS message',
-                    'Enter latitude coordinate': 'Enter latitude coordinate',
-                    'Enter longitude coordinate': 'Enter longitude coordinate',
-                    'Upload a small file (< 2KB)': 'Upload a small file (< 2KB)',
-                    'Enter event title': 'Enter event title',
-                    'Enter start date (YYYY-MM-DDTHH:MM)': 'Enter start date (YYYY-MM-DDTHH:MM)',
-                    'Enter end date (YYYY-MM-DDTHH:MM)': 'Enter end date (YYYY-MM-DDTHH:MM)',
-                    'Enter event location': 'Enter event location',
-                    'Enter event description': 'Enter event description',
-                    'Select cryptocurrency type': 'Select cryptocurrency type',
-                    'Enter wallet address': 'Enter wallet address',
-                    'Enter amount (optional)': 'Enter amount (optional)',
-                    'Enter label (optional)': 'Enter label (optional)',
-                    'Select social media platform': 'Select social media platform',
-                    'Enter username': 'Enter username',
-                    'Select app store platform': 'Select app store platform',
-                    'Enter app ID or URL': 'Enter app ID or URL',
-                    'Enter base URL': 'Enter base URL',
-                    'Enter language parameter (e.g., lang=en)': 'Enter language parameter (e.g., lang=en)',
-                    'Enter custom HTML content': 'Enter custom HTML content',
-                    'Choose QR dot color': 'Choose QR dot color',
-                    'Choose QR background color': 'Choose QR background color',
-                    'Select QR dot style': 'Select QR dot style',
-                    'Upload a logo for the QR code': 'Upload a logo for the QR code',
-                    'Select QR shape': 'Select QR shape',
-                    'Adjust logo size': 'Adjust logo size',
-                    'Upload CSV file with QR data': 'Upload CSV file with QR data',
-                    'Select QR frame style': 'Select QR frame style'
-                },
-                id: {
-                    'Your Text or URL': 'Teks atau URL Anda',
-                    'Network Name (SSID)': 'Nama Jaringan (SSID)',
-                    'Password': 'Kata Sandi',
-                    'Encryption': 'Enkripsi',
-                    'Full Name': 'Nama Lengkap',
-                    'Phone': 'Telepon',
-                    'Email': 'Email',
-                    'Organization': 'Organisasi',
-                    'Website': 'Situs Web',
-                    'Recipient Email': 'Email Penerima',
-                    'Subject': 'Subjek',
-                    'Message': 'Pesan',
-                    'Phone Number': 'Nomor Telepon',
-                    'Latitude': 'Lintang',
-                    'Longitude': 'Bujur',
-                    'Upload File': 'Unggah File',
-                    'Warning': 'Peringatan',
-                    'For very small files': 'Hanya untuk file sangat kecil (< 2KB). File besar akan menghasilkan kode QR yang tidak dapat dipindai. Untuk file besar, unggah ke layanan cloud dan buat kode QR dari tautan berbagi.',
-                    'Event Title': 'Judul Acara',
-                    'Start Date (YYYY-MM-DDTHH:MM)': 'Tanggal Mulai (YYYY-MM-DDTHH:MM)',
-                    'End Date (YYYY-MM-DDTHH:MM)': 'Tanggal Selesai (YYYY-MM-DDTHH:MM)',
-                    'Location': 'Lokasi',
-                    'Description': 'Deskripsi',
-                    'Crypto Type': 'Jenis Kripto',
-                    'Wallet Address': 'Alamat Dompet',
-                    'Amount': 'Jumlah',
-                    'Label': 'Label',
-                    'Platform': 'Platform',
-                    'Username': 'Nama Pengguna',
-                    'App ID or URL': 'ID Aplikasi atau URL',
-                    'Base URL': 'URL Dasar',
-                    'Language Parameter': 'Parameter Bahasa',
-                    'HTML Content': 'Konten HTML',
-                    'Design Options': 'Opsi Desain',
-                    'Dot Color': 'Warna Titik',
-                    'Background Color': 'Warna Latar',
-                    'Dot Style': 'Gaya Titik',
-                    'Upload Logo': 'Unggah Logo',
-                    'Shape Editor': 'Editor Bentuk',
-                    'QR Shape': 'Bentuk QR',
-                    'Logo Size': 'Ukuran Logo',
-                    'Batch Processing': 'Pemrosesan Massal',
-                    'Upload CSV': 'Unggah CSV',
-                    'CSV Format': 'Format CSV: Satu kolom dengan data QR (misal, URL)',
-                    'Generate Batch QR': 'Buat QR Massal',
-                    'Frame Options': 'Opsi Bingkai',
-                    'Frame Style': 'Gaya Bingkai',
-                    'Generate QR Code': 'Buat Kode QR',
-                    'Download PNG': 'Unduh PNG',
-                    'Download SVG': 'Unduh SVG',
-                    'Download PDF': 'Unduh PDF',
-                    'Download EPS': 'Unduh EPS',
-                    'Voice Input': 'Input Suara',
-                    'Back to Homepage': 'Kembali ke Beranda',
-                    'Privacy Policy': 'Kebijakan Privasi',
-                    'Enter your text or URL here': 'Masukkan teks atau URL Anda di sini',
-                    'Enter your WiFi network name': 'Masukkan nama jaringan WiFi Anda',
-                    'Enter your WiFi password': 'Masukkan kata sandi WiFi Anda',
-                    'Select WiFi encryption type': 'Pilih jenis enkripsi WiFi',
-                    'Enter your full name': 'Masukkan nama lengkap Anda',
-                    'Enter your phone number': 'Masukkan nomor telepon Anda',
-                    'Enter your email address': 'Masukkan alamat email Anda',
-                    'Enter your organization': 'Masukkan organisasi Anda',
-                    'Enter your website URL': 'Masukkan URL situs web Anda',
-                    'Enter recipient email': 'Masukkan email penerima',
-                    'Enter email subject': 'Masukkan subjek email',
-                    'Enter email message': 'Masukkan pesan email',
-                    'Enter phone number for SMS': 'Masukkan nomor telepon untuk SMS',
-                    'Enter SMS message': 'Masukkan pesan SMS',
-                    'Enter latitude coordinate': 'Masukkan koordinat lintang',
-                    'Enter longitude coordinate': 'Masukkan koordinat bujur',
-                    'Upload a small file (< 2KB)': 'Unggah file kecil (< 2KB)',
-                    'Enter event title': 'Masukkan judul acara',
-                    'Enter start date (YYYY-MM-DDTHH:MM)': 'Masukkan tanggal mulai (YYYY-MM-DDTHH:MM)',
-                    'Enter end date (YYYY-MM-DDTHH:MM)': 'Masukkan tanggal selesai (YYYY-MM-DDTHH:MM)',
-                    'Enter event location': 'Masukkan lokasi acara',
-                    'Enter event description': 'Masukkan deskripsi acara',
-                    'Select cryptocurrency type': 'Pilih jenis kripto',
-                    'Enter wallet address': 'Masukkan alamat dompet',
-                    'Enter amount (optional)': 'Masukkan jumlah (opsional)',
-                    'Enter label (optional)': 'Masukkan label (opsional)',
-                    'Select social media platform': 'Pilih platform media sosial',
-                    'Enter username': 'Masukkan nama pengguna',
-                    'Select app store platform': 'Pilih platform toko aplikasi',
-                    'Enter app ID or URL': 'Masukkan ID aplikasi atau URL',
-                    'Enter base URL': 'Masukkan URL dasar',
-                    'Enter language parameter (e.g., lang=en)': 'Masukkan parameter bahasa (misal, lang=en)',
-                    'Enter custom HTML content': 'Masukkan konten HTML kustom',
-                    'Choose QR dot color': 'Pilih warna titik QR',
-                    'Choose QR background color': 'Pilih warna latar QR',
-                    'Select QR dot style': 'Pilih gaya titik QR',
-                    'Upload a logo for the QR code': 'Unggah logo untuk kode QR',
-                    'Select QR shape': 'Pilih bentuk QR',
-                    'Adjust logo size': 'Sesuaikan ukuran logo',
-                    'Upload CSV file with QR data': 'Unggah file CSV dengan data QR',
-                    'Select QR frame style': 'Pilih gaya bingkai QR'
+        // Particles.js for animated background
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 50, density: { enable: true, value_area: 800 } },
+                color: { value: '#FFD700' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: false },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
                 }
-            };
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
+                modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        });
 
-            function switchLanguage(lang) {
-                currentLang = lang;
-                document.querySelectorAll('[data-lang]').forEach(el => {
-                    el.textContent = languages[lang][el.dataset.lang] || el.textContent;
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeQrCode();
+
+            // Tab Switching
+            function openTab(event, tabName) {
+                console.log('Switching to tab:', tabName);
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-selected', 'false');
                 });
-                document.querySelectorAll('.tooltip').forEach(el => {
-                    el.setAttribute('data-tooltip', languages[lang][el.getAttribute('data-lang')] || el.getAttribute('data-tooltip'));
-                });
+                document.getElementById(tabName).classList.remove('hidden');
+                event.currentTarget.classList.add('active');
+                event.currentTarget.setAttribute('aria-selected', 'true');
+                currentTab = tabName;
+                gsap.to(`#${tabName}`, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
+                generateQrCode();
             }
 
-            // Initialize Language
-            document.getElementById('language-toggle').value = currentLang;
-            switchLanguage(currentLang);
-            document.getElementById('language-toggle').addEventListener('change', (e) => {
-                switchLanguage(e.target.value);
-            });
-
-            // High-Contrast Toggle (Accessibility)
-            document.getElementById('high-contrast-toggle').addEventListener('click', () => {
-                document.body.classList.toggle('high-contrast');
-                speak(document.body.classList.contains('high-contrast') ? 
-                    languages[currentLang]['High-contrast mode enabled'] || 'High-contrast mode enabled' : 
-                    languages[currentLang]['High-contrast mode disabled'] || 'High-contrast mode disabled');
-            });
-
-            window.openTab = function(evt, tabName) {
-                gsap.to('.tab-content:not(.hidden)', { 
-                    x: -50, 
-                    opacity: 0, 
-                    duration: 0.3, 
-                    ease: 'power2.in', 
-                    onComplete: () => {
-                        currentTab = tabName;
-                        document.querySelectorAll('.tab-content').forEach(tc => tc.classList.add('hidden'));
-                        document.querySelectorAll('.tab-button').forEach(tb => tb.classList.remove('active'));
-                        const newTab = document.getElementById(tabName);
-                        newTab.classList.remove('hidden');
-                        gsap.fromTo(newTab, 
-                            { x: 50, opacity: 0 }, 
-                            { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
-                        );
-                        evt.currentTarget.classList.add('active');
-                        evt.currentTarget.setAttribute('aria-selected', 'true');
-                        document.querySelectorAll('.tab-button').forEach(tb => {
-                            if (tb !== evt.currentTarget) tb.setAttribute('aria-selected', 'false');
-                        });
-                        // Focus on first input for accessibility
-                        const firstInput = newTab.querySelector('input, textarea, select');
-                        if (firstInput) firstInput.focus();
-                    }
-                });
-            };
-
+            // Input Validation
             function validateInput(tab) {
                 let isValid = true;
-                const errorMessages = {
-                    text: 'text-error',
-                    wifi: 'wifi-error',
-                    vcard: 'vcard-error',
-                    email: 'email-error',
-                    sms: 'sms-error',
-                    geo: 'geo-error',
-                    event: 'event-error',
-                    crypto: 'crypto-error',
-                    phone: 'phone-error',
-                    whatsapp: 'whatsapp-error',
-                    social: 'social-error',
-                    appstore: 'appstore-error',
-                    multilang: 'multilang-error',
-                    htmlcustom: 'htmlcustom-error'
-                };
                 if (tab === 'text') {
-                    const input = document.getElementById('text-input').value.trim();
-                    if (!input) {
+                    const text = document.getElementById('text-input').value.trim();
+                    if (!text) {
                         isValid = false;
                         const error = document.getElementById('text-error');
                         error.classList.remove('hidden');
                         gsap.to('#text-input', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter a valid text or URL'] || 'Please enter a valid text or URL');
+                        speak('Please enter a valid text or URL');
                     } else {
                         document.getElementById('text-error').classList.add('hidden');
                     }
@@ -977,7 +712,7 @@
                         const error = document.getElementById('wifi-error');
                         error.classList.remove('hidden');
                         gsap.to('#wifi-ssid', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter a valid SSID'] || 'Please enter a valid SSID');
+                        speak('Please enter a valid SSID');
                     } else {
                         document.getElementById('wifi-error').classList.add('hidden');
                     }
@@ -988,29 +723,29 @@
                         const error = document.getElementById('vcard-error');
                         error.classList.remove('hidden');
                         gsap.to('#vcard-name', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter a valid name'] || 'Please enter a valid name');
+                        speak('Please enter a valid name');
                     } else {
                         document.getElementById('vcard-error').classList.add('hidden');
                     }
                 } else if (tab === 'email') {
-                    const to = document.getElementById('email-to').value.trim();
-                    if (!to || !to.includes('@')) {
+                    const email = document.getElementById('email-to').value.trim();
+                    if (!email || !email.includes('@')) {
                         isValid = false;
                         const error = document.getElementById('email-error');
                         error.classList.remove('hidden');
                         gsap.to('#email-to', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter a valid email'] || 'Please enter a valid email');
+                        speak('Please enter a valid email');
                     } else {
                         document.getElementById('email-error').classList.add('hidden');
                     }
                 } else if (tab === 'sms') {
-                    const to = document.getElementById('sms-to').value.trim();
-                    if (!to) {
+                    const smsTo = document.getElementById('sms-to').value.trim();
+                    if (!smsTo) {
                         isValid = false;
                         const error = document.getElementById('sms-error');
                         error.classList.remove('hidden');
                         gsap.to('#sms-to', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter a valid phone number'] || 'Please enter a valid phone number');
+                        speak('Please enter a valid phone number');
                     } else {
                         document.getElementById('sms-error').classList.add('hidden');
                     }
@@ -1022,9 +757,16 @@
                         const error = document.getElementById('geo-error');
                         error.classList.remove('hidden');
                         gsap.to('#geo-lat, #geo-lon', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter valid coordinates'] || 'Please enter valid coordinates');
+                        speak('Please enter valid coordinates');
                     } else {
                         document.getElementById('geo-error').classList.add('hidden');
+                    }
+                } else if (tab === 'file') {
+                    if (!fileDataUrl) {
+                        isValid = false;
+                        const warning = document.querySelector('.file-warning');
+                        gsap.to(warning, { duration: 0.5, className: '+=error-shake' });
+                        speak('Please upload a valid file');
                     }
                 } else if (tab === 'event') {
                     const summary = document.getElementById('event-summary').value.trim();
@@ -1033,7 +775,7 @@
                         const error = document.getElementById('event-error');
                         error.classList.remove('hidden');
                         gsap.to('#event-summary', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter a valid event title'] || 'Please enter a valid event title');
+                        speak('Please enter a valid event title');
                     } else {
                         document.getElementById('event-error').classList.add('hidden');
                     }
@@ -1044,7 +786,7 @@
                         const error = document.getElementById('crypto-error');
                         error.classList.remove('hidden');
                         gsap.to('#crypto-address', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter a valid wallet address'] || 'Please enter a valid wallet address');
+                        speak('Please enter a valid wallet address');
                     } else {
                         document.getElementById('crypto-error').classList.add('hidden');
                     }
@@ -1055,7 +797,7 @@
                         const error = document.getElementById('phone-error');
                         error.classList.remove('hidden');
                         gsap.to('#phone-number', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter a valid phone number'] || 'Please enter a valid phone number');
+                        speak('Please enter a valid phone number');
                     } else {
                         document.getElementById('phone-error').classList.add('hidden');
                     }
@@ -1066,7 +808,7 @@
                         const error = document.getElementById('whatsapp-error');
                         error.classList.remove('hidden');
                         gsap.to('#whatsapp-number', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter a valid WhatsApp number'] || 'Please enter a valid WhatsApp number');
+                        speak('Please enter a valid WhatsApp number');
                     } else {
                         document.getElementById('whatsapp-error').classList.add('hidden');
                     }
@@ -1077,7 +819,7 @@
                         const error = document.getElementById('social-error');
                         error.classList.remove('hidden');
                         gsap.to('#social-username', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter a valid username'] || 'Please enter a valid username');
+                        speak('Please enter a valid username');
                     } else {
                         document.getElementById('social-error').classList.add('hidden');
                     }
@@ -1088,7 +830,7 @@
                         const error = document.getElementById('appstore-error');
                         error.classList.remove('hidden');
                         gsap.to('#appstore-id', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter a valid app ID or URL'] || 'Please enter a valid app ID or URL');
+                        speak('Please enter a valid app ID or URL');
                     } else {
                         document.getElementById('appstore-error').classList.add('hidden');
                     }
@@ -1099,7 +841,7 @@
                         const error = document.getElementById('multilang-error');
                         error.classList.remove('hidden');
                         gsap.to('#multilang-baseurl', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter a valid URL'] || 'Please enter a valid URL');
+                        speak('Please enter a valid URL');
                     } else {
                         document.getElementById('multilang-error').classList.add('hidden');
                     }
@@ -1110,7 +852,7 @@
                         const error = document.getElementById('htmlcustom-error');
                         error.classList.remove('hidden');
                         gsap.to('#htmlcustom-content', { duration: 0.5, className: '+=error-shake' });
-                        speak(languages[currentLang]['Please enter valid HTML content'] || 'Please enter valid HTML content');
+                        speak('Please enter valid HTML content');
                     } else {
                         document.getElementById('htmlcustom-error').classList.add('hidden');
                     }
@@ -1118,6 +860,7 @@
                 return isValid;
             }
 
+            // Generate QR Code
             function generateQrCode() {
                 if (!validateInput(currentTab)) return;
 
@@ -1232,6 +975,11 @@
                 const frameStyle = document.getElementById('qr-frame').value;
                 qrContainer.className = `relative flex justify-center items-center max-w-[300px] min-h-[300px] p-4 rounded-xl transition-all backdrop-blur-md shadow-lg frame-${frameStyle}`;
 
+                // Clear and reinitialize QR Code
+                const qrCodeContainer = document.getElementById('qr-code');
+                qrCodeContainer.innerHTML = '';
+                qrCode.append(qrCodeContainer);
+
                 // Interactive Shape Editor with Konva
                 if (stage) stage.destroy();
                 stage = new Konva.Stage({
@@ -1297,23 +1045,30 @@
                     duration: 0.5, 
                     ease: 'back.in', 
                     onComplete: () => {
-                        qrCode.update({
-                            data: data,
-                            image: logoImage,
-                            dotsOptions: { color: dotColor, type: dotStyle },
-                            backgroundOptions: { color: "transparent" },
-                            imageOptions: { crossOrigin: "anonymous", margin: 5, imageSize: logoSize },
-                            cornersSquareOptions: { type: qrShape === 'circle' ? 'extra-rounded' : 'square' }
-                        });
-                        gsap.to(qrContainer, { 
-                            opacity: 1, 
-                            rotation: 0, 
-                            scale: 1, 
-                            duration: 1, 
-                            ease: 'back.out' 
-                        });
-                        loading.classList.add('hidden');
-                        speak(languages[currentLang]['QR code generated successfully'] || 'QR code generated successfully');
+                        try {
+                            qrCode.update({
+                                data: data,
+                                image: logoImage,
+                                dotsOptions: { color: dotColor, type: dotStyle },
+                                backgroundOptions: { color: bgColor },
+                                imageOptions: { crossOrigin: 'anonymous', margin: 5, imageSize: logoSize },
+                                cornersSquareOptions: { type: qrShape === 'circle' ? 'extra-rounded' : 'square' }
+                            });
+                            gsap.to(qrContainer, { 
+                                opacity: 1, 
+                                rotation: 0, 
+                                scale: 1, 
+                                duration: 1, 
+                                ease: 'back.out' 
+                            });
+                            loading.classList.add('hidden');
+                            speak('QR code generated successfully');
+                            console.log('QR Code updated successfully');
+                        } catch (error) {
+                            console.error('Error updating QR code:', error);
+                            speak('Failed to generate QR code');
+                            loading.classList.add('hidden');
+                        }
                     }
                 });
 
@@ -1322,7 +1077,7 @@
                 localStorage.setItem('gamificationPoints', gamificationPoints);
                 if (gamificationPoints % 5 === 0) {
                     const popup = document.getElementById('badge-popup');
-                    popup.textContent = languages[currentLang]['Badge Unlocked: QR Master!'] || 'Badge Unlocked: QR Master!';
+                    popup.textContent = 'Badge Unlocked: QR Master!';
                     popup.style.display = 'block';
                     gsap.from(popup, { y: -50, opacity: 0, duration: 0.5 });
                     setTimeout(() => {
@@ -1331,7 +1086,7 @@
                 }
             }
 
-            // Real-time Preview dengan Debounce
+            // Real-time Preview with Debounce
             document.querySelectorAll('input, textarea, select').forEach(el => {
                 el.addEventListener('input', () => {
                     clearTimeout(debounceTimer);
@@ -1366,7 +1121,7 @@
                     fileDataUrl = null;
                     const warning = document.querySelector('.file-warning');
                     gsap.to(warning, { duration: 0.5, className: '+=error-shake' });
-                    speak(languages[currentLang]['File too large. Please upload a file smaller than 2KB'] || 'File too large. Please upload a file smaller than 2KB');
+                    speak('File too large. Please upload a file smaller than 2KB');
                 }
             });
 
@@ -1374,19 +1129,19 @@
             document.getElementById('voice-input-btn').addEventListener('click', () => {
                 if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
                     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-                    recognition.lang = currentLang === 'id' ? 'id-ID' : 'en-US';
+                    recognition.lang = 'en-US';
                     recognition.onresult = (event) => {
                         const input = document.getElementById(`${currentTab}-input`) || document.getElementById('text-input');
                         input.value = event.results[0][0].transcript;
                         generateQrCode();
-                        speak(languages[currentLang]['Voice input recorded'] || 'Voice input recorded');
+                        speak('Voice input recorded');
                     };
                     recognition.onerror = () => {
-                        speak(languages[currentLang]['Voice input failed'] || 'Voice input failed');
+                        speak('Voice input failed');
                     };
                     recognition.start();
                 } else {
-                    speak(languages[currentLang]['Voice input not supported in this browser'] || 'Voice input not supported in this browser');
+                    speak('Voice input not supported in this browser');
                 }
             });
 
@@ -1394,7 +1149,7 @@
             function speak(text) {
                 if ('speechSynthesis' in window) {
                     const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = currentLang === 'id' ? 'id-ID' : 'en-US';
+                    utterance.lang = 'en-US';
                     speechSynthesis.speak(utterance);
                 }
             }
@@ -1412,12 +1167,12 @@
 
                         const processRow = (index) => {
                             if (index >= rows.length) {
-                                zip.generateAsync({ type: "blob" }).then(content => {
+                                zip.generateAsync({ type: 'blob' }).then(content => {
                                     const a = document.createElement('a');
                                     a.href = URL.createObjectURL(content);
-                                    a.download = "batch_qr_codes.zip";
+                                    a.download = 'batch_qr_codes.zip';
                                     a.click();
-                                    speak(languages[currentLang]['Batch QR codes generated successfully'] || 'Batch QR codes generated successfully');
+                                    speak('Batch QR codes generated successfully');
                                 });
                                 return;
                             }
@@ -1428,6 +1183,9 @@
                                 zip.file(`qr_${index + 1}.png`, blob);
                                 processed++;
                                 processRow(index + 1);
+                            }).catch(err => {
+                                console.error('Error generating QR for row', index, ':', err);
+                                processRow(index + 1);
                             });
                         };
 
@@ -1437,19 +1195,19 @@
                 } else {
                     const csvInput = document.getElementById('csv-input');
                     gsap.to(csvInput, { duration: 0.5, className: '+=error-shake' });
-                    speak(languages[currentLang]['Please upload a valid CSV file'] || 'Please upload a valid CSV file');
+                    speak('Please upload a valid CSV file');
                 }
             });
 
             // Download Buttons
             document.getElementById('download-png').addEventListener('click', () => {
-                qrCode.download({ name: "qr-code", extension: "png" });
-                speak(languages[currentLang]['Downloading PNG'] || 'Downloading PNG');
+                qrCode.download({ name: 'qr-code', extension: 'png' });
+                speak('Downloading PNG');
             });
 
             document.getElementById('download-svg').addEventListener('click', () => {
-                qrCode.download({ name: "qr-code", extension: "svg" });
-                speak(languages[currentLang]['Downloading SVG'] || 'Downloading SVG');
+                qrCode.download({ name: 'qr-code', extension: 'svg' });
+                speak('Downloading SVG');
             });
 
             document.getElementById('download-pdf').addEventListener('click', () => {
@@ -1462,10 +1220,10 @@
                         doc.addImage(img, 'PNG', 10, 10, 50, 50);
                         doc.save('qr-code.pdf');
                         URL.revokeObjectURL(imgUrl);
-                        speak(languages[currentLang]['Downloading PDF'] || 'Downloading PDF');
+                        speak('Downloading PDF');
                     };
                     img.src = imgUrl;
-                });
+                }).catch(err => console.error('Error generating PDF:', err));
             });
 
             document.getElementById('download-eps').addEventListener('click', () => {
@@ -1478,10 +1236,10 @@
                         a.href = URL.createObjectURL(new Blob([epsContent], { type: 'application/postscript' }));
                         a.download = 'qr-code.eps';
                         a.click();
-                        speak(languages[currentLang]['Downloading EPS'] || 'Downloading EPS');
+                        speak('Downloading EPS');
                     };
                     reader.readAsText(blob);
-                });
+                }).catch(err => console.error('Error generating EPS:', err));
             });
 
             // Frame Style Change
@@ -1491,7 +1249,7 @@
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('/sw.js').then(() => {
                     console.log('Service Worker Registered');
-                    speak(languages[currentLang]['Offline mode enabled'] || 'Offline mode enabled');
+                    speak('Offline mode enabled');
                 }).catch(err => console.error('Service Worker Error:', err));
             }
 
@@ -1504,6 +1262,9 @@
                     }
                 });
             });
+
+            // Generate Button
+            document.getElementById('generate-btn').addEventListener('click', generateQrCode);
 
             // Initial setup
             openTab({ currentTarget: document.querySelector('.tab-button') }, 'text');
@@ -1546,4 +1307,4 @@
         navigator.serviceWorker.register(swUrl);
     </script>
 </body>
-</html>
+</html>                               
