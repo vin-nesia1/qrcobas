@@ -853,9 +853,6 @@
     </div>
     
     <script>
-    // --- JAVASCRIPT SECTION (NO CHANGES MADE TO THIS SECTION) ---
-    // [The entire existing JavaScript from the previous response is preserved here]
-    // ...
     const App = {
         qrCode: null,
         html5QrCode: null,
@@ -930,6 +927,7 @@
         },
 
         loadTheme() {
+            const themeButton = document.getElementById('theme-toggle-button');
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
             if (!localStorage.getItem('appSettings')) {
                 this.state.appSettings.theme = prefersDark ? 'dark' : 'light';
@@ -937,10 +935,14 @@
 
             if (this.state.appSettings.theme === 'light') {
                 document.body.classList.add('light-mode');
-                document.getElementById('theme-toggle-button').innerHTML = '<i class="fas fa-moon" aria-hidden="true"></i>';
+                if (themeButton) {
+                    themeButton.innerHTML = '<i class="fas fa-moon" aria-hidden="true"></i>';
+                }
             } else {
                 document.body.classList.remove('light-mode');
-                document.getElementById('theme-toggle-button').innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i>';
+                if (themeButton) {
+                    themeButton.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i>';
+                }
             }
         },
 
@@ -1079,7 +1081,7 @@
                 const minSwipeDistance = 50;
 
                 if (touchEndX < touchStartX - minSwipeDistance) {
-                    const nextIndex = Math.min(this.state.currentTabIndex + 1, document.querySelectorAll('.tab-content').length - 1);
+                    const nextIndex = Math.min(this.state.currentTabIndex + 1, document.querySelectorAll('.tab-button').length - 1);
                     if (nextIndex !== this.state.currentTabIndex) {
                         const nextTabName = document.querySelector(`.tab-button[data-tab-index="${nextIndex}"]`).dataset.tabName;
                         this.openTab(null, nextTabName);
@@ -1813,7 +1815,8 @@
         initVoiceInput(inputId, buttonId) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) {
-                document.getElementById(buttonId).style.display = 'none';
+                const button = document.getElementById(buttonId);
+                if(button) button.style.display = 'none';
                 return;
             }
             const recognition = new SpeechRecognition();
@@ -1953,9 +1956,11 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-    });
+    };
 
     document.addEventListener('DOMContentLoaded', () => App.init());
     </script>
 </body>
 </html>
+
+    
