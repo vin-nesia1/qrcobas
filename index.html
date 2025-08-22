@@ -73,8 +73,8 @@
         };
     </script>
 
-    <!-- QR Code Styling Library -->
-    <script type="module" src="https://unpkg.com/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
+    <!-- QR Code Styling Library (kembali ke versi asli untuk stabilitas) -->
+    <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
 
     <style>
         /* Custom animations and overrides */
@@ -94,6 +94,25 @@
         }
         .btn:hover {
             transform: scale(1.05);
+        }
+        /* Ensure QR code container is visible and sized properly */
+        #qr-code-container {
+            width: 100%;
+            max-width: 300px;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            transition: background-color 0.3s ease;
+        }
+        #qr-code canvas, #qr-code svg {
+            width: 100% !important;
+            height: auto !important;
+            border-radius: 4px;
         }
         /* Smooth scrolling for anchor links */
         html {
@@ -354,7 +373,7 @@
         </section>
 
         <section class="output flex flex-col items-center justify-center bg-surface p-6 rounded-xl border border-border lg:flex-1 lg:sticky lg:top-8">
-            <div id="qr-code-container" class="w-full max-w-xs p-4 rounded-lg shadow-2xl bg-white">
+            <div id="qr-code-container" class="bg-white">
                 <div id="qr-code"></div>
             </div>
             <div class="download-buttons flex flex-col sm:flex-row gap-4 w-full">
@@ -379,169 +398,188 @@
         </div>
     </footer>
 
-    <script type="module">
-        import QRCodeStyling from 'https://unpkg.com/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js';
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentTab = 'text';
+            let logoImage = null;
+            let fileDataUrl = null;
 
-        let currentTab = 'text';
-        let logoImage = null;
-        let fileDataUrl = null;
-
-        const qrCode = new QRCodeStyling({
-            width: 300,
-            height: 300,
-            data: "Welcome to VIN NESIA QR Generator!",
-            image: "",
-            dotsOptions: { color: "#000000", type: "square" },
-            backgroundOptions: { color: "#ffffff" },
-            imageOptions: { crossOrigin: "anonymous", margin: 5, imageSize: 0.4 },
-            qrOptions: { errorCorrectionLevel: 'H' }
-        });
-
-        qrCode.append(document.getElementById("qr-code"));
-
-        window.openTab = (evt, tabName) => {
-            currentTab = tabName;
-            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.add('hidden'));
-            document.querySelectorAll('.tab-button').forEach(tb => tb.classList.remove('active'));
-            document.getElementById(tabName).classList.remove('hidden');
-            document.getElementById(tabName).classList.add('fade-in');
-            evt.currentTarget.classList.add('active');
-            evt.currentTarget.setAttribute('aria-selected', 'true');
-            document.querySelectorAll('.tab-button').forEach(tb => {
-                if (tb !== evt.currentTarget) tb.setAttribute('aria-selected', 'false');
+            const qrCode = new QRCodeStyling({
+                width: 300,
+                height: 300,
+                data: "Welcome to VIN NESIA QR Generator!",
+                image: "",
+                dotsOptions: { color: "#000000", type: "square" },
+                backgroundOptions: { color: "#ffffff" },
+                imageOptions: { crossOrigin: "anonymous", margin: 5, imageSize: 0.4 },
+                qrOptions: { errorCorrectionLevel: 'H' }
             });
-        };
 
-        const generateQrCode = () => {
-            let data = "";
-            switch (currentTab) {
-                case 'text':
-                    data = document.getElementById('text-input').value || "https://qr.vinnesia.my.id";
-                    break;
-                case 'wifi':
-                    const ssid = document.getElementById('wifi-ssid').value;
-                    const password = document.getElementById('wifi-password').value;
-                    const encryption = document.getElementById('wifi-encryption').value;
-                    if (ssid) data = `WIFI:T:${encryption};S:${ssid};P:${password};;`;
-                    break;
-                case 'vcard':
-                    const name = document.getElementById('vcard-name').value;
-                    const phone = document.getElementById('vcard-phone').value;
-                    const email = document.getElementById('vcard-email').value;
-                    const org = document.getElementById('vcard-org').value;
-                    const url = document.getElementById('vcard-url').value;
-                    if (name) data = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${org}\nURL:${url}\nEND:VCARD`;
-                    break;
-                case 'email':
-                    const to = document.getElementById('email-to').value;
-                    const subject = document.getElementById('email-subject').value;
-                    const body = document.getElementById('email-body').value;
-                    if (to) data = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                    break;
-                case 'sms':
-                    const smsTo = document.getElementById('sms-to').value;
-                    const smsBody = document.getElementById('sms-body').value;
-                    if (smsTo) data = `SMSTO:${smsTo}:${encodeURIComponent(smsBody)}`;
-                    break;
-                case 'geo':
-                    const lat = document.getElementById('geo-lat').value;
-                    const lon = document.getElementById('geo-lon').value;
-                    if (lat && lon) data = `geo:${lat},${lon}`;
-                    break;
-                case 'file':
-                    data = fileDataUrl || " ";
-                    break;
-                case 'event':
-                    const summary = document.getElementById('event-summary').value;
-                    const start = document.getElementById('event-start').value.replace(/[-:]/g, '');
-                    const end = document.getElementById('event-end').value.replace(/[-:]/g, '');
-                    const location = document.getElementById('event-location').value;
-                    const description = document.getElementById('event-description').value;
-                    if (summary && start && end) {
-                        data = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${summary}\nDTSTART:${start}\nDTEND:${end}\nLOCATION:${location}\nDESCRIPTION:${description}\nEND:VEVENT\nEND:VCALENDAR`;
-                    }
-                    break;
-                case 'crypto':
-                    const cryptoType = document.getElementById('crypto-type').value;
-                    const address = document.getElementById('crypto-address').value;
-                    const amount = document.getElementById('crypto-amount').value;
-                    const label = document.getElementById('crypto-label').value;
-                    if (address) data = `${cryptoType}:${address}${amount ? `?amount=${amount}` : ''}${label ? `&label=${encodeURIComponent(label)}` : ''}`;
-                    break;
-                case 'phone':
-                    const phoneNumber = document.getElementById('phone-number').value;
-                    if (phoneNumber) data = `tel:${phoneNumber}`;
-                    break;
-                case 'whatsapp':
-                    const whatsappNumber = document.getElementById('whatsapp-number').value;
-                    const whatsappMessage = document.getElementById('whatsapp-message').value;
-                    if (whatsappNumber) data = `https://wa.me/${whatsappNumber.replace('+', '')}${whatsappMessage ? `?text=${encodeURIComponent(whatsappMessage)}` : ''}`;
-                    break;
-                case 'social':
-                    const platform = document.getElementById('social-platform').value;
-                    const username = document.getElementById('social-username').value;
-                    if (username) {
-                        if (platform === 'instagram') data = `https://instagram.com/${username}`;
-                        else if (platform === 'telegram') data = `https://t.me/${username}`;
-                        else if (platform === 'tiktok') data = `https://tiktok.com/@${username}`;
-                    }
-                    break;
-                case 'appstore':
-                    const appPlatform = document.getElementById('appstore-platform').value;
-                    const appId = document.getElementById('appstore-id').value;
-                    if (appId) {
-                        if (appPlatform === 'playstore') data = appId.startsWith('http') ? appId : `https://play.google.com/store/apps/details?id=${appId}`;
-                        else if (appPlatform === 'appstore') data = appId.startsWith('http') ? appId : `https://apps.apple.com/app/id${appId}`;
-                    }
-                    break;
-                case 'multilang':
-                    const baseUrl = document.getElementById('multilang-baseurl').value;
-                    const langParam = document.getElementById('multilang-langparam').value;
-                    if (baseUrl && langParam) data = `${baseUrl}?${langParam}`;
-                    break;
-                case 'htmlcustom':
-                    const htmlContent = document.getElementById('htmlcustom-content').value;
-                    if (htmlContent) data = `data:text/html;base64,${btoa(htmlContent)}`;
-                    break;
+            qrCode.append(document.getElementById("qr-code"));
+            console.log('QR Code initialized'); // Debugging: Cek apakah library dimuat
+
+            window.openTab = function(evt, tabName) {
+                currentTab = tabName;
+                document.querySelectorAll('.tab-content').forEach(tc => tc.classList.add('hidden'));
+                document.querySelectorAll('.tab-button').forEach(tb => tb.classList.remove('active'));
+                document.getElementById(tabName).classList.remove('hidden');
+                document.getElementById(tabName).classList.add('fade-in');
+                evt.currentTarget.classList.add('active');
+                evt.currentTarget.setAttribute('aria-selected', 'true');
+                document.querySelectorAll('.tab-button').forEach(tb => {
+                    if (tb !== evt.currentTarget) tb.setAttribute('aria-selected', 'false');
+                });
+            };
+
+            function generateQrCode() {
+                let data = "";
+                switch (currentTab) {
+                    case 'text':
+                        data = document.getElementById('text-input').value || "https://qr.vinnesia.my.id";
+                        break;
+                    case 'wifi':
+                        const ssid = document.getElementById('wifi-ssid').value;
+                        const password = document.getElementById('wifi-password').value;
+                        const encryption = document.getElementById('wifi-encryption').value;
+                        if (ssid) data = `WIFI:T:${encryption};S:${ssid};P:${password};;`;
+                        break;
+                    case 'vcard':
+                        const name = document.getElementById('vcard-name').value;
+                        const phone = document.getElementById('vcard-phone').value;
+                        const email = document.getElementById('vcard-email').value;
+                        const org = document.getElementById('vcard-org').value;
+                        const url = document.getElementById('vcard-url').value;
+                        if (name) data = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${org}\nURL:${url}\nEND:VCARD`;
+                        break;
+                    case 'email':
+                        const to = document.getElementById('email-to').value;
+                        const subject = document.getElementById('email-subject').value;
+                        const body = document.getElementById('email-body').value;
+                        if (to) data = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                        break;
+                    case 'sms':
+                        const smsTo = document.getElementById('sms-to').value;
+                        const smsBody = document.getElementById('sms-body').value;
+                        if (smsTo) data = `SMSTO:${smsTo}:${encodeURIComponent(smsBody)}`;
+                        break;
+                    case 'geo':
+                        const lat = document.getElementById('geo-lat').value;
+                        const lon = document.getElementById('geo-lon').value;
+                        if (lat && lon) data = `geo:${lat},${lon}`;
+                        break;
+                    case 'file':
+                        data = fileDataUrl || " ";
+                        break;
+                    case 'event':
+                        const summary = document.getElementById('event-summary').value;
+                        const start = document.getElementById('event-start').value.replace(/[-:]/g, '');
+                        const end = document.getElementById('event-end').value.replace(/[-:]/g, '');
+                        const location = document.getElementById('event-location').value;
+                        const description = document.getElementById('event-description').value;
+                        if (summary && start && end) {
+                            data = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${summary}\nDTSTART:${start}\nDTEND:${end}\nLOCATION:${location}\nDESCRIPTION:${description}\nEND:VEVENT\nEND:VCALENDAR`;
+                        }
+                        break;
+                    case 'crypto':
+                        const cryptoType = document.getElementById('crypto-type').value;
+                        const address = document.getElementById('crypto-address').value;
+                        const amount = document.getElementById('crypto-amount').value;
+                        const label = document.getElementById('crypto-label').value;
+                        if (address) data = `${cryptoType}:${address}${amount ? `?amount=${amount}` : ''}${label ? `&label=${encodeURIComponent(label)}` : ''}`;
+                        break;
+                    case 'phone':
+                        const phoneNumber = document.getElementById('phone-number').value;
+                        if (phoneNumber) data = `tel:${phoneNumber}`;
+                        break;
+                    case 'whatsapp':
+                        const whatsappNumber = document.getElementById('whatsapp-number').value;
+                        const whatsappMessage = document.getElementById('whatsapp-message').value;
+                        if (whatsappNumber) data = `https://wa.me/${whatsappNumber.replace('+', '')}${whatsappMessage ? `?text=${encodeURIComponent(whatsappMessage)}` : ''}`;
+                        break;
+                    case 'social':
+                        const platform = document.getElementById('social-platform').value;
+                        const username = document.getElementById('social-username').value;
+                        if (username) {
+                            if (platform === 'instagram') data = `https://instagram.com/${username}`;
+                            else if (platform === 'telegram') data = `https://t.me/${username}`;
+                            else if (platform === 'tiktok') data = `https://tiktok.com/@${username}`;
+                        }
+                        break;
+                    case 'appstore':
+                        const appPlatform = document.getElementById('appstore-platform').value;
+                        const appId = document.getElementById('appstore-id').value;
+                        if (appId) {
+                            if (appPlatform === 'playstore') data = appId.startsWith('http') ? appId : `https://play.google.com/store/apps/details?id=${appId}`;
+                            else if (appPlatform === 'appstore') data = appId.startsWith('http') ? appId : `https://apps.apple.com/app/id${appId}`;
+                        }
+                        break;
+                    case 'multilang':
+                        const baseUrl = document.getElementById('multilang-baseurl').value;
+                        const langParam = document.getElementById('multilang-langparam').value;
+                        if (baseUrl && langParam) data = `${baseUrl}?${langParam}`;
+                        break;
+                    case 'htmlcustom':
+                        const htmlContent = document.getElementById('htmlcustom-content').value;
+                        if (htmlContent) data = `data:text/html;base64,${btoa(htmlContent)}`;
+                        break;
+                }
+
+                // Validasi data agar tidak kosong
+                if (!data) {
+                    data = "Welcome to VIN NESIA QR Generator!"; // Default jika kosong
+                    console.log('Data kosong, menggunakan default');
+                } else {
+                    console.log('Data QR: ', data); // Debugging
+                }
+
+                const dotColor = document.getElementById('dot-color').value;
+                const bgColor = document.getElementById('bg-color').value;
+                const dotStyle = document.getElementById('dot-style').value;
+                const qrContainer = document.getElementById('qr-code-container');
+                qrContainer.style.backgroundColor = bgColor;
+
+                qrCode.update({
+                    data: data,
+                    image: logoImage,
+                    dotsOptions: { color: dotColor, type: dotStyle },
+                    backgroundOptions: { color: "transparent" }
+                });
+                console.log('QR Code updated'); // Debugging
             }
 
-            const dotColor = document.getElementById('dot-color').value;
-            const bgColor = document.getElementById('bg-color').value;
-            const dotStyle = document.getElementById('dot-style').value;
-            const qrContainer = document.getElementById('qr-code-container');
-            qrContainer.style.backgroundColor = bgColor;
+            document.getElementById('generate-btn').addEventListener('click', generateQrCode);
 
-            qrCode.update({
-                data: data || " ",
-                image: logoImage,
-                dotsOptions: { color: dotColor, type: dotStyle },
-                backgroundOptions: { color: "transparent" }
+            document.getElementById('logo-upload').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => { 
+                        logoImage = event.target.result; 
+                        console.log('Logo uploaded'); // Debugging
+                    };
+                    reader.readAsDataURL(file);
+                }
             });
-        };
 
-        document.getElementById('generate-btn').addEventListener('click', generateQrCode);
-        document.getElementById('logo-upload').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => { logoImage = event.target.result; };
-                reader.readAsDataURL(file);
-            }
-        });
-        document.getElementById('file-input').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => { fileDataUrl = event.target.result; };
-                reader.readAsDataURL(file);
-            }
-        });
-        document.getElementById('download-png').addEventListener('click', () => qrCode.download({ name: "vinnesia-qr", extension: "png" }));
-        document.getElementById('download-svg').addEventListener('click', () => qrCode.download({ name: "vinnesia-qr", extension: "svg" }));
+            document.getElementById('file-input').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => { 
+                        fileDataUrl = event.target.result; 
+                        console.log('File uploaded for QR'); // Debugging
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
 
-        // Initial setup
-        document.querySelector('.tab-button').click();
-        generateQrCode();
+            document.getElementById('download-png').addEventListener('click', () => qrCode.download({ name: "vinnesia-qr", extension: "png" }));
+            document.getElementById('download-svg').addEventListener('click', () => qrCode.download({ name: "vinnesia-qr", extension: "svg" }));
+
+            // Initial setup
+            openTab({currentTarget: document.querySelector('.tab-button')}, 'text');
+            generateQrCode();
+        });
     </script>
 </body>
 </html>
