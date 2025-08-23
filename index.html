@@ -422,11 +422,17 @@
                 0 0 30px rgba(0, 245, 255, 0.2);
         }
 
-        #qr-code canvas,
-        #qr-code svg {
+        #qr-code {
             border-radius: 12px;
-            display: block;
-            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 280px;
+        }
+
+        #qr-code canvas {
+            border-radius: 12px;
+            max-width: 100%;
             height: auto;
         }
 
@@ -550,6 +556,31 @@
             opacity: 0.7;
         }
 
+        /* Custom QR Styles */
+        .qr-square { 
+            fill: var(--dot-color, #000000) !important; 
+        }
+        .qr-dots { 
+            rx: "50%" !important; 
+            fill: var(--dot-color, #000000) !important; 
+        }
+        .qr-rounded { 
+            rx: "15%" !important; 
+            fill: var(--dot-color, #000000) !important; 
+        }
+        .qr-extra-rounded { 
+            rx: "30%" !important; 
+            fill: var(--dot-color, #000000) !important; 
+        }
+        .qr-classy { 
+            rx: "10%" !important; 
+            fill: var(--dot-color, #000000) !important; 
+        }
+        .qr-classy-rounded { 
+            rx: "25%" !important; 
+            fill: var(--dot-color, #000000) !important; 
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             main {
@@ -663,7 +694,7 @@
             </div>
 
             <!-- Tab Contents -->
-            <div id="text" class="tab-content active"><div class="form-group"><label for="text-input">Your Text or URL</label><textarea id="text-input" placeholder="e.g., https://www.vinnesia.my.id"></textarea></div></div>
+            <div id="text" class="tab-content active"><div class="form-group"><label for="text-input">Your Text or URL</label><textarea id="text-input" placeholder="e.g., https://www.vinnesia.my.id">Welcome to VIN NESIA QR Generator!</textarea></div></div>
             <div id="wifi" class="tab-content"><div class="form-group"><label for="wifi-ssid">Network Name (SSID)</label><input type="text" id="wifi-ssid" placeholder="MyWiFiNetwork"></div><div class="form-group"><label for="wifi-password">Password</label><input type="text" id="wifi-password" placeholder="SecretPassword"></div><div class="form-group"><label for="wifi-encryption">Encryption</label><select id="wifi-encryption"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">None</option></select></div></div>
             <div id="vcard" class="tab-content"><div class="form-group"><label for="vcard-name">Full Name</label><input type="text" id="vcard-name"></div><div class="form-group"><label for="vcard-phone">Phone</label><input type="tel" id="vcard-phone"></div><div class="form-group"><label for="vcard-email">Email</label><input type="email" id="vcard-email"></div><div class="form-group"><label for="vcard-org">Organization</label><input type="text" id="vcard-org"></div><div class="form-group"><label for="vcard-url">Website</label><input type="url" id="vcard-url"></div></div>
             <div id="email" class="tab-content"><div class="form-group"><label for="email-to">Recipient Email</label><input type="email" id="email-to" placeholder="recipient@example.com"></div><div class="form-group"><label for="email-subject">Subject</label><input type="text" id="email-subject"></div><div class="form-group"><label for="email-body">Message</label><textarea id="email-body"></textarea></div></div>
@@ -745,60 +776,14 @@
         </div>
     </footer>
 
-    <!-- QR Code Styling Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qr-code-styling/1.6.0-rc.1/qr-code-styling.js" integrity="sha512-3bQp4Jasbaey8Gx/MwUY0l1eGKUJZOUzv8lIgB7D2KJU2Hf/HzTI/YiJOgQ8fYTkOYy6C4LRMz8zHD9qLjKZQ==" crossorigin="anonymous"></script>
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
     
     <script>
         // Global variables
         let currentTab = 'text';
         let logoImage = null;
         let fileDataUrl = null;
-        let qrCode = null;
-
-        // Initialize QR Code when page loads
-        function initQRCode() {
-            try {
-                if (typeof QRCodeStyling === 'undefined') {
-                    console.log('QRCodeStyling not loaded yet, retrying...');
-                    setTimeout(initQRCode, 100);
-                    return;
-                }
-
-                qrCode = new QRCodeStyling({
-                    width: 300,
-                    height: 300,
-                    data: "Welcome to VIN NESIA QR Generator!",
-                    image: "",
-                    dotsOptions: { 
-                        color: "#000000", 
-                        type: "square" 
-                    },
-                    backgroundOptions: { 
-                        color: "#ffffff" 
-                    },
-                    imageOptions: { 
-                        crossOrigin: "anonymous", 
-                        margin: 5, 
-                        imageSize: 0.4 
-                    },
-                    qrOptions: { 
-                        errorCorrectionLevel: 'H' 
-                    }
-                });
-
-                const qrContainer = document.getElementById("qr-code");
-                if (qrContainer) {
-                    qrCode.append(qrContainer);
-                    console.log('QR Code initialized successfully');
-                } else {
-                    console.error('QR container not found');
-                }
-
-            } catch (error) {
-                console.error('Error initializing QR Code:', error);
-                setTimeout(initQRCode, 500);
-            }
-        }
 
         // Tab switching function
         function openTab(evt, tabName) {
@@ -813,13 +798,139 @@
             evt.currentTarget.classList.add('active');
         }
 
-        // Generate QR Code function
-        function generateQrCode() {
-            if (!qrCode) {
-                console.log('QR Code not initialized yet');
+        // Apply custom dot styles to QR code
+        function applyDotStyle(canvas, dotStyle, dotColor, bgColor) {
+            if (!canvas) {
+                console.log('No canvas provided to applyDotStyle');
                 return;
             }
+            
+            try {
+                const ctx = canvas.getContext('2d');
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+                
+                console.log('Applying dot style:', dotStyle, 'with color:', dotColor);
+                
+                // Clear canvas and set background
+                ctx.fillStyle = bgColor || '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Calculate module size
+                const moduleCount = 21; // Basic QR code is 21x21 modules
+                const moduleSize = Math.floor(canvas.width / moduleCount);
+                
+                // Set dot color
+                ctx.fillStyle = dotColor || '#000000';
+                
+                // Scan through image data to find dark pixels
+                for (let y = 0; y < canvas.height; y += moduleSize) {
+                    for (let x = 0; x < canvas.width; x += moduleSize) {
+                        // Check if this module should be dark
+                        const centerX = x + Math.floor(moduleSize / 2);
+                        const centerY = y + Math.floor(moduleSize / 2);
+                        const pixelIndex = (centerY * canvas.width + centerX) * 4;
+                        
+                        if (pixelIndex < data.length) {
+                            const r = data[pixelIndex];
+                            const g = data[pixelIndex + 1];
+                            const b = data[pixelIndex + 2];
+                            const brightness = (r + g + b) / 3;
+                            
+                            // If pixel is dark, draw the styled module
+                            if (brightness < 128) {
+                                drawModuleWithStyle(ctx, x, y, moduleSize, dotStyle);
+                            }
+                        }
+                    }
+                }
+                
+                // Add logo if present
+                if (logoImage) {
+                    addLogoToCanvas(ctx, canvas.width, canvas.height);
+                }
+                
+            } catch (error) {
+                console.error('Error in applyDotStyle:', error);
+                // If styling fails, just use the basic QR code
+            }
+        }
 
+        // Draw individual module with specific style
+        function drawModuleWithStyle(ctx, x, y, size, style) {
+            switch (style) {
+                case 'dots':
+                    ctx.beginPath();
+                    ctx.arc(x + size/2, y + size/2, size/2.2, 0, 2 * Math.PI);
+                    ctx.fill();
+                    break;
+                case 'rounded':
+                    drawRoundedRect(ctx, x + 1, y + 1, size - 2, size - 2, size * 0.15);
+                    break;
+                case 'extra-rounded':
+                    drawRoundedRect(ctx, x + 1, y + 1, size - 2, size - 2, size * 0.3);
+                    break;
+                case 'classy':
+                    drawRoundedRect(ctx, x + 0.5, y + 0.5, size - 1, size - 1, size * 0.1);
+                    break;
+                case 'classy-rounded':
+                    drawRoundedRect(ctx, x + 0.5, y + 0.5, size - 1, size - 1, size * 0.25);
+                    break;
+                case 'square':
+                default:
+                    ctx.fillRect(x, y, size, size);
+                    break;
+            }
+        }
+
+        // Helper function to draw rounded rectangles
+        function drawRoundedRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // Helper function to convert hex to RGB
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+
+        // Add logo to canvas
+        function addLogoToCanvas(ctx, canvasWidth, canvasHeight) {
+            if (!logoImage) return;
+            
+            const img = new Image();
+            img.onload = function() {
+                const logoSize = Math.min(canvasWidth, canvasHeight) * 0.2;
+                const x = (canvasWidth - logoSize) / 2;
+                const y = (canvasHeight - logoSize) / 2;
+                
+                // Draw white background for logo
+                ctx.fillStyle = 'white';
+                ctx.fillRect(x - 5, y - 5, logoSize + 10, logoSize + 10);
+                
+                // Draw logo
+                ctx.drawImage(img, x, y, logoSize, logoSize);
+            };
+            img.src = logoImage;
+        }
+
+        // Generate QR Code function
+        function generateQrCode() {
             // Show loading state
             const generateBtn = document.getElementById('generate-btn');
             const originalText = generateBtn.textContent;
@@ -833,13 +944,14 @@
                     // Generate data based on current tab
                     switch (currentTab) {
                         case 'text':
-                            data = document.getElementById('text-input').value || "https://qr.vinnesia.my.id";
+                            data = document.getElementById('text-input').value || "Welcome to VIN NESIA QR Generator!";
                             break;
                         case 'wifi':
                             const ssid = document.getElementById('wifi-ssid').value;
                             const password = document.getElementById('wifi-password').value;
                             const encryption = document.getElementById('wifi-encryption').value;
                             if (ssid) data = `WIFI:T:${encryption};S:${ssid};P:${password};;`;
+                            else data = "WIFI:T:WPA;S:MyWiFi;P:password123;;";
                             break;
                         case 'vcard':
                             const name = document.getElementById('vcard-name').value;
@@ -848,34 +960,40 @@
                             const org = document.getElementById('vcard-org').value;
                             const url = document.getElementById('vcard-url').value;
                             if (name) data = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${org}\nURL:${url}\nEND:VCARD`;
+                            else data = "BEGIN:VCARD\nVERSION:3.0\nFN:John Doe\nTEL:+1234567890\nEMAIL:john@example.com\nEND:VCARD";
                             break;
                         case 'email':
                             const to = document.getElementById('email-to').value;
                             const subject = document.getElementById('email-subject').value;
                             const body = document.getElementById('email-body').value;
                             if (to) data = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                            else data = "mailto:example@email.com?subject=Hello&body=Hello World";
                             break;
                         case 'sms':
                             const smsTo = document.getElementById('sms-to').value;
                             const smsBody = document.getElementById('sms-body').value;
                             if (smsTo) data = `SMSTO:${smsTo}:${encodeURIComponent(smsBody)}`;
+                            else data = "SMSTO:+1234567890:Hello from VIN NESIA";
                             break;
                         case 'geo':
                             const lat = document.getElementById('geo-lat').value;
                             const lon = document.getElementById('geo-lon').value;
                             if (lat && lon) data = `geo:${lat},${lon}`;
+                            else data = "geo:-6.2088,106.8456";
                             break;
                         case 'file':
-                            data = fileDataUrl || " ";
+                            data = fileDataUrl || "No file selected - Please upload a file";
                             break;
                         case 'event':
                             const summary = document.getElementById('event-summary').value;
-                            const start = document.getElementById('event-start').value.replace(/[-:]/g, '');
-                            const end = document.getElementById('event-end').value.replace(/[-:]/g, '');
+                            const start = document.getElementById('event-start').value.replace(/[-:T]/g, '').replace(/\d{2}$/, '00');
+                            const end = document.getElementById('event-end').value.replace(/[-:T]/g, '').replace(/\d{2}$/, '00');
                             const location = document.getElementById('event-location').value;
                             const description = document.getElementById('event-description').value;
                             if (summary && start && end) {
                                 data = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${summary}\nDTSTART:${start}\nDTEND:${end}\nLOCATION:${location}\nDESCRIPTION:${description}\nEND:VEVENT\nEND:VCALENDAR`;
+                            } else {
+                                data = "BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:Sample Event\nDTSTART:20241225T120000\nDTEND:20241225T130000\nLOCATION:Jakarta\nDESCRIPTION:Sample event from VIN NESIA\nEND:VEVENT\nEND:VCALENDAR";
                             }
                             break;
                         case 'crypto':
@@ -884,15 +1002,18 @@
                             const amount = document.getElementById('crypto-amount').value;
                             const label = document.getElementById('crypto-label').value;
                             if (address) data = `${cryptoType}:${address}${amount ? `?amount=${amount}` : ''}${label ? `&label=${encodeURIComponent(label)}` : ''}`;
+                            else data = "bitcoin:1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa?amount=0.001&label=Donation";
                             break;
                         case 'phone':
                             const phoneNumber = document.getElementById('phone-number').value;
                             if (phoneNumber) data = `tel:${phoneNumber}`;
+                            else data = "tel:+6281234567890";
                             break;
                         case 'whatsapp':
                             const whatsappNumber = document.getElementById('whatsapp-number').value;
                             const whatsappMessage = document.getElementById('whatsapp-message').value;
                             if (whatsappNumber) data = `https://wa.me/${whatsappNumber.replace('+', '')}${whatsappMessage ? `?text=${encodeURIComponent(whatsappMessage)}` : ''}`;
+                            else data = "https://wa.me/6281234567890?text=Hello from VIN NESIA";
                             break;
                         case 'social':
                             const platform = document.getElementById('social-platform').value;
@@ -901,6 +1022,8 @@
                                 if (platform === 'instagram') data = `https://instagram.com/${username}`;
                                 else if (platform === 'telegram') data = `https://t.me/${username}`;
                                 else if (platform === 'tiktok') data = `https://tiktok.com/@${username}`;
+                            } else {
+                                data = "https://instagram.com/vin.nesia.id";
                             }
                             break;
                         case 'appstore':
@@ -909,46 +1032,84 @@
                             if (appId) {
                                 if (appPlatform === 'playstore') data = appId.startsWith('http') ? appId : `https://play.google.com/store/apps/details?id=${appId}`;
                                 else if (appPlatform === 'appstore') data = appId.startsWith('http') ? appId : `https://apps.apple.com/app/id${appId}`;
+                            } else {
+                                data = "https://play.google.com/store/apps/details?id=com.example.app";
                             }
                             break;
                         case 'multilang':
                             const baseUrl = document.getElementById('multilang-baseurl').value;
                             const langParam = document.getElementById('multilang-langparam').value;
                             if (baseUrl && langParam) data = `${baseUrl}?${langParam}`;
+                            else data = "https://example.com?lang=en";
                             break;
                         case 'htmlcustom':
                             const htmlContent = document.getElementById('htmlcustom-content').value;
                             if (htmlContent) data = `data:text/html;base64,${btoa(htmlContent)}`;
+                            else data = "data:text/html;base64," + btoa("<h1>Hello World</h1>");
                             break;
+                        default:
+                            data = "Welcome to VIN NESIA QR Generator!";
                     }
+
+                    console.log('Generating QR code for data:', data);
 
                     // Get design options
                     const dotColor = document.getElementById('dot-color').value;
                     const bgColor = document.getElementById('bg-color').value;
                     const dotStyle = document.getElementById('dot-style').value;
-                    const qrContainer = document.getElementById('qr-code-container');
                     
-                    if (qrContainer) {
-                        qrContainer.style.backgroundColor = bgColor;
-                    }
+                    // Update container background
+                    const qrContainer = document.getElementById('qr-code-container');
+                    qrContainer.style.backgroundColor = bgColor;
 
-                    // Update QR code
-                    qrCode.update({
-                        data: data || "Welcome to VIN NESIA QR Generator!",
-                        image: logoImage || "",
-                        dotsOptions: { 
-                            color: dotColor, 
-                            type: dotStyle 
+                    // Clear previous QR code
+                    const qrCodeDiv = document.getElementById('qr-code');
+                    qrCodeDiv.innerHTML = '';
+
+                    // Create canvas element
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 280;
+                    canvas.height = 280;
+                    canvas.style.maxWidth = '100%';
+                    canvas.style.height = 'auto';
+                    canvas.style.borderRadius = '12px';
+
+                    // Generate basic QR code first
+                    QRCode.toCanvas(canvas, data, {
+                        width: 280,
+                        margin: 2,
+                        color: {
+                            dark: dotColor,
+                            light: bgColor
                         },
-                        backgroundOptions: { 
-                            color: "transparent" 
+                        errorCorrectionLevel: 'H'
+                    }, function (error) {
+                        if (error) {
+                            console.error('QR Code generation error:', error);
+                            qrCodeDiv.innerHTML = '<div style="color: #ff6b6b; text-align: center; padding: 2rem;">❌ Error generating QR code<br>Please check your input data</div>';
+                            return;
                         }
+                        
+                        console.log('Basic QR code generated, applying custom styling...');
+                        
+                        // Apply custom dot styling
+                        setTimeout(() => {
+                            try {
+                                applyDotStyle(canvas, dotStyle, dotColor, bgColor);
+                                qrCodeDiv.appendChild(canvas);
+                                console.log('QR Code generated successfully with style:', dotStyle);
+                            } catch (styleError) {
+                                console.error('Error applying style:', styleError);
+                                // If styling fails, just show the basic QR code
+                                qrCodeDiv.appendChild(canvas);
+                            }
+                        }, 100);
                     });
 
-                    console.log('QR Code generated successfully');
-
                 } catch (error) {
-                    console.error('Error generating QR code:', error);
+                    console.error('Error in generateQrCode:', error);
+                    const qrCodeDiv = document.getElementById('qr-code');
+                    qrCodeDiv.innerHTML = '<div style="color: #ff6b6b; text-align: center; padding: 2rem;">❌ Error generating QR code<br>Please try again</div>';
                 } finally {
                     // Reset button
                     generateBtn.textContent = originalText;
@@ -1007,10 +1168,21 @@
             const downloadPng = document.getElementById('download-png');
             if (downloadPng) {
                 downloadPng.addEventListener('click', () => {
-                    if (!qrCode) return;
+                    const canvas = document.querySelector('#qr-code canvas');
+                    if (!canvas) {
+                        alert('Please generate a QR code first!');
+                        return;
+                    }
+                    
                     const originalText = downloadPng.textContent;
                     downloadPng.textContent = '⬇️ Downloading...';
-                    qrCode.download({ name: "vinnesia-qr", extension: "png" });
+                    
+                    // Create download link
+                    const link = document.createElement('a');
+                    link.download = 'vinnesia-qr-code.png';
+                    link.href = canvas.toDataURL();
+                    link.click();
+                    
                     setTimeout(() => downloadPng.textContent = originalText, 2000);
                 });
             }
@@ -1018,10 +1190,30 @@
             const downloadSvg = document.getElementById('download-svg');
             if (downloadSvg) {
                 downloadSvg.addEventListener('click', () => {
-                    if (!qrCode) return;
+                    const canvas = document.querySelector('#qr-code canvas');
+                    if (!canvas) {
+                        alert('Please generate a QR code first!');
+                        return;
+                    }
+                    
                     const originalText = downloadSvg.textContent;
                     downloadSvg.textContent = '⬇️ Downloading...';
-                    qrCode.download({ name: "vinnesia-qr", extension: "svg" });
+                    
+                    // Convert canvas to SVG (basic implementation)
+                    const dataURL = canvas.toDataURL();
+                    const svg = `<svg width="${canvas.width}" height="${canvas.height}" xmlns="http://www.w3.org/2000/svg">
+                        <image href="${dataURL}" width="${canvas.width}" height="${canvas.height}"/>
+                    </svg>`;
+                    
+                    const blob = new Blob([svg], { type: 'image/svg+xml' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    const link = document.createElement('a');
+                    link.download = 'vinnesia-qr-code.svg';
+                    link.href = url;
+                    link.click();
+                    
+                    URL.revokeObjectURL(url);
                     setTimeout(() => downloadSvg.textContent = originalText, 2000);
                 });
             }
@@ -1035,6 +1227,29 @@
             }
         }
 
+        // Real-time generation on input change
+        function setupRealTimeGeneration() {
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                if (input.type !== 'file') {
+                    input.addEventListener('input', debounce(generateQrCode, 1000));
+                }
+            });
+        }
+
+        // Debounce function
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
         // Keyboard shortcuts
         function setupKeyboardShortcuts() {
             document.addEventListener('keydown', (e) => {
@@ -1046,7 +1261,8 @@
                             break;
                         case 's':
                             e.preventDefault();
-                            if (qrCode) {
+                            const canvas = document.querySelector('#qr-code canvas');
+                            if (canvas) {
                                 const downloadBtn = document.getElementById('download-png');
                                 if (downloadBtn) downloadBtn.click();
                             }
@@ -1095,30 +1311,18 @@
             }
         }
 
-        // Intersection Observer for animations
-        function setupAnimations() {
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }
-                    });
-                }, { threshold: 0.1 });
-
-                document.querySelectorAll('.glass-card').forEach(card => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    observer.observe(card);
-                });
-            }
-        }
-
         // Initialize everything when DOM is ready
         function initializeApp() {
             console.log('Initializing VIN NESIA QR Generator...');
+            
+            // Check if QRCode library is loaded
+            if (typeof QRCode === 'undefined') {
+                console.log('QRCode library not loaded yet, retrying...');
+                setTimeout(initializeApp, 100);
+                return;
+            }
+            
+            console.log('QRCode library loaded successfully');
             
             // Setup all event handlers
             setupFileHandlers();
@@ -1127,10 +1331,11 @@
             setupKeyboardShortcuts();
             setupFormInteractions();
             setupMobileScroll();
-            setupAnimations();
+            // setupRealTimeGeneration(); // Disabled for now to avoid conflicts
             
-            // Initialize QR Code
-            initQRCode();
+            // Generate initial QR code
+            console.log('Generating initial QR code...');
+            setTimeout(generateQrCode, 1000);
             
             console.log('App initialized successfully');
         }
