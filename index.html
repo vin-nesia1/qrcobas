@@ -3,1755 +3,1148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced QR Code Generator - VIN NESIA</title>
+    <meta name="google-site-verification" content="h4xG5XuTjoTcM8fRui_yj0Dzy2go3ZTa3RfZBGwZmBg" />
     
-    <meta name="description" content="Generate high-quality, professional QR codes with VIN NESIA's advanced QR Code Generator. Features include real-time customization, a built-in QR scanner, bulk generation, gradient colors, custom frames, logo integration, and a sleek modern design. Create QR for URLs, text, WiFi, vCards, emails, SMS, location, files, events, crypto, phone, WhatsApp, social media, and more.">
-    <meta name="keywords" content="qr code generator, qr code online, free qr code, qr code scanner, bulk qr code, custom qr code, professional qr, modern qr, dynamic qr, qr code with logo, qr code for website, qr code for business, qr code for marketing, vcard qr code, wifi qr code, gradient qr, frame qr, vin nesia qr, indonesia qr, pembuat kode QR, pemindai kode QR">
+    <!-- SEO Meta Tags (English) -->
+    <title>QR Code Generator - VIN NESIA</title>
+    <meta name="description" content="Create custom QR Codes with your logo for free. The VIN NESIA QR Code Generator supports Text, URL, WiFi, vCard, Location, and Files. Design your QR code with unique colors and styles.">
+    <meta name="keywords" content="qr code generator, create qr code, free qr code, vin nesia, online qr code, qr code with logo, wifi qr code, vcard qr code, qr generator tool">
     <meta name="author" content="VIN NESIA">
     <link rel="canonical" href="https://qr.vinnesia.my.id">
-    <meta name="theme-color" content="#10101a">
-    
+    <link rel="icon" type="image/png" href="/favicon-v1.png" sizes="48x48">
+    <link rel="shortcut icon" href="/favicon-v1.ico" type="image/x-icon">
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://qr.vinnesia.my.id/">
-    <meta property="og:title" content="Advanced QR Code Generator - VIN NESIA">
-    <meta property="og:description" content="Generate high-quality, professional QR codes with VIN NESIA's advanced QR Code Generator. Features include real-time customization, a built-in QR scanner, bulk generation, gradient colors, custom frames, logo integration, and a sleek modern design.">
-    <meta property="og:image" content="https://placehold.co/1200x630/3b82f6/ffffff?text=VINNESIA+QR">
+    <meta property="og:url" content="https://qr.vinnesia.my.id">
+    <meta property="og:title" content="QR Code Generator - VIN NESIA">
+    <meta property="og:description" content="Easily create custom QR Codes with your logo for free. Supports Text, URL, WiFi, vCard, and more.">
+    <meta property="og:image" content="https://www.vinnesia.my.id/og-image.png">
 
+    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://qr.vinnesia.my.id/">
-    <meta property="twitter:title" content="Advanced QR Code Generator - VIN NESIA">
-    <meta property="twitter:description" content="Generate high-quality, professional QR codes with VIN NESIA's advanced QR Code Generator. Features include real-time customization, a built-in QR scanner, bulk generation, gradient colors, custom frames, logo integration, and a sleek modern design.">
-    <meta property="twitter:image" content="https://placehold.co/1200x630/3b82f6/ffffff?text=VINNESIA+QR">
-
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta property="twitter:url" content="https://qr.vinnesia.my.id">
+    <meta property="twitter:title" content="QR Code Generator - VIN NESIA">
+    <meta property="twitter:description" content="Easily create custom QR Codes with your logo for free. Supports Text, URL, WiFi, vCard, and more.">
+    <meta property="twitter:image" content="https://www.vinnesia.my.id/og-image.png">
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6MQ8QLENDT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6MQ8QLENDT');
+    </script>
 
-    <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
-    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --color-background: #0d0d1a;
-            --color-surface: rgba(20, 20, 35, 0.5);
-            --color-primary: #3b82f6;
-            --color-secondary: #8b5cf6;
-            --color-success: #10b981;
-            --color-warning: #f59e0b;
-            --color-danger: #ef4444;
-            --color-text: #f0f0f5;
-            --color-text-muted: #a0a0b0;
+            --color-background: #0a0a0f;
+            --color-surface: linear-gradient(145deg, #1a1a2e, #16213e);
+            --color-surface-light: rgba(255, 255, 255, 0.05);
+            --color-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --color-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --color-accent: #00f5ff;
+            --color-text: #ffffff;
+            --color-text-muted: #a0a0a0;
             --color-border: rgba(255, 255, 255, 0.1);
-            --transition-speed: 0.4s;
-            --border-radius: 12px;
-            --touch-target-min-size: 48px;
-            --glass-blur: 16px;
-            --spring-easing: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --perspective: 1000px;
-            --shadow-light: rgba(255, 255, 255, 0.1);
-            --shadow-dark: rgba(0, 0, 0, 0.2);
+            --color-action: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.37);
+            --shadow-glow: 0 0 20px rgba(0, 245, 255, 0.3);
+            --backdrop-blur: blur(16px) saturate(180%);
         }
 
-        body.light-mode {
-            --color-background: #f0f2f5;
-            --color-surface: rgba(255, 255, 255, 0.7);
-            --color-text: #2c3e50;
-            --color-text-muted: #7f8c8d;
-            --color-border: rgba(0, 0, 0, 0.1);
-            --shadow-light: rgba(255, 255, 255, 0.8);
-            --shadow-dark: rgba(0, 0, 0, 0.1);
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes aurora { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        @keyframes modal-fade-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        @keyframes loading-spinner { to { transform: rotate(360deg); } }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
-        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); } 50% { box-shadow: 0 0 10px 5px rgba(59, 130, 246, 0.1); } }
-
-        /* Mobile-first base styles */
-        body {
-            font-family: 'Poppins', sans-serif;
+        * {
             margin: 0;
-            background-color: var(--color-background);
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--color-background);
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
             color: var(--color-text);
             line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
             overflow-x: hidden;
-            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
         }
-        body.modal-open { overflow: hidden; }
-        body::before {
-            content: '';
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        /* Animated Background Elements */
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(at 20% 20%, hsla(220, 80%, 50%, 0.2) 0px, transparent 50%),
-                        radial-gradient(at 80% 20%, hsla(280, 80%, 50%, 0.2) 0px, transparent 50%),
-                        radial-gradient(at 20% 80%, hsla(180, 80%, 50%, 0.2) 0px, transparent 50%),
-                        radial-gradient(at 80% 80%, hsla(340, 80%, 50%, 0.2) 0px, transparent 50%);
+            pointer-events: none;
             z-index: -1;
-            animation: aurora 20s ease infinite;
-            background-size: 400% 400%;
-        }
-        body.light-mode::before {
-             background: radial-gradient(at 20% 20%, hsla(220, 80%, 80%, 0.3) 0px, transparent 50%),
-                         radial-gradient(at 80% 20%, hsla(280, 80%, 80%, 0.3) 0px, transparent 50%),
-                         radial-gradient(at 20% 80%, hsla(180, 80%, 80%, 0.3) 0px, transparent 50%),
-                         radial-gradient(at 80% 80%, hsla(340, 80%, 80%, 0.3) 0px, transparent 50%);
         }
 
-        .container { 
+        .floating-shapes {
+            position: absolute;
             width: 100%;
-            max-width: 1200px; 
-            margin: 1rem auto;
-            padding: 0 1rem;
-            box-sizing: border-box;
-            animation: fadeIn 1s ease-out forwards; 
-        }
-        main { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 1.5rem; 
+            height: 100%;
         }
 
-        header { 
-            text-align: center; 
-            padding: 1rem 0.5rem;
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
         }
-        header h1 { 
-            margin: 0;
-            font-weight: 700; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            gap: 0.5rem; 
-            font-size: clamp(1.8rem, 5vw, 2.2rem);
+
+        .shape:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            width: 60px;
+            height: 60px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            animation-delay: 0s;
         }
-        header p { 
-            color: var(--color-text-muted); 
-            margin-top: 0.5rem; 
-            max-width: 600px; 
-            margin-left: auto; 
-            margin-right: auto; 
-            font-size: clamp(0.85rem, 2.5vw, 1rem);
-            line-height: 1.4;
-        }
-        .logo-img { 
+
+        .shape:nth-child(2) {
+            top: 60%;
+            right: 20%;
+            width: 40px;
             height: 40px;
+            background: var(--color-secondary);
+            transform: rotate(45deg);
+            animation-delay: 2s;
         }
 
-        .controls, .output, .modal-content {
-            background: var(--color-surface);
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: var(--border-radius);
-            border: 1px solid var(--color-border);
-            backdrop-filter: blur(var(--glass-blur));
-            box-shadow: 0 10px 30px var(--shadow-dark);
-            transition: all 0.2s ease;
-        }
-        .output { 
-            position: static;
-            margin-top: 0;
-            margin-bottom: 0;
+        .shape:nth-child(3) {
+            bottom: 30%;
+            left: 70%;
+            width: 80px;
+            height: 80px;
+            background: var(--color-primary);
+            border-radius: 20px;
+            animation-delay: 4s;
         }
 
-        .tabs-container {
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 3rem 1rem;
+            position: relative;
+        }
+
+        .header-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .logo-img {
+            height: 60px;
+            filter: drop-shadow(0 0 10px var(--color-accent));
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { filter: drop-shadow(0 0 10px var(--color-accent)); }
+            100% { filter: drop-shadow(0 0 20px var(--color-accent)) brightness(1.2); }
+        }
+
+        header p {
+            color: var(--color-text-muted);
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+
+        /* Main Layout */
+        main {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.3rem;
-            padding-bottom: 1rem;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid var(--color-border);
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            align-items: start;
         }
-        .tab-button {
+
+        /* Glass Morphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: var(--backdrop-blur);
+            border: 1px solid var(--color-border);
+            border-radius: 24px;
+            box-shadow: var(--shadow-glass);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        }
+
+        .controls {
+            padding: 2.5rem;
             display: flex;
             flex-direction: column;
-            align-items: center; 
-            justify-content: center; 
-            gap: 2px;
-            padding: 0.5rem 0.2rem;
-            min-height: var(--touch-target-min-size);
-            box-sizing: border-box; 
-            cursor: pointer; 
-            border: 1px solid transparent; 
-            background: transparent; 
-            color: var(--color-text-muted);
-            border-radius: var(--border-radius); 
-            transition: all 0.2s var(--spring-easing);
-            font-size: 0.7rem;
-            font-weight: 600; 
-            white-space: nowrap; 
-            text-overflow: ellipsis; 
-            overflow: hidden; 
+            gap: 2rem;
+        }
+
+        .output {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+            position: sticky;
+            top: 2rem;
             text-align: center;
         }
-        .tab-button i {
-            display: block;
-            margin-bottom: 2px;
-            font-size: 0.9rem;
-        }
-        .tab-button:hover { background-color: rgba(255, 255, 255, 0.05); color: var(--color-text); }
-        .tab-button.active {
-            background: var(--color-primary); color: white; border-color: var(--color-primary);
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transform: translateY(-2px);
-        }
-        .tabs-content-viewport { overflow: hidden; position: relative; min-height: 280px; }
-        .tabs-content-wrapper { display: flex; transition: transform 0.2s var(--spring-easing); } 
-        .tab-content { width: 100%; flex-shrink: 0; display: block; padding-top: 0.5rem; }
-        
-        .form-group { margin-bottom: 1rem; position: relative; }
-        .form-group label { display: block; margin-bottom: 0.3rem; font-weight: 600; color: var(--color-text); font-size: 0.9rem; }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%; 
-            padding: 0.75rem;
-            border: 1px solid var(--color-border);
-            border-radius: 8px; 
-            box-sizing: border-box; 
-            font-size: 1rem;
-            background-color: rgba(0,0,0,0.3); 
-            color: var(--color-text);
-            transition: all 0.2s ease;
-        }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-            outline: none; border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
-        }
-        .form-group.invalid input, .form-group.invalid textarea, .form-group.invalid select {
-            border-color: var(--color-danger);
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.4);
-        }
-        .form-group.invalid .validation-message { display: block; color: var(--color-danger); font-size: 0.8em; margin-top: 0.2rem; }
-        .validation-message { display: none; }
-        .form-row { display: grid; grid-template-columns: 1fr; gap: 0.8rem; }
-        
-        .output-header { 
-            display: flex; 
-            width: 100%; 
-            margin-bottom: 1rem; 
-            flex-direction: column;
-            align-items: stretch; 
-            gap: 0.5rem;
-        }
-        .output-header > div { display: flex; gap: 0.3rem; justify-content: center; }
-        .output-header h2 { margin: 0; font-size: 1.2em; text-align: center; }
-        .output-header button { flex: 1; padding: 0.6rem 0.8rem; font-size: 0.8rem; }
-        #qr-code-container {
-            width: 100%; 
-            max-width: 280px;
-            margin: 0 auto 1rem auto;
-            aspect-ratio: 1 / 1; 
-            padding: 1rem; border-radius: var(--border-radius);
-            box-shadow: 0 0 30px rgba(0,0,0,0.5); box-sizing: border-box;
-            animation: float 4s ease-in-out infinite;
-        }
-        .download-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; width: 100%; }
-        
-        .collapsible-header { font-size: 1rem; padding: 0.8rem 0; }
-        .design-grid { grid-template-columns: 1fr; gap: 0.8rem; }
-        .templates-grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-        .template-btn { padding: 0.5rem; aspect-ratio: 1; }
-        .template-btn i { font-size: 1.5rem; }
-        .template-btn span { font-size: 0.7rem; }
 
-        .modal-overlay {
-            position: fixed;
+        /* Modern Tab System */
+        .tabs-container {
+            margin-bottom: 2rem;
+        }
+
+        .tabs-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-button {
+            padding: 1rem;
+            border: none;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
             top: 0;
-            left: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 999;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
         }
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
+
+        .tab-button:hover::before {
+            left: 100%;
         }
-        .modal-content {
-            background: var(--color-surface);
+
+        .tab-button:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-text);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .tab-button.active {
+            background: var(--color-primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--color-text);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
             padding: 1rem;
-            border-radius: var(--border-radius);
-            position: relative;
-            box-shadow: 0 10px 30px var(--shadow-dark);
-            width: 95%;
-            max-height: 95vh;
-            overflow-y: auto;
-            animation: modal-fade-in 0.3s forwards;
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px rgba(0, 245, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input[type="color"] {
+            padding: 0.5rem;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .file-warning {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+            padding: 1rem;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(8px);
+        }
+
+        /* Design Options */
+        .design-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .design-section h3 {
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .design-section h3::before {
+            content: '🎨';
+            font-size: 1.2em;
+        }
+
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* QR Code Display */
+        #qr-code-container {
+            width: 100%;
+            max-width: 320px;
+            padding: 2rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        #qr-code-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 0 30px rgba(0, 245, 255, 0.2);
+        }
+
+        #qr-code canvas,
+        #qr-code svg {
+            border-radius: 12px;
+            display: block;
+            width: 100%;
             height: auto;
         }
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        .modal-close-btn {
-            background: transparent;
+        /* Buttons */
+        .btn {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
             border: none;
-            color: var(--color-text-muted);
-            font-size: 2rem;
-            line-height: 1;
             cursor: pointer;
-            min-width: 44px;
-            min-height: 44px;
-        }
-        .btn { min-height: 48px; font-size: 1rem; padding: 0.8rem 1.5rem; }
-        .palette-color, .accent-color-swatch { min-width: 48px; min-height: 48px; }
-        
-        .toast-notification { bottom: 10px; left: 10px; right: 10px; width: auto; }
-        .qr-loading-spinner { border: 4px solid rgba(255, 255, 255, 0.3); border-top: 4px solid var(--color-primary); border-radius: 50%; width: 50px; height: 50px; animation: loading-spinner 1s linear infinite; position: absolute; z-index: 2; display: none; }
-        #qr-code-container.loading .qr-loading-spinner { display: block; }
-        #qr-code-container.loading #qr-code { opacity: 0.5; }
-        #qr-code canvas, #qr-code svg { border-radius: 8px; display: block; width: 100% !important; height: auto !important; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .theme-toggle-container { position: fixed; top: 1rem; right: 1rem; z-index: 100; }
-        .theme-toggle-button { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 50%; width: 48px; height: 48px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 1.2em; color: var(--color-text); transition: all 0.2s var(--spring-easing); box-shadow: 0 2px 8px rgba(0,0,0,0.1); box-sizing: border-box; }
-        .theme-toggle-button:hover { transform: scale(1.1) rotate(15deg); border-color: var(--color-primary); }
-
-        .drop-zone {
-            display: flex;
-            flex-direction: column;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
-            border: 2px dashed var(--color-border);
-            border-radius: var(--border-radius);
-            text-align: center;
-            transition: all 0.2s ease;
-        }
-        .drop-zone.hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: var(--color-primary);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        #qr-history-list li {
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-generate {
+            background: var(--color-action);
+            color: white;
+            width: 100%;
+            padding: 1.25rem;
+            font-size: 1.1rem;
+            margin-top: auto;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(79, 172, 254, 0.4);
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-secondary {
+            background: var(--color-secondary);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--color-accent);
+            border: 2px solid var(--color-accent);
+        }
+
+        .btn-outline:hover {
+            background: var(--color-accent);
+            color: var(--color-background);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            margin-top: 4rem;
+            padding: 3rem 1rem;
+            text-align: center;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .footer-content {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 1rem;
-            margin-bottom: 0.5rem;
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
-        }
-        #qr-history-list li div:first-child {
-            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            width: 100%;
-        }
-        
-        /* Desktop and Tablet Overrides */
-        @media (min-width: 769px) {
-            .container { margin: 2rem auto; }
-            .controls, .output, .modal-content { padding: 2rem; }
-            header { padding: 2rem 1rem; }
-            header h1 {
-                flex-direction: row;
-                gap: 1rem;
-                font-size: clamp(2rem, 4.5vw, 2.5rem);
-            }
-            header p { font-size: clamp(1rem, 2.8vw, 1.1rem); line-height: 1.6; }
-            .logo-img { height: 50px; }
-            .tabs-container { 
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-                gap: 0.5rem; 
-                overflow-x: unset;
-            }
-            .tab-button {
-                flex-direction: row;
-                font-size: 0.8rem;
-                padding: 0.6rem 0.8rem;
-            }
-            .tab-button i { font-size: 1em; margin-bottom: 0; }
-            .form-row { grid-template-columns: 1fr 1fr; }
-            .output-header { flex-direction: row; align-items: center; }
-            .output-header h2 { text-align: left; }
-            #qr-code-container { max-width: none; }
-            .download-buttons { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
-            .design-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-            .templates-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
-            .toast-notification { bottom: 20px; right: 20px; left: auto; width: auto; }
-            .modal-content {
-                width: 95%;
-                height: auto;
-            }
-            #qr-history-list li {
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
-        }
-        
-        @media (min-width: 992px) {
-            main { grid-template-columns: 2fr 1fr; }
-            .output { position: sticky; top: 2rem; }
-            .tabs-container { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
-            .tab-button { font-size: 0.9rem; }
+            gap: 2rem;
         }
 
-        @media (min-width: 1200px) {
-            header h1 { font-size: 3em; }
-            header p { font-size: 1.2em; }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
         }
-        
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
+
+        .footer-links a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-accent);
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            main {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .output {
+                position: static;
+            }
+
+            .tabs-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 1rem 0;
+            }
+
+            header {
+                padding: 2rem 1rem;
+            }
+
+            header h1 {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo-img {
+                height: 45px;
+            }
+
+            .controls,
+            .output {
+                padding: 1.5rem;
+            }
+
+            .design-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .download-buttons {
+                flex-direction: column;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tabs-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .tab-button {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            #qr-code-container {
+                max-width: 280px;
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
 
     <header>
-        <h1><img src="logo.png" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/50x50/3b82f6/ffffff?text=VN';" alt="VIN NESIA Logo" class="logo-img"> VIN NESIA</h1>
-        <p>A Premium QR Code Suite. Generate, customize, scan, and bulk-create QR codes with a professional, real-time interface.</p>
+        <div class="header-glow"></div>
+        <h1>
+            <img src="logo.png" alt="VIN NESIA Logo" class="logo-img" onerror="this.style.display='none'">
+            VIN NESIA
+        </h1>
+        <p>Advanced QR Code Generator</p>
     </header>
 
     <main class="container">
-        <div class="controls" role="region" aria-label="QR Code Generator Controls">
-            <div class="tabs-container" role="tablist" aria-label="QR Code Types">
-                <button class="tab-button active" role="tab" aria-selected="true" id="tab-text" data-tab-index="0" data-tab-name="text" onclick="App.openTab(event, 'text')"><i class="fas fa-font" aria-hidden="true"></i><span>Text/URL</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-wifi" data-tab-index="1" data-tab-name="wifi" onclick="App.openTab(event, 'wifi')"><i class="fas fa-wifi" aria-hidden="true"></i><span>WiFi</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-vcard" data-tab-index="2" data-tab-name="vcard" onclick="App.openTab(event, 'vcard')"><i class="fas fa-address-card" aria-hidden="true"></i><span>vCard</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-email" data-tab-index="3" data-tab-name="email" onclick="App.openTab(event, 'email')"><i class="fas fa-envelope" aria-hidden="true"></i><span>Email</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-sms" data-tab-index="4" data-tab-name="sms" onclick="App.openTab(event, 'sms')"><i class="fas fa-sms" aria-hidden="true"></i><span>SMS</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-location" data-tab-index="5" data-tab-name="location" onclick="App.openTab(event, 'location')"><i class="fas fa-map-marker-alt" aria-hidden="true"></i><span>Location</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-file" data-tab-index="6" data-tab-name="file" onclick="App.openTab(event, 'file')"><i class="fas fa-file-alt" aria-hidden="true"></i><span>File</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-event" data-tab-index="7" data-tab-name="event" onclick="App.openTab(event, 'event')"><i class="fas fa-calendar-alt" aria-hidden="true"></i><span>Event</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-crypto" data-tab-index="8" data-tab-name="crypto" onclick="App.openTab(event, 'crypto')"><i class="fab fa-bitcoin" aria-hidden="true"></i><span>Crypto</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-phone" data-tab-index="9" data-tab-name="phone" onclick="App.openTab(event, 'phone')"><i class="fas fa-phone" aria-hidden="true"></i><span>Phone</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-whatsapp" data-tab-index="10" data-tab-name="whatsapp" onclick="App.openTab(event, 'whatsapp')"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-social" data-tab-index="11" data-tab-name="social" onclick="App.openTab(event, 'social')"><i class="fas fa-share-alt" aria-hidden="true"></i><span>Social</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-appstore" data-tab-index="12" data-tab-name="appstore" onclick="App.openTab(event, 'appstore')"><i class="fab fa-app-store-ios" aria-hidden="true"></i><span>App Store</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-multilang" data-tab-index="13" data-tab-name="multilang" onclick="App.openTab(event, 'multilang')"><i class="fas fa-globe" aria-hidden="true"></i><span>Multi-Lang</span></button>
-                <button class="tab-button" role="tab" aria-selected="false" id="tab-html" data-tab-index="14" data-tab-name="html" onclick="App.openTab(event, 'html')"><i class="fab fa-html5" aria-hidden="true"></i><span>HTML</span></button>
-            </div>
-
-            <div class="tabs-content-viewport">
-                <div class="tabs-content-wrapper" role="tabpanel" aria-labelledby="tab-text">
-                    <div id="text" class="tab-content" role="tabpanel" aria-labelledby="tab-text">
-                        <div class="form-group">
-                            <label for="text-input">Your URL or Text</label>
-                            <textarea class="qr-input typing-placeholder" id="text-input" placeholder="e.g., https://www.vinnesia.my.id" list="common-prefixes" required></textarea>
-                            <button class="voice-input-btn" id="voice-input-btn-text" aria-label="Use voice input"><i class="fas fa-microphone"></i></button>
-                            <datalist id="common-prefixes">
-                                <option value="https://"></option>
-                                <option value="http://"></option>
-                                <option value="mailto:"></option>
-                                <option value="tel:"></option>
-                            </datalist>
-                            <span class="validation-message" role="alert" aria-live="polite">Please enter valid URL or text.</span>
-                            <div class="character-counter" id="text-input-counter" aria-live="polite">0/250</div>
-                            <button class="btn btn-outline mt-2 copy-to-clipboard" data-target="text-input" aria-label="Copy text to clipboard"><i class="fas fa-copy" aria-hidden="true"></i> Copy Text</button>
-                        </div>
-                    </div>
-                    <div id="wifi" class="tab-content" role="tabpanel" aria-labelledby="tab-wifi"></div>
-                    <div id="vcard" class="tab-content" role="tabpanel" aria-labelledby="tab-vcard"></div>
-                    <div id="event" class="tab-content" role="tabpanel" aria-labelledby="tab-event"></div>
-                    <div id="email" class="tab-content" role="tabpanel" aria-labelledby="tab-email"></div>
-                    <div id="sms" class="tab-content" role="tabpanel" aria-labelledby="tab-sms"></div>
-                    <div id="location" class="tab-content" role="tabpanel" aria-labelledby="tab-location"></div>
-                    <div id="file" class="tab-content" role="tabpanel" aria-labelledby="tab-file"></div>
-                    <div id="crypto" class="tab-content" role="tabpanel" aria-labelledby="tab-crypto"></div>
-                    <div id="phone" class="tab-content" role="tabpanel" aria-labelledby="tab-phone"></div>
-                    <div id="whatsapp" class="tab-content" role="tabpanel" aria-labelledby="tab-whatsapp"></div>
-                    <div id="social" class="tab-content" role="tabpanel" aria-labelledby="tab-social"></div>
-                    <div id="appstore" class="tab-content" role="tabpanel" aria-labelledby="tab-appstore"></div>
-                    <div id="multilang" class="tab-content" role="tabpanel" aria-labelledby="tab-multilang"></div>
-                    <div id="html" class="tab-content" role="tabpanel" aria-labelledby="tab-html"></div>
+        <div class="controls glass-card">
+            <div class="tabs-container">
+                <div class="tabs-grid">
+                    <button class="tab-button active" onclick="openTab(event, 'text')">📝 Text/URL</button>
+                    <button class="tab-button" onclick="openTab(event, 'wifi')">📶 WiFi</button>
+                    <button class="tab-button" onclick="openTab(event, 'vcard')">👤 vCard</button>
+                    <button class="tab-button" onclick="openTab(event, 'email')">📧 Email</button>
+                    <button class="tab-button" onclick="openTab(event, 'sms')">📱 SMS</button>
+                    <button class="tab-button" onclick="openTab(event, 'geo')">📍 Location</button>
+                    <button class="tab-button" onclick="openTab(event, 'file')">📁 File</button>
+                    <button class="tab-button" onclick="openTab(event, 'event')">🗓️ Event</button>
+                    <button class="tab-button" onclick="openTab(event, 'crypto')">💰 Crypto</button>
+                    <button class="tab-button" onclick="openTab(event, 'phone')">☎️ Phone</button>
+                    <button class="tab-button" onclick="openTab(event, 'whatsapp')">💬 WhatsApp</button>
+                    <button class="tab-button" onclick="openTab(event, 'social')">🌐 Social</button>
+                    <button class="tab-button" onclick="openTab(event, 'appstore')">📱 App Store</button>
+                    <button class="tab-button" onclick="openTab(event, 'multilang')">🌍 Multi-Lang</button>
+                    <button class="tab-button" onclick="openTab(event, 'htmlcustom')">📄 HTML</button>
                 </div>
             </div>
 
-            <div id="templates-collapsible" class="collapsible mt-4" role="group" aria-label="QR Code Templates">
-                <div class="collapsible-header" role="button" aria-expanded="false" aria-controls="templates-content-panel" tabindex="0">
-                    <span><i class="fas fa-layer-group" aria-hidden="true"></i> Professional Templates</span>
-                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                </div>
-                <div class="collapsible-content" id="templates-content-panel">
-                    <div class="templates-grid">
-                        <button class="template-btn" onclick="App.applyTemplate('default')" aria-label="Apply Default Template">
-                            <i class="fas fa-qrcode"></i><span>Default</span>
-                        </button>
-                        <button class="template-btn" onclick="App.applyTemplate('social')" aria-label="Apply Social Media Template">
-                            <i class="fas fa-share-alt"></i><span>Social</span>
-                        </button>
-                        <button class="template-btn" onclick="App.applyTemplate('business')" aria-label="Apply Business Card Template">
-                            <i class="fas fa-briefcase"></i><span>Business</span>
-                        </button>
-                        <button class="template-btn" onclick="App.applyTemplate('event')" aria-label="Apply Wedding Event Template">
-                            <i class="fas fa-glass-cheers"></i><span>Event</span>
-                        </button>
-                    </div>
+            <!-- Tab Contents -->
+            <div id="text" class="tab-content active"><div class="form-group"><label for="text-input">Your Text or URL</label><textarea id="text-input" placeholder="e.g., https://www.vinnesia.my.id"></textarea></div></div>
+            <div id="wifi" class="tab-content"><div class="form-group"><label for="wifi-ssid">Network Name (SSID)</label><input type="text" id="wifi-ssid" placeholder="MyWiFiNetwork"></div><div class="form-group"><label for="wifi-password">Password</label><input type="text" id="wifi-password" placeholder="SecretPassword"></div><div class="form-group"><label for="wifi-encryption">Encryption</label><select id="wifi-encryption"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">None</option></select></div></div>
+            <div id="vcard" class="tab-content"><div class="form-group"><label for="vcard-name">Full Name</label><input type="text" id="vcard-name"></div><div class="form-group"><label for="vcard-phone">Phone</label><input type="tel" id="vcard-phone"></div><div class="form-group"><label for="vcard-email">Email</label><input type="email" id="vcard-email"></div><div class="form-group"><label for="vcard-org">Organization</label><input type="text" id="vcard-org"></div><div class="form-group"><label for="vcard-url">Website</label><input type="url" id="vcard-url"></div></div>
+            <div id="email" class="tab-content"><div class="form-group"><label for="email-to">Recipient Email</label><input type="email" id="email-to" placeholder="recipient@example.com"></div><div class="form-group"><label for="email-subject">Subject</label><input type="text" id="email-subject"></div><div class="form-group"><label for="email-body">Message</label><textarea id="email-body"></textarea></div></div>
+            <div id="sms" class="tab-content"><div class="form-group"><label for="sms-to">Phone Number</label><input type="tel" id="sms-to" placeholder="+1234567890"></div><div class="form-group"><label for="sms-body">Message</label><textarea id="sms-body"></textarea></div></div>
+            <div id="geo" class="tab-content"><div class="form-group"><label for="geo-lat">Latitude</label><input type="text" id="geo-lat" placeholder="40.7128"></div><div class="form-group"><label for="geo-lon">Longitude</label><input type="text" id="geo-lon" placeholder="-74.0060"></div></div>
+            <div id="file" class="tab-content"><div class="form-group"><label for="file-input">Upload File</label><input type="file" id="file-input"><div class="file-warning"><strong>Warning:</strong> For very small files (< 2KB) only. Large files will create unscannable QR codes. For larger files, upload them to a cloud service and create a QR code from the share link.</div></div></div>
+            <div id="event" class="tab-content">
+                <div class="form-group"><label for="event-summary">Event Title</label><input type="text" id="event-summary" placeholder="My Event"></div>
+                <div class="form-group"><label for="event-start">Start Date (YYYY-MM-DDTHH:MM)</label><input type="text" id="event-start" placeholder="2023-12-31T23:59"></div>
+                <div class="form-group"><label for="event-end">End Date (YYYY-MM-DDTHH:MM)</label><input type="text" id="event-end" placeholder="2024-01-01T00:01"></div>
+                <div class="form-group"><label for="event-location">Location</label><input type="text" id="event-location" placeholder="Jakarta, Indonesia"></div>
+                <div class="form-group"><label for="event-description">Description</label><textarea id="event-description" placeholder="Event details..."></textarea></div>
+            </div>
+            <div id="crypto" class="tab-content">
+                <div class="form-group"><label for="crypto-type">Crypto Type</label><select id="crypto-type"><option value="bitcoin">Bitcoin</option><option value="ethereum">Ethereum</option><option value="litecoin">Litecoin</option></select></div>
+                <div class="form-group"><label for="crypto-address">Wallet Address</label><input type="text" id="crypto-address" placeholder="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"></div>
+                <div class="form-group"><label for="crypto-amount">Amount</label><input type="text" id="crypto-amount" placeholder="0.001"></div>
+                <div class="form-group"><label for="crypto-label">Label</label><input type="text" id="crypto-label" placeholder="Donation"></div>
+            </div>
+            <div id="phone" class="tab-content">
+                <div class="form-group"><label for="phone-number">Phone Number</label><input type="tel" id="phone-number" placeholder="+6281234567890"></div>
+            </div>
+            <div id="whatsapp" class="tab-content">
+                <div class="form-group"><label for="whatsapp-number">Phone Number</label><input type="tel" id="whatsapp-number" placeholder="+6281234567890"></div>
+                <div class="form-group"><label for="whatsapp-message">Pre-filled Message</label><textarea id="whatsapp-message" placeholder="Hello!"></textarea></div>
+            </div>
+            <div id="social" class="tab-content">
+                <div class="form-group"><label for="social-platform">Platform</label><select id="social-platform"><option value="instagram">Instagram</option><option value="telegram">Telegram</option><option value="tiktok">TikTok</option></select></div>
+                <div class="form-group"><label for="social-username">Username</label><input type="text" id="social-username" placeholder="username"></div>
+            </div>
+            <div id="appstore" class="tab-content">
+                <div class="form-group"><label for="appstore-platform">Platform</label><select id="appstore-platform"><option value="playstore">Google Play Store</option><option value="appstore">Apple App Store</option></select></div>
+                <div class="form-group"><label for="appstore-id">App ID or URL</label><input type="text" id="appstore-id" placeholder="com.example.app or full URL"></div>
+            </div>
+            <div id="multilang" class="tab-content">
+                <div class="form-group"><label for="multilang-baseurl">Base URL</label><input type="url" id="multilang-baseurl" placeholder="https://example.com"></div>
+                <div class="form-group"><label for="multilang-langparam">Language Parameter (e.g., lang=en)</label><input type="text" id="multilang-langparam" placeholder="lang=en"></div>
+            </div>
+            <div id="htmlcustom" class="tab-content">
+                <div class="form-group"><label for="htmlcustom-content">HTML Content</label><textarea id="htmlcustom-content" placeholder="<h1>Hello World</h1>"></textarea></div>
+            </div>
+
+            <div class="design-section">
+                <h3>Design Options</h3>
+                <div class="design-grid">
+                    <div class="form-group"><label for="dot-color">Dot Color</label><input type="color" id="dot-color" value="#000000"></div>
+                    <div class="form-group"><label for="bg-color">Background Color</label><input type="color" id="bg-color" value="#ffffff"></div>
+                    <div class="form-group"><label for="dot-style">Dot Style</label><select id="dot-style"><option value="square">Square</option><option value="dots">Dots</option><option value="rounded">Rounded</option><option value="extra-rounded">Extra Rounded</option><option value="classy">Classy</option><option value="classy-rounded">Classy Rounded</option></select></div>
+                    <div class="form-group"><label for="logo-upload">Upload Logo</label><input type="file" id="logo-upload" accept="image/*"></div>
                 </div>
             </div>
 
-            <div id="design-options-collapsible" class="collapsible" role="group" aria-label="QR Code Design Options">
-                <div class="collapsible-header" role="button" aria-expanded="false" aria-controls="design-content-panel" tabindex="0">
-                    <span><i class="fas fa-palette" aria-hidden="true"></i> Expert Design Options</span>
-                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                </div>
-                <div class="collapsible-content" id="design-content-panel">
-                    <div class="form-group" id="accent-color-container">
-                        <label>Accent Color</label>
-                        <div id="accent-color-palette" role="group" aria-label="Select accent color"></div>
-                    </div>
-
-                    <div class="design-grid">
-                        <div class="form-group"><label for="dot-style">Dot Style</label><select class="qr-input" id="dot-style"><option value="square">Square</option><option value="dots">Dots</option><option value="rounded">Rounded</option><option value="extra-rounded">Extra Rounded</option><option value="classy">Classy</option><option value="classy-rounded">Classy Rounded</option></select></div>
-                        <div class="form-group"><label for="dot-color">Dot Color</label><input type="color" class="qr-input" id="dot-color" value="#3b82f6"></div>
-                        <div class="form-group">
-                            <label>Dot Gradient</label>
-                            <div id="dot-gradient-colors">
-                                <div class="gradient-picker">
-                                    <input type="color" class="qr-input" data-gradient-stop="0" value="#3b82f6" aria-label="Dot gradient start color">
-                                    <input type="color" class="qr-input" data-gradient-stop="1" value="#8b5cf6" aria-label="Dot gradient end color">
-                                    <button onclick="App.addGradientColor('dot')" aria-label="Add dot gradient color"><i class="fas fa-plus-circle" aria-hidden="true"></i></button>
-                                </div>
-                            </div>
-                            <div class="gradient-options">
-                                <label for="dot-gradient-type">Type:</label>
-                                <select class="qr-input" id="dot-gradient-type" aria-label="Dot gradient type">
-                                    <option value="radial">Radial</option><option value="linear">Linear</option>
-                                </select>
-                                <label for="dot-gradient-rotation">Rotation:</label>
-                                <input type="range" class="qr-input" id="dot-gradient-rotation" min="0" max="360" value="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="360" aria-label="Dot gradient rotation">
-                                <span><span id="dot-gradient-rotation-value">0</span>°</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group"><label for="bg-color">Background Color</label><input type="color" class="qr-input" id="bg-color" value="#0d0d1a"></div>
-                        <div class="form-group">
-                            <label>Background Gradient</label>
-                            <div id="bg-gradient-colors">
-                                <div class="gradient-picker">
-                                    <input type="color" class="qr-input" data-gradient-stop="0" value="#0d0d1a" aria-label="Background gradient start color">
-                                    <input type="color" class="qr-input" data-gradient-stop="1" value="#1a1a2e" aria-label="Background gradient end color">
-                                    <button onclick="App.addGradientColor('bg')" aria-label="Add background gradient color"><i class="fas fa-plus-circle" aria-hidden="true"></i></button>
-                                </div>
-                            </div>
-                            <div class="gradient-options">
-                                <label for="bg-gradient-type">Type:</label>
-                                <select class="qr-input" id="bg-gradient-type" aria-label="Background gradient type">
-                                    <option value="radial">Radial</option><option value="linear">Linear</option>
-                                </select>
-                                <label for="bg-gradient-rotation">Rotation:</label>
-                                <input type="range" class="qr-input" id="bg-gradient-rotation" min="0" max="360" value="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="360" aria-label="Background gradient rotation">
-                                <span><span id="bg-gradient-rotation-value">0</span>°</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group"><label for="corner-square-style">Corner Square Style</label><select class="qr-input" id="corner-square-style"><option value="square">Square</option><option value="extra-rounded">Extra Rounded</option><option value="dot">Dot</option></select></div>
-                        <div class="form-group"><label for="corner-square-color">Corner Square Color</label><input type="color" class="qr-input" id="corner-square-color" value="#3b82f6"></div>
-                        
-                        <div class="form-group"><label for="corner-dot-style">Corner Dot Style</label><select class="qr-input" id="corner-dot-style"><option value="square">Square</option><option value="dot">Dot</option></select></div>
-                        <div class="form-group"><label for="corner-dot-color">Corner Dot Color</label><input type="color" class="qr-input" id="corner-dot-color" value="#3b82f6"></div>
-
-                        <div class="form-group"><label for="margin">Margin</label><input type="number" class="qr-input" id="margin" value="0" min="0" max="100" aria-label="QR Code margin"></div>
-                        <div class="form-group"><label for="image-size">Image Size</label><input type="range" class="qr-input" id="image-size" min="0.1" max="1" step="0.05" value="0.4" aria-valuenow="0.4" aria-valuemin="0.1" aria-valuemax="1" aria-label="Logo image size in QR code"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="logo-upload">Upload Logo (or Paste from Clipboard)</label>
-                        <div class="drop-zone" id="logo-drop-zone" role="group" aria-label="Drag and drop area for logo upload">
-                            <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
-                            <p>Drag & drop, click to upload, or paste logo</p>
-                            <input type="file" id="logo-upload" accept="image/*" style="display:none;" aria-label="Upload logo file">
-                            <button type="button" class="btn btn-outline mt-2" onclick="document.getElementById('logo-upload').click();" aria-label="Choose logo file"><i class="fas fa-upload" aria-hidden="true"></i> Choose Logo</button>
-                        </div>
-                        <div id="logo-palette-container" style="display: none; margin-top: 1rem;">
-                            <label>Smart Palette (from Logo)</label>
-                            <div id="logo-palette" role="group" aria-label="Extracted color palette from logo"></div>
-                        </div>
-                        <div id="logo-controls" style="display: none; margin-top: 1rem;" role="group" aria-label="Logo positioning controls">
-                            <button class="btn btn-outline" onclick="App.removeLogo()" aria-label="Remove uploaded logo"><i class="fas fa-times-circle" aria-hidden="true"></i> Remove Logo</button>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="frame-text">Frame Text (e.g., SCAN ME)</label>
-                        <input type="text" class="qr-input" id="frame-text" placeholder="SCAN ME" aria-label="Text to display in QR frame">
-                    </div>
-                    <div class="form-group">
-                        <label for="frame-color">Frame Color</label>
-                        <input type="color" class="qr-input" id="frame-color" value="#3b82f6" aria-label="QR frame color">
-                    </div>
-                    <div class="form-group">
-                        <label for="frame-font-color">Frame Font Color</label>
-                        <input type="color" class="qr-input" id="frame-font-color" value="#ffffff" aria-label="QR frame font color">
-                    </div>
-                    <div class="form-group">
-                        <label for="frame-corner-radius">Frame Corner Radius (%)</label>
-                        <input type="range" class="qr-input" id="frame-corner-radius" min="0" max="50" value="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="50" aria-label="QR frame corner radius">
-                        <span><span id="frame-corner-radius-value">0</span>%</span>
-                    </div>
-                </div>
-            </div>
-
-            <div id="recent-qrs-collapsible" class="collapsible mt-4" role="region" aria-label="Recent QR Codes History">
-                <div class="collapsible-header" role="button" aria-expanded="false" aria-controls="history-content-panel" tabindex="0">
-                    <span><i class="fas fa-history" aria-hidden="true"></i> Recent QR Codes</span>
-                    <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                </div>
-                <div class="collapsible-content" id="history-content-panel">
-                    <div class="history-controls" style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
-                        <input type="search" id="history-search" placeholder="Search history..." class="qr-input" style="flex-grow: 1;">
-                        <button class="btn btn-outline" onclick="App.exportHistory()" aria-label="Export history"><i class="fas fa-file-export"></i></button>
-                        <button class="btn btn-outline" onclick="document.getElementById('history-import-input').click()" aria-label="Import history"><i class="fas fa-file-import"></i></button>
-                        <input type="file" id="history-import-input" accept=".json" style="display:none;">
-                    </div>
-                    <ul id="qr-history-list" role="list"></ul>
-                    <div id="history-bulk-actions" style="display: none; margin-top: 1rem; display:flex; gap: 0.5rem;">
-                        <button class="btn btn-primary" onclick="App.exportSelectedHistory()"><i class="fas fa-file-export"></i> Export Selected</button>
-                        <button class="btn btn-danger" onclick="App.deleteSelectedHistory()"><i class="fas fa-trash-alt"></i> Delete Selected</button>
-                    </div>
-                    <button class="btn btn-outline mt-2" onclick="App.clearHistory()" aria-label="Clear all QR code history"><i class="fas fa-trash-alt" aria-hidden="true"></i> Clear History</button>
-                </div>
-            </div>
+            <button id="generate-btn" class="btn btn-generate">✨ Generate QR Code</button>
         </div>
 
-        <div class="output" role="region" aria-label="QR Code Preview and Download">
-            <div class="output-header">
-                <h2>Preview</h2>
-                <div>
-                    <button id="share-config-btn" class="btn btn-outline" aria-label="Share current QR configuration"><i class="fas fa-share-alt"></i> Share</button>
-                    <button id="scan-qr-btn" class="btn btn-outline" aria-label="Open QR Code Scanner"><i class="fas fa-qrcode"></i> Scan</button>
-                    <button id="bulk-qr-btn" class="btn btn-outline" aria-label="Open Bulk QR Code Generator"><i class="fas fa-layer-group"></i> Bulk</button>
-                </div>
-            </div>
-            <div id="qr-code-container" aria-live="polite" aria-atomic="true">
-                <div class="qr-loading-spinner" role="status" aria-label="QR Code is generating"></div>
+        <div class="output glass-card">
+            <div id="qr-code-container">
                 <div id="qr-code"></div>
             </div>
-            <div class="advanced-export-options">
-                 <div class="form-group">
-                    <label for="export-size">Size (px)</label>
-                    <select id="export-size" class="qr-input">
-                        <option value="512">512px (Web)</option>
-                        <option value="1024">1024px</option>
-                        <option value="2048">2048px (Print)</option>
-                        <option value="4096">4096px (High-Res)</option>
-                    </select>
-                 </div>
-            </div>
             <div class="download-buttons">
-                <button id="download-png" class="btn btn-primary" aria-label="Download QR Code as PNG"><i class="fas fa-file-image" aria-hidden="true"></i> PNG</button>
-                <button id="download-svg" class="btn btn-secondary" aria-label="Download QR Code as SVG"><i class="fas fa-file-code" aria-hidden="true"></i> SVG</button>
-                <button id="download-webp" class="btn btn-primary" aria-label="Download QR Code as WebP"><i class="fas fa-file-image" aria-hidden="true"></i> WebP</button>
-                <button id="download-pdf" class="btn btn-secondary" aria-label="Download QR Code as PDF"><i class="fas fa-file-pdf" aria-hidden="true"></i> PDF</button>
+                <button id="download-png" class="btn btn-primary">📥 PNG</button>
+                <button id="download-svg" class="btn btn-secondary">📄 SVG</button>
             </div>
         </div>
     </main>
 
-    <div id="scanner-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="scanner-modal-title">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="scanner-modal-title">QR Code Scanner</h2>
-                <button class="modal-close-btn" aria-label="Close scanner modal">&times;</button>
-            </div>
-            <div id="qr-scanner-container" aria-label="QR Code live scanner feed"></div>
-            <p><strong>Result:</strong> <span id="scanner-result" aria-live="polite" aria-atomic="true">Align QR code within the frame.</span></p>
-            <button class="btn btn-primary mt-3 copy-to-clipboard" data-target="scanner-result" aria-label="Copy scanner result to clipboard"><i class="fas fa-copy" aria-hidden="true"></i> Copy Result</button>
-        </div>
-    </div>
-    
-    <div id="bulk-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="bulk-modal-title">
-         <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="bulk-modal-title">Bulk QR Code Generator</h2>
-                <button class="modal-close-btn" aria-label="Close bulk generator modal">&times;</button>
-            </div>
-            <p class="text-sm text-gray-400 mb-4">Enter data, one QR code per line. For vCards, use CSV format: "FullName,Email,Phone".</p>
-            <div class="form-group">
-                <label for="bulk-type">QR Code Type for Bulk</label>
-                <select id="bulk-type" class="qr-input" aria-label="Select QR code type for bulk generation">
-                    <option value="text">URL/Text</option>
-                    <option value="wifi">WiFi</option>
-                    <option value="vcard">vCard (CSV)</option>
-                    <option value="email">Email</option>
-                    <option value="sms">SMS</option>
-                    <option value="location">Location</option>
-                    <option value="phone">Phone</option>
-                    <option value="whatsapp">WhatsApp</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="bulk-data">Data for Bulk Generation</label>
-                <textarea id="bulk-data" rows="8" placeholder="https://google.com&#10;https://vinnesia.my.id&#10;John Doe,john@email.com,+12345" aria-label="Input data for bulk QR code generation"></textarea>
-            </div>
-            <button id="bulk-generate-zip" class="btn btn-primary" aria-label="Generate and download all QR codes as ZIP"><i class="fas fa-file-archive" aria-hidden="true"></i> Generate & Download ZIP</button>
-        </div>
-    </div>
-
-    <div id="shortcuts-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="shortcuts-modal-title">
-         <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="shortcuts-modal-title">Keyboard Shortcuts</h2>
-                <button class="modal-close-btn" aria-label="Close shortcuts modal">&times;</button>
-            </div>
-            <div class="shortcuts-grid">
-                <span>Generate QR</span><kbd>Ctrl + Enter</kbd>
-                <span>Download PNG</span><kbd>Ctrl + S</kbd>
-                <span>Undo</span><kbd>Ctrl + Z</kbd>
-                <span>Redo</span><kbd>Ctrl + Y</kbd>
-                <span>Open Scanner</span><kbd>Ctrl + Q</kbd>
-                <span>Open Bulk</span><kbd>Ctrl + B</kbd>
-                <span>Toggle Theme</span><kbd>Ctrl + T</kbd>
-                <span>Show Shortcuts</span><kbd>Ctrl + /</kbd>
+    <footer>
+        <div class="footer-content">
+            <a href="https://www.vinnesia.my.id" class="btn btn-outline">🏠 Back to Homepage</a>
+            <ul class="footer-links">
+                <li><a href="mailto:support@vinnesia.my.id">📧 Email</a></li>
+                <li><a href="https://instagram.com/vin.nesia.id" target="_blank" rel="noopener noreferrer">📸 Instagram</a></li>
+                <li><a href="https://wa.me/62895354511777" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a></li>
+                <li><a href="https://www.vinnesia.my.id/privacy" target="_blank">🔒 Privacy Policy</a></li>
+            </ul>
+            <div class="copyright">
+                © 2025 VIN NESIA. All rights reserved. <br> 🇮🇩 Made with ❤️ in Indonesia
             </div>
         </div>
-    </main>
+    </footer>
 
-
-    <div id="toast-notification" class="toast-notification" role="status" aria-live="polite"></div>
-
-    <div class="theme-toggle-container">
-        <button id="theme-toggle-button" class="theme-toggle-button" aria-label="Toggle dark/light mode">
-            <i class="fas fa-sun" aria-hidden="true"></i>
-        </button>
-    </div>
+    <!-- QR Code Styling Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qr-code-styling/1.6.0-rc.1/qr-code-styling.js" integrity="sha512-3bQp4Jasbaey8Gx/MwUY0l1eGKUJZOUzv8lIgB7D2KJU2Hf/HzTI/YiJOgQ8fYTkOYy6C4LRMz8zHD9qLjKZQ==" crossorigin="anonymous"></script>
     
     <script>
-    const App = {
-        qrCode: null,
-        html5QrCode: null,
-        logoImage: null,
-        debounceTimer: null,
-        state: { 
-            currentTab: 'text', 
-            currentTabIndex: 0,
-            qrHistory: JSON.parse(localStorage.getItem('qrHistory')) || [],
-            appSettings: JSON.parse(localStorage.getItem('appSettings')) || { theme: 'dark', dotGradientColors: ['#3b82f6', '#8b5cf6'], bgGradientColors: ['#0d0d1a', '#1a1a2e'] },
-            undoStack: [],
-            redoStack: []
-        },
-        placeholderTexts: {
-            text: "e.g., https://www.vinnesia.my.id",
-            wifi: "Network Name (SSID)",
-            vcard: "Full Name, Email, Phone, Organization...",
-            email: "recipient@example.com",
-            sms: "+1234567890",
-            location: "Latitude, Longitude",
-            file: "Drag & drop your file here...",
-            event: "Event Title, Start Time, End Time, Location...",
-            crypto: "Wallet Address, Amount...",
-            phone: "+1234567890",
-            whatsapp: "+1234567890",
-            social: "Social Media URL (e.g., linkedin.com/in/vinnesia)",
-            appstore: "App Store URL",
-            multilang: "Lang1 Text::Lang2 Text",
-            html: "HTML content for web page..."
-        },
-        typingAnimationInterval: null,
-        maxHistoryItems: 50,
+        // Global variables
+        let currentTab = 'text';
+        let logoImage = null;
+        let fileDataUrl = null;
+        let qrCode = null;
 
-        loadInitialContent() {
-            const content = {
-                wifi: `<div class="form-group"><label for="wifi-ssid">Network Name (SSID)</label><input type="text" class="qr-input" id="wifi-ssid" placeholder="MyWiFiNetwork" required><span class="validation-message" role="alert" aria-live="polite">SSID cannot be empty.</span></div><div class="form-group"><label for="wifi-password">Password</label><input type="password" class="qr-input" id="wifi-password" placeholder="Password (leave blank for open network)"></div><div class="form-group"><label for="wifi-encryption">Encryption</label><select class="qr-input" id="wifi-encryption"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">No Encryption</option></select></div>`,
-                vcard: `<div class="form-row"><div class="form-group"><label for="vcard-name">Full Name</label><input type="text" class="qr-input" id="vcard-name" placeholder="John Doe" required><span class="validation-message" role="alert" aria-live="polite">Full Name is required.</span></div><div class="form-group"><label for="vcard-org">Organization</label><input type="text" class="qr-input" id="vcard-org" placeholder="Acme Corp"></div></div><div class="form-row"><div class="form-group"><label for="vcard-phone">Phone</label><input type="tel" class="qr-input" id="vcard-phone" placeholder="+1234567890"></div><div class="form-group"><label for="vcard-email">Email</label><input type="email" class="qr-input" id="vcard-email" placeholder="john.doe@example.com"><span class="validation-message" role="alert" aria-live="polite">Enter a valid email.</span></div></div><div class="form-group"><label for="vcard-url">Website</label><input type="url" class="qr-input" id="vcard-url" placeholder="https://example.com"></div><div class="form-group"><label for="vcard-address">Address</label><input type="text" class="qr-input" id="vcard-address" placeholder="123 Main St, City, Country"></div><div class="form-group"><label for="vcard-title">Title</label><input type="text" class="qr-input" id="vcard-title" placeholder="Software Engineer"></div>`,
-                event: `<div class="form-group"><label for="event-summary">Event Title</label><input type="text" class="qr-input" id="event-summary" placeholder="Team Meeting" required><span class="validation-message" role="alert" aria-live="polite">Event Title is required.</span></div><div class="form-group"><label for="event-location">Location</label><input type="text" class="qr-input" id="event-location" placeholder="Conference Room A"></div><div class="form-group"><label for="event-start">Start Time</label><input type="datetime-local" class="qr-input" id="event-start" required><span class="validation-message" role="alert" aria-live="polite">Start Time is required.</span></div><div class="form-group"><label for="event-end">End Time</label><input type="datetime-local" class="qr-input" id="event-end"></div><div class="form-group"><label for="event-description">Description</label><textarea class="qr-input" id="event-description" placeholder="Agenda for the weekly sync-up"></textarea></div>`,
-                email: `<div class="form-group"><label for="email-to">Recipient Email</label><input type="email" class="qr-input" id="email-to" placeholder="recipient@example.com" required><span class="validation-message" role="alert" aria-live="polite">Enter a valid email.</span></div><div class="form-group"><label for="email-subject">Subject</label><input type="text" class="qr-input" id="email-subject" placeholder="Meeting Request"></div><div class="form-group"><label for="email-body">Message Body</label><textarea class="qr-input" id="email-body" placeholder="Hi, I'd like to discuss..."></textarea></div>`,
-                sms: `<div class="form-group"><label for="sms-number">Phone Number</label><input type="tel" class="qr-input" id="sms-number" placeholder="+1234567890" required><span class="validation-message" role="alert" aria-live="polite">Enter a valid phone number.</span></div><div class="form-group"><label for="sms-message">Message</label><textarea class="qr-input" id="sms-message" placeholder="Hello there!"></textarea></div>`,
-                location: `<div class="form-row"><div class="form-group"><label for="location-lat">Latitude</label><input type="number" step="any" class="qr-input" id="location-lat" placeholder="34.0522" required><span class="validation-message" role="alert" aria-live="polite">Enter a valid latitude.</span></div><div class="form-group"><label for="location-lon">Longitude</label><input type="number" step="any" class="qr-input" id="location-lon" placeholder="-118.2437" required><span class="validation-message" role="alert" aria-live="polite">Enter a valid longitude.</span></div></div>`,
-                file: `<div class="form-group"><label>Upload File (Max 1MB)</label><div class="drop-zone" id="file-drop-zone" role="group" aria-label="Drag and drop area for file upload"><i class="fas fa-file-upload" aria-hidden="true"></i><p>Drag & drop your file here or click to upload</p><input type="file" id="file-upload" accept=".txt,.pdf,.csv" style="display:none;" aria-label="Upload file"></div><p id="file-upload-name" class="mt-2 text-sm text-gray-400"></p><span class="validation-message" role="alert" aria-live="polite">File size exceeds 1MB.</span><button type="button" class="btn btn-outline mt-2" onclick="document.getElementById('file-upload').click();" aria-label="Choose file to upload"><i class="fas fa-upload" aria-hidden="true"></i> Choose File</button></div>`,
-                crypto: `<div class="form-group"><label for="crypto-currency">Currency</label><select class="qr-input" id="crypto-currency"><option value="bitcoin">Bitcoin (BTC)</option><option value="ethereum">Ethereum (ETH)</option></select></div><div class="form-group"><label for="crypto-address">Wallet Address</label><input type="text" class="qr-input" id="crypto-address" placeholder="bc1q..." required><span class="validation-message" role="alert" aria-live="polite">Wallet address is required.</span></div><div class="form-group"><label for="crypto-amount">Amount</label><input type="number" step="any" class="qr-input" id="crypto-amount" placeholder="0.001"></div>`,
-                phone: `<div class="form-group"><label for="phone-number">Phone Number</label><input type="tel" class="qr-input" id="phone-number" placeholder="+1234567890" required><span class="validation-message" role="alert" aria-live="polite">Enter a valid phone number.</span></div>`,
-                whatsapp: `<div class="form-group"><label for="whatsapp-number">WhatsApp Number</label><input type="tel" class="qr-input" id="whatsapp-number" placeholder="+1234567890" required><span class="validation-message" role="alert" aria-live="polite">Enter a valid WhatsApp number.</span></div><div class="form-group"><label for="whatsapp-message">Message</label><textarea class="qr-input" id="whatsapp-message" placeholder="Hi there!"></textarea></div>`,
-                social: `<div class="form-group"><label for="social-url">Social Media Profile URL</label><input type="url" class="qr-input" id="social-url" placeholder="https://linkedin.com/in/vinnesia" required><span class="validation-message" role="alert" aria-live="polite">Enter a valid URL.</span></div>`,
-                appstore: `<div class="form-group"><label for="appstore-url">App Store Link</label><input type="url" class="qr-input" id="appstore-url" placeholder="https://apps.apple.com/app/id..." required><span class="validation-message" role="alert" aria-live="polite">Enter a valid URL.</span></div><div class="form-group"><label for="playstore-url">Play Store Link (Optional)</label><input type="url" class="qr-input" id="playstore-url" placeholder="https://play.google.com/store/apps/details?id..."><span class="validation-message" role="alert" aria-live="polite">Enter a valid URL.</span></div>`,
-                multilang: `<div class="form-group"><label for="multilang-default">Default Text</label><textarea class="qr-input" id="multilang-default" placeholder="Hello World" required></textarea><span class="validation-message" role="alert" aria-live="polite">Default text is required.</span></div><div class="form-group"><label for="multilang-en">English Text</label><textarea class="qr-input" id="multilang-en" placeholder="Hello World (English)"></textarea></div><div class="form-group"><label for="multilang-id">Indonesian Text</label><textarea class="qr-input" id="multilang-id" placeholder="Halo Dunia (Indonesia)"></textarea></div><p class="text-sm text-gray-400">Add more languages by adding input with id 'multilang-xx' where 'xx' is ISO 639-1 code. Example: multilang-es for Spanish.</p>`,
-                html: `<div class="form-group"><label for="html-content">HTML Content</label><textarea class="qr-input" id="html-content" rows="10" placeholder="<h1>Hello</h1><p>From QR Code!</p>" required></textarea><span class="validation-message" role="alert" aria-live="polite">HTML content cannot be empty.</span></div>`
-            };
-            Object.keys(content).forEach(key => {
-                const tab = document.getElementById(key);
-                if (tab) tab.innerHTML = content[key];
-            });
-            this.attachEventListenersToDynamicContent();
-            this.generateQrCode();
-        },
-        init() {
-            this.loadConfigFromURL();
-            this.loadTheme();
-            this.setupQRCode();
-            this.attachEventListeners();
-            this.loadInitialContent();
-            this.loadHistory();
-            this.applyInitialSettings();
-            this.startTypingAnimation('text-input', this.placeholderTexts.text);
-            this.setupModalFocusManagement();
-            this.initAccentColorPicker();
-            this.initVoiceInput('text-input', 'voice-input-btn-text');
-            console.log("Premium QR Suite Initialized with Advanced Features.");
-        },
-        loadTheme() {
-            const themeButton = document.getElementById('theme-toggle-button');
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (!localStorage.getItem('appSettings')) {
-                this.state.appSettings.theme = prefersDark ? 'dark' : 'light';
-            }
-            if (this.state.appSettings.theme === 'light') {
-                document.body.classList.add('light-mode');
-                if (themeButton) {
-                    themeButton.innerHTML = '<i class="fas fa-moon" aria-hidden="true"></i>';
-                }
-            } else {
-                document.body.classList.remove('light-mode');
-                if (themeButton) {
-                    themeButton.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i>';
-                }
-            }
-        },
-        toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            this.state.appSettings.theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
-            localStorage.setItem('appSettings', JSON.stringify(this.state.appSettings));
-            this.loadTheme();
-            this.generateQrCode();
-        },
-        setupQRCode() {
-            // Check if qrCode is already initialized to avoid re-appending
-            if (this.qrCode) {
-                this.qrCode.clear();
-            } else {
-                this.qrCode = new QRCodeStyling({
-                    width: 300, height: 300, data: "https://qr.vinnesia.my.id",
-                    dotsOptions: { color: "#3b82f6", type: "rounded" },
-                    backgroundOptions: { color: "#0d0d1a" },
-                    imageOptions: { crossOrigin: "anonymous", margin: 8, imageSize: 0.4 },
-                    cornersSquareOptions: { color: "#3b82f6", type: "square" },
-                    cornersDotOptions: { color: "#3b82f6", type: "dot" },
-                    qrOptions: { errorCorrectionLevel: 'H' }
-                });
-                this.qrCode.append(document.getElementById("qr-code"));
-            }
-        },
-        attachEventListeners() {
-            document.querySelectorAll('.qr-input').forEach(input => {
-                input.addEventListener('input', (e) => {
-                    this.saveStateForUndo();
-                    this.validateInput(e.target);
-                    clearTimeout(this.debounceTimer);
-                    this.debounceTimer = setTimeout(() => this.generateQrCode(), 250);
-                    this.saveAppSettings();
-                    this.updateCharacterCounter(e.target);
-                });
-            });
-            document.getElementById('logo-upload').addEventListener('change', e => this.handleLogoUpload(e.target.files[0]));
-            document.querySelectorAll('.collapsible').forEach(collapsible => {
-                const header = collapsible.querySelector('.collapsible-header');
-                const content = collapsible.querySelector('.collapsible-content');
-                if(header && content) {
-                    const toggle = () => {
-                        const isOpen = collapsible.classList.toggle('open');
-                        content.classList.toggle('open');
-                        header.setAttribute('aria-expanded', isOpen);
-                    };
-                    header.addEventListener('click', toggle);
-                    header.addEventListener('keydown', e => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            toggle();
-                        }
-                    });
-                }
-            });
-            document.getElementById('scan-qr-btn').addEventListener('click', (e) => {
-                this.lastFocusedElement = e.currentTarget;
-                this.openModal('scanner-modal');
-            });
-            document.getElementById('bulk-qr-btn').addEventListener('click', (e) => {
-                this.lastFocusedElement = e.currentTarget;
-                this.openModal('bulk-modal');
-            });
-            document.querySelectorAll('.modal-overlay').forEach(el => {
-                el.addEventListener('click', e => {
-                    if (e.target === el || e.target.closest('.modal-close-btn')) {
-                        this.closeAllModals();
-                    }
-                });
-                 el.addEventListener('keydown', (e) => { if (e.key === 'Escape') { this.closeAllModals(); } });
-            });
-            document.getElementById('download-png').addEventListener('click', () => this.download('png'));
-            document.getElementById('download-svg').addEventListener('click', () => this.download('svg'));
-            document.getElementById('download-webp').addEventListener('click', () => this.download('webp'));
-            document.getElementById('download-pdf').addEventListener('click', () => this.download('pdf'));
-            document.getElementById('bulk-generate-zip').addEventListener('click', () => this.handleBulkGenerate());
-            document.getElementById('share-config-btn').addEventListener('click', () => this.shareConfiguration());
-            const dropZone = document.getElementById('logo-drop-zone');
-            dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('hover'); });
-            dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('hover'); });
-            dropZone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                dropZone.classList.remove('hover');
-                if (e.dataTransfer.files && e.dataTransfer.files[0]) { this.handleLogoUpload(e.dataTransfer.files[0]); }
-            });
-            document.addEventListener('paste', e => this.handleClipboardPaste(e));
-            document.querySelectorAll('.copy-to-clipboard').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const targetId = e.currentTarget.dataset.target;
-                    const targetElement = document.getElementById(targetId) || document.querySelector(`#${targetId} span`);
-                    if (targetElement) { this.copyToClipboard(targetElement.value || targetElement.textContent); }
-                });
-            });
-            ['dot-gradient-rotation', 'bg-gradient-rotation', 'frame-corner-radius'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.addEventListener('input', e => {
-                        document.getElementById(`${id}-value`).textContent = e.target.value;
-                        this.generateQrCode();
-                        this.saveAppSettings();
-                    });
-                }
-            });
-            document.getElementById('theme-toggle-button').addEventListener('click', () => this.toggleTheme());
-            document.addEventListener('keydown', (e) => {
-                if (e.ctrlKey) {
-                    switch (e.key.toLowerCase()) {
-                        case 'enter': e.preventDefault(); this.generateQrCode(); this.showToast('QR Code generated!'); break;
-                        case 's': e.preventDefault(); this.download('png'); this.showToast('Downloading PNG...'); break;
-                        case 'z': e.preventDefault(); this.undo(); break;
-                        case 'y': e.preventDefault(); this.redo(); break;
-                        case 'q': e.preventDefault(); this.openModal('scanner-modal'); break;
-                        case 'b': e.preventDefault(); this.openModal('bulk-modal'); break;
-                        case 't': e.preventDefault(); this.toggleTheme(); break;
-                        case '/': e.preventDefault(); this.openModal('shortcuts-modal'); break;
-                    }
-                }
-            });
-            document.getElementById('history-search').addEventListener('input', e => this.renderHistory(e.target.value));
-            document.getElementById('history-import-input').addEventListener('change', e => this.importHistory(e.target.files[0]));
-            let touchStartX = 0;
-            const tabsContentWrapper = document.querySelector('.tabs-content-wrapper');
-            tabsContentWrapper.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
-            tabsContentWrapper.addEventListener('touchend', (e) => {
-                const touchEndX = e.changedTouches[0].clientX;
-                const minSwipeDistance = 50;
-                if (touchEndX < touchStartX - minSwipeDistance) {
-                    const nextIndex = Math.min(this.state.currentTabIndex + 1, document.querySelectorAll('.tab-button').length - 1);
-                    if (nextIndex !== this.state.currentTabIndex) {
-                        const nextTabName = document.querySelector(`.tab-button[data-tab-index="${nextIndex}"]`).dataset.tabName;
-                        this.openTab(null, nextTabName);
-                    }
-                } else if (touchEndX > touchStartX + minSwipeDistance) {
-                    const prevIndex = Math.max(this.state.currentTabIndex - 1, 0);
-                    if (prevIndex !== this.state.currentTabIndex) {
-                        const prevTabName = document.querySelector(`.tab-button[data-tab-index="${prevIndex}"]`).dataset.tabName;
-                        this.openTab(null, prevTabName);
-                    }
-                }
-            });
-        },
-        attachEventListenersToDynamicContent() {
-            document.querySelectorAll('.qr-input:not([data-listener-attached])').forEach(input => {
-                input.addEventListener('input', (e) => {
-                    this.saveStateForUndo();
-                    this.validateInput(e.target);
-                    clearTimeout(this.debounceTimer);
-                    this.debounceTimer = setTimeout(() => this.generateQrCode(), 250);
-                    this.saveAppSettings();
-                    this.updateCharacterCounter(e.target);
-                });
-                input.dataset.listenerAttached = 'true';
-            });
-            const fileDropZone = document.getElementById('file-drop-zone');
-            if (fileDropZone && !fileDropZone.dataset.listener-attached) {
-                fileDropZone.addEventListener('dragover', (e) => { e.preventDefault(); fileDropZone.classList.add('hover'); });
-                fileDropZone.addEventListener('dragleave', () => { fileDropZone.classList.remove('hover'); });
-                fileDropZone.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    fileDropZone.classList.remove('hover');
-                    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                        this.handleFileUpload(e.dataTransfer.files[0]);
-                    }
-                });
-                document.getElementById('file-upload').addEventListener('change', (e) => { this.handleFileUpload(e.target.files[0]); });
-                fileDropZone.dataset.listener-attached = 'true';
-            }
-        },
-        getQrData() {
-            let data = "https://qr.vinnesia.my.id";
-            switch(this.state.currentTab) {
-                case 'text': data = document.getElementById('text-input').value; break;
-                case 'wifi':
-                    const ssid = document.getElementById('wifi-ssid').value;
-                    const password = document.getElementById('wifi-password').value;
-                    const encryption = document.getElementById('wifi-encryption').value;
-                    data = `WIFI:S:${ssid};T:${encryption};P:${password};;`;
-                    break;
-                case 'vcard':
-                    const vName = document.getElementById('vcard-name').value;
-                    const vOrg = document.getElementById('vcard-org').value;
-                    const vPhone = document.getElementById('vcard-phone').value;
-                    const vEmail = document.getElementById('vcard-email').value;
-                    const vUrl = document.getElementById('vcard-url').value;
-                    const vAddress = document.getElementById('vcard-address').value;
-                    const vTitle = document.getElementById('vcard-title').value;
-                    data = `BEGIN:VCARD\nVERSION:3.0\nFN:${vName}\nORG:${vOrg}\nTEL:${vPhone}\nEMAIL:${vEmail}\nURL:${vUrl}\nADR:${vAddress}\nTITLE:${vTitle}\nEND:VCARD`;
-                    break;
-                case 'event':
-                    const eSummary = document.getElementById('event-summary').value;
-                    const eLocation = document.getElementById('event-location').value;
-                    const eStart = document.getElementById('event-start').value ? new Date(document.getElementById('event-start').value).toISOString().replace(/[-:]|\.\d{3}/g, '') : '';
-                    const eEnd = document.getElementById('event-end').value ? new Date(document.getElementById('event-end').value).toISOString().replace(/[-:]|\.\d{3}/g, '') : '';
-                    const eDescription = document.getElementById('event-description').value;
-                    data = `BEGIN:VEVENT\nSUMMARY:${eSummary}\nLOCATION:${eLocation}\nDTSTART:${eStart}\nDTEND:${eEnd}\nDESCRIPTION:${eDescription}\nEND:VEVENT`;
-                    break;
-                case 'email':
-                    const mailTo = document.getElementById('email-to').value;
-                    const mailSubject = document.getElementById('email-subject').value;
-                    const mailBody = document.getElementById('email-body').value;
-                    data = `mailto:${mailTo}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
-                    break;
-                case 'sms':
-                    const smsNumber = document.getElementById('sms-number').value;
-                    const smsMessage = document.getElementById('sms-message').value;
-                    data = `SMSTO:${smsNumber}:${smsMessage}`;
-                    break;
-                case 'location':
-                    const lat = document.getElementById('location-lat').value;
-                    const lon = document.getElementById('location-lon').value;
-                    data = `geo:${lat},${lon}`;
-                    break;
-                case 'file':
-                    data = document.getElementById('file-upload-name').dataset.fileContent || "Please upload a file.";
-                    break;
-                case 'crypto':
-                    const currency = document.getElementById('crypto-currency').value;
-                    const address = document.getElementById('crypto-address').value;
-                    const amount = document.getElementById('crypto-amount').value;
-                    data = `${currency}:${address}${amount ? `?amount=${amount}` : ''}`;
-                    break;
-                case 'phone':
-                    data = `tel:${document.getElementById('phone-number').value}`;
-                    break;
-                case 'whatsapp':
-                    const whatsappNumber = document.getElementById('whatsapp-number').value.replace(/\D/g, '');
-                    const whatsappMessage = document.getElementById('whatsapp-message').value;
-                    data = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-                    break;
-                case 'social':
-                    data = document.getElementById('social-url').value;
-                    break;
-                case 'appstore':
-                    const appStoreUrl = document.getElementById('appstore-url').value;
-                    const playStoreUrl = document.getElementById('playstore-url').value;
-                    data = appStoreUrl;
-                    if (appStoreUrl && playStoreUrl) {
-                        data = `https://linktree.com/?appstore=${encodeURIComponent(appStoreUrl)}&playstore=${encodeURIComponent(playStoreUrl)}`;
-                    } else if (playStoreUrl) {
-                        data = playStoreUrl;
-                    }
-                    break;
-                case 'multilang':
-                    let multiLangData = [];
-                    const defaultText = document.getElementById('multilang-default').value;
-                    if (defaultText) multiLangData.push(`DEFAULT:${defaultText}`);
-                    document.querySelectorAll('[id^="multilang-"]:not(#multilang-default)').forEach(input => {
-                        const langCode = input.id.replace('multilang-', '').toUpperCase();
-                        if (input.value) multiLangData.push(`${langCode}:${input.value}`);
-                    });
-                    data = multiLangData.join('\n');
-                    break;
-                case 'html':
-                    data = document.getElementById('html-content').value;
-                    break;
-            }
-            return data || "https://qr.vinnesia.my.id";
-        },
-        getGradientColors(prefix) {
-            const colors = [];
-            document.querySelectorAll(`#${prefix}-gradient-colors input[type="color"]`).forEach(input => {
-                colors.push(input.value);
-            });
-            return colors;
-        },
-        generateQrCode() {
-            if (!this.qrCode) return;
-            document.getElementById('qr-code-container').classList.add('loading');
-            const currentTabElement = document.getElementById(this.state.currentTab);
-            const firstInput = currentTabElement ? currentTabElement.querySelector('input, textarea') : null;
-            if (firstInput && !this.validateInput(firstInput, true)) {
-                document.getElementById('qr-code-container').classList.remove('loading');
-                return;
-            }
-            const dotColors = this.getGradientColors('dot');
-            const bgColors = this.getGradientColors('bg');
-            const options = {
-                data: this.getQrData(),
-                image: this.logoImage,
-                imageOptions: { 
-                    crossOrigin: "anonymous", 
-                    margin: 8, 
-                    imageSize: parseFloat(document.getElementById('image-size').value),
-                },
-                qrOptions: { errorCorrectionLevel: 'H' },
-                dotsOptions: { 
-                    type: document.getElementById('dot-style').value,
-                    gradient: dotColors.length > 1 ? {
-                        type: document.getElementById('dot-gradient-type').value,
-                        rotation: parseFloat(document.getElementById('dot-gradient-rotation').value) * Math.PI / 180,
-                        colorStops: dotColors.map((color, index) => ({ offset: index / (dotColors.length - 1 || 1), color: color }))
-                    } : null,
-                    color: dotColors[0] || "#3b82f6"
-                },
-                backgroundOptions: { 
-                    gradient: bgColors.length > 1 ? {
-                        type: document.getElementById('bg-gradient-type').value,
-                        rotation: parseFloat(document.getElementById('bg-gradient-rotation').value) * Math.PI / 180,
-                        colorStops: bgColors.map((color, index) => ({ offset: index / (bgColors.length - 1 || 1), color: color }))
-                    } : null,
-                    color: bgColors[0] || (document.body.classList.contains('light-mode') ? '#f0f2f5' : '#0d0d1a')
-                },
-                cornersSquareOptions: { 
-                    color: document.getElementById('corner-square-color').value, 
-                    type: document.getElementById('corner-square-style').value 
-                },
-                cornersDotOptions: { 
-                    color: document.getElementById('corner-dot-color').value,
-                    type: document.getElementById('corner-dot-style').value
-                },
-                margin: parseInt(document.getElementById('margin').value || 0),
-            };
-            this.qrCode.update(options);
-            setTimeout(() => {
-                document.getElementById('qr-code-container').classList.remove('loading');
-                this.addQrToHistory(options.data);
-            }, 500);
-        },
-        handleLogoUpload(file) {
-            if (!file || !file.type.startsWith('image/')) {
-                this.showToast('Please upload a valid image file.', 'warning');
-                return;
-            }
-            if (file.size > 2 * 1024 * 1024) { // 2MB limit
-                this.showToast('File size exceeds 2MB limit.', 'danger');
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = e => {
-                this.logoImage = e.target.result;
-                this.generateQrCode();
-                this.extractColorsFromImage(this.logoImage);
-                document.getElementById('logo-controls').style.display = 'block';
-                this.showToast('Logo uploaded!');
-            };
-            reader.readAsDataURL(file);
-        },
-        removeLogo() {
-            this.logoImage = null;
-            this.generateQrCode();
-            document.getElementById('logo-upload').value = '';
-            document.getElementById('logo-palette-container').style.display = 'none';
-            document.getElementById('logo-controls').style.display = 'none';
-            this.showToast('Logo removed!');
-        },
-        extractColorsFromImage(imageUrl) {
-            const img = new Image();
-            img.crossOrigin = "Anonymous";
-            img.src = imageUrl;
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                const scale = Math.min(100 / img.width, 100 / img.height);
-                canvas.width = img.width * scale;
-                canvas.height = img.height * scale;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-                const colorCount = {};
-                for (let i = 0; i < imageData.length; i += 4 * 4) {
-                    if (imageData[i+3] < 255) continue;
-                    const rgb = `rgb(${imageData[i]}, ${imageData[i+1]}, ${imageData[i+2]})`;
-                    colorCount[rgb] = (colorCount[rgb] || 0) + 1;
-                }
-                const sortedColors = Object.keys(colorCount).sort((a, b) => colorCount[b] - colorCount[a]);
-                this.displayColorPalette(sortedColors.slice(0, 5));
-            };
-            img.onerror = () => {
-                document.getElementById('logo-palette-container').style.display = 'none';
-            };
-        },
-        displayColorPalette(colors) {
-            const paletteContainer = document.getElementById('logo-palette');
-            paletteContainer.innerHTML = '';
-            colors.forEach(color => {
-                const colorDiv = document.createElement('div');
-                colorDiv.className = 'palette-color';
-                colorDiv.style.backgroundColor = color;
-                colorDiv.setAttribute('role', 'button');
-                colorDiv.setAttribute('aria-label', `Select color ${this.rgbToHex(color)}`);
-                colorDiv.tabIndex = 0;
-                colorDiv.addEventListener('click', () => {
-                    const hexColor = this.rgbToHex(color);
-                    document.getElementById('dot-color').value = hexColor;
-                    document.getElementById('corner-square-color').value = hexColor;
-                    document.getElementById('corner-dot-color').value = hexColor;
-                    this.generateQrCode();
-                    this.showToast(`Color ${hexColor.toUpperCase()} applied!`);
-                });
-                colorDiv.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        colorDiv.click();
-                    }
-                });
-                paletteContainer.appendChild(colorDiv);
-            });
-            document.getElementById('logo-palette-container').style.display = 'block';
-        },
-        addGradientColor(type) {
-            const container = document.getElementById(`${type}-gradient-colors`);
-            const pickers = container.querySelectorAll('.gradient-picker');
-            const newPicker = document.createElement('div');
-            newPicker.className = 'gradient-picker';
-            newPicker.innerHTML = `
-                <input type="color" class="qr-input" value="#ffffff" aria-label="${type} gradient color stop ${pickers.length + 1}">
-                <button onclick="App.removeGradientColor(this, '${type}')" aria-label="Remove ${type} gradient color"><i class="fas fa-minus-circle" aria-hidden="true"></i></button>
-            `;
-            container.insertBefore(newPicker, container.lastElementChild);
-            newPicker.querySelector('input[type="color"]').addEventListener('input', () => {
-                this.saveStateForUndo();
-                clearTimeout(this.debounceTimer);
-                this.debounceTimer = setTimeout(() => this.generateQrCode(), 250);
-                this.saveAppSettings();
-            });
-            this.generateQrCode();
-            this.showToast('Gradient color added!');
-        },
-        removeGradientColor(button, type) {
-            const container = document.getElementById(`${type}-gradient-colors`);
-            if (container.querySelectorAll('.gradient-picker').length > 1) {
-                this.saveStateForUndo();
-                button.closest('.gradient-picker').remove();
-                this.generateQrCode();
-                this.saveAppSettings();
-                this.showToast('Gradient color removed!');
-            } else {
-                this.showToast('Cannot remove the last gradient color.', 'warning');
-            }
-        },
-        async download(extension) {
-            const size = parseInt(document.getElementById('export-size').value, 10);
-            this.showToast(`Generating ${extension.toUpperCase()}...`, 'primary');
-            const originalOptions = { ...this.qrCode.options };
-            this.qrCode.update({ width: size, height: size });
+        // Initialize QR Code when page loads
+        function initQRCode() {
             try {
-                if (extension === 'pdf') {
-                    const { jsPDF } = window.jspdf;
-                    const pdf = new jsPDF();
-                    const dataUrl = await this.qrCode.getRawData('png');
-                    pdf.addImage(dataUrl, 'PNG', 10, 10, 190, 190);
-                    pdf.save('vinnesia-qr.pdf');
-                    this.showToast(`Downloading QR code as PDF!`);
-                } else {
-                     await this.qrCode.download({ name: "vinnesia-qr", extension });
-                     this.showToast(`Downloading QR code as ${extension.toUpperCase()}!`);
-                }
-            } catch (error) {
-                console.error("Download error:", error);
-                this.showToast(`Failed to download ${extension.toUpperCase()}.`, 'danger');
-            } finally {
-                this.qrCode.update(originalOptions);
-            }
-        },
-        async handleBulkGenerate() {
-            if (typeof(Worker) === "undefined") {
-                this.showToast("Web Workers not supported. Bulk generation might freeze the UI.", "warning");
-                return;
-            }
-            const bulkGenerateButton = document.getElementById('bulk-generate-zip');
-            bulkGenerateButton.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Generating...';
-            bulkGenerateButton.disabled = true;
-            const workerScript = `
-                self.importScripts('https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js', 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
-                self.onmessage = async (e) => {
-                    const { type, dataLines, options } = e.data;
-                    const zip = new JSZip();
-                    const tempQr = new QRCodeStyling(options);
-                    for (let i = 0; i < dataLines.length; i++) {
-                        let qrDataString = dataLines[i].trim();
-                        if (!qrDataString) continue;
-                        let generatedQrData = qrDataString;
-                        switch (type) {
-                            case 'vcard':
-                                const parts = qrDataString.split(',');
-                                generatedQrData = \`BEGIN:VCARD\\nVERSION:3.0\\nFN:\${parts[0] || ''}\\nEMAIL:\${parts[1] || ''}\\nTEL:\${parts[2] || ''}\\nEND:VCARD\`;
-                                break;
-                            case 'phone':
-                                generatedQrData = \`tel:\${qrDataString}\`;
-                                break;
-                        }
-                        tempQr.update({ data: generatedQrData });
-                        const blob = await tempQr.getRawData('png');
-                        zip.file(\`qr_code_\${type}_\${i + 1}.png\`, blob);
-                        self.postMessage({ type: 'progress', value: (i + 1) / dataLines.length });
-                    }
-                    const zipBlob = await zip.generateAsync({ type: 'blob' });
-                    self.postMessage({ type: 'done', zipBlob });
-                };
-            `;
-            const blob = new Blob([workerScript], { type: 'application/javascript' });
-            const worker = new Worker(URL.createObjectURL(blob));
-            worker.onmessage = (e) => {
-                if (e.data.type === 'progress') {
-                    bulkGenerateButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Generating... (${Math.round(e.data.value * 100)}%)`;
-                } else if (e.data.type === 'done') {
-                    const { zipBlob } = e.data;
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(zipBlob);
-                    link.download = 'vinnesia-bulk-qrcodes.zip';
-                    link.click();
-                    URL.revokeObjectURL(link.href);
-                    this.showToast('Bulk QR codes downloaded as ZIP!');
-                    this.closeAllModals();
-                    worker.terminate();
-                    bulkGenerateButton.innerHTML = '<i class="fas fa-file-archive"></i> Generate & Download ZIP';
-                    bulkGenerateButton.disabled = false;
-                }
-            };
-            worker.onerror = (e) => {
-                console.error("Worker error:", e);
-                this.showToast('Error in bulk generation worker.', 'danger');
-                worker.terminate();
-                bulkGenerateButton.innerHTML = '<i class="fas fa-file-archive"></i> Generate & Download ZIP';
-                bulkGenerateButton.disabled = false;
-            };
-            const type = document.getElementById('bulk-type').value;
-            const rawData = document.getElementById('bulk-data').value.trim();
-            if (!rawData) {
-                this.showToast('Please enter data for bulk generation.', 'danger');
-                bulkGenerateButton.innerHTML = '<i class="fas fa-file-archive"></i> Generate & Download ZIP';
-                bulkGenerateButton.disabled = false;
-                return;
-            }
-            const dataLines = rawData.split('\n');
-            worker.postMessage({ type, dataLines, options: this.qrCode.options });
-        },
-        openModal(modalId) {
-            this.closeAllModals();
-            const modal = document.getElementById(modalId);
-            modal.classList.add('show');
-            document.body.classList.add('modal-open');
-            const focusable = modal.querySelector('button, input, select, textarea');
-            if(focusable) focusable.focus();
-            if (modalId === 'scanner-modal') this.startScanner();
-        },
-        closeAllModals() {
-            document.querySelectorAll('.modal-overlay.show').forEach(m => m.classList.remove('show'));
-            document.body.classList.remove('modal-open');
-            this.stopScanner();
-            if (this.lastFocusedElement) {
-                this.lastFocusedElement.focus();
-                this.lastFocusedElement = null;
-            }
-        },
-        setupModalFocusManagement() {
-            document.querySelectorAll('.modal-overlay').forEach(modal => {
-                modal.addEventListener('keydown', (e) => {
-                    if (e.key === 'Tab') {
-                        const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-                        const first = focusableElements[0];
-                        const last = focusableElements[focusableElements.length - 1];
-                        if (e.shiftKey) {
-                            if (document.activeElement === first) { last.focus(); e.preventDefault(); }
-                        } else {
-                            if (document.activeElement === last) { first.focus(); e.preventDefault(); }
-                        }
-                    }
-                });
-            });
-        },
-        startScanner() {
-            if (!this.html5QrCode) { this.html5QrCode = new Html5Qrcode("qr-scanner-container"); }
-            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-            const scannerResultElement = document.getElementById('scanner-result');
-            scannerResultElement.textContent = "Align QR code within the frame.";
-            this.html5QrCode.start({ facingMode: "environment" }, config, 
-                (decodedText) => {
-                    scannerResultElement.textContent = decodedText;
-                    this.stopScanner();
-                    this.showToast('QR Code scanned successfully!');
-                }, () => {}
-            ).catch(err => {
-                scannerResultElement.textContent = "Scanner Error. Please grant camera permission.";
-                this.showToast('Camera permission denied or scanner error.', 'danger');
-            });
-        },
-        stopScanner() {
-            if (this.html5QrCode && this.html5QrCode.isScanning) {
-                this.html5QrCode.stop().catch(() => {});
-            }
-        },
-        openTab(evt, tabName) {
-            this.saveStateForUndo();
-            const tabButton = evt ? evt.currentTarget : document.querySelector(`.tab-button[data-tab-name="${tabName}"]`);
-            if (!tabButton) return;
-            this.state.currentTab = tabName;
-            this.state.currentTabIndex = parseInt(tabButton.dataset.tabIndex, 10);
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.classList.remove('active');
-                btn.setAttribute('aria-selected', 'false');
-            });
-            tabButton.classList.add('active');
-            tabButton.setAttribute('aria-selected', 'true');
-            const wrapper = document.querySelector('.tabs-content-wrapper');
-            wrapper.style.transform = `translateX(-${this.state.currentTabIndex * 100}%)`;
-            this.generateQrCode();
-            const currentTabElement = document.getElementById(tabName);
-            const primaryInput = currentTabElement ? currentTabElement.querySelector('input, textarea') : null;
-            if (primaryInput && this.placeholderTexts[tabName]) {
-                this.startTypingAnimation(primaryInput.id, this.placeholderTexts[tabName]);
-            }
-        },
-        rgbToHex(rgbStr) {
-            const match = rgbStr.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
-            if (!match) return '#000000';
-            const toHex = (c) => ('0' + parseInt(c, 10).toString(16)).slice(-2);
-            return `#${toHex(match[1])}${toHex(match[2])}${toHex(match[3])}`;
-        },
-        startTypingAnimation(elementId, placeholderText) {
-            const inputElement = document.getElementById(elementId);
-            if (!inputElement || inputElement.value.length > 0) return;
-            clearInterval(this.typingAnimationInterval);
-            let i = 0;
-            inputElement.placeholder = '';
-            this.typingAnimationInterval = setInterval(() => {
-                if (i < placeholderText.length) {
-                    inputElement.placeholder += placeholderText[i];
-                    i++;
-                } else {
-                    clearInterval(this.typingAnimationInterval);
-                }
-            }, 50);
-        },
-        validateInput(inputElement, showAlert = false) {
-            const formGroup = inputElement.closest('.form-group');
-            if (!formGroup) return true;
-            let isValid = true;
-            if (inputElement.hasAttribute('required') && !inputElement.value.trim()) {
-                 isValid = false;
-            }
-            if (inputElement.type === 'email' && inputElement.value.trim() && !/^\S+@\S+\.\S+$/.test(inputElement.value)) {
-                isValid = false;
-            }
-            if (isValid) {
-                formGroup.classList.remove('invalid');
-            } else {
-                formGroup.classList.add('invalid');
-            }
-            return isValid;
-        },
-        updateCharacterCounter(inputElement) {
-            const counterElement = document.getElementById(`${inputElement.id}-counter`);
-            if (counterElement) {
-                const maxLength = 250;
-                const currentLength = inputElement.value.length;
-                counterElement.textContent = `${currentLength}/${maxLength}`;
-                counterElement.classList.toggle('danger', currentLength > maxLength * 0.9);
-                counterElement.classList.toggle('warning', currentLength > maxLength * 0.7 && currentLength <= maxLength * 0.9);
-            }
-        },
-        copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                this.showToast('Copied to clipboard!');
-            }).catch(() => {
-                this.showToast('Failed to copy.', 'danger');
-            });
-        },
-        showToast(message, type = 'success', duration = 3000) {
-            const toast = document.getElementById('toast-notification');
-            toast.textContent = message;
-            toast.className = `toast-notification show ${type}`;
-            setTimeout(() => { toast.classList.remove('show'); }, duration);
-        },
-        handleFileUpload(file) {
-            const fileNameDisplay = document.getElementById('file-upload-name');
-            if (!file) {
-                fileNameDisplay.textContent = '';
-                return;
-            };
-            if (file.size > 1024 * 1024) {
-                this.showToast('File size too large (max 1MB).', 'danger');
-                fileNameDisplay.dataset.fileContent = '';
-                return;
-            }
-            fileNameDisplay.textContent = `File: ${file.name}`;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                fileNameDisplay.dataset.fileContent = e.target.result;
-                this.generateQrCode();
-                this.showToast('File ready for QR generation!');
-            };
-            reader.readAsDataURL(file);
-        },
-        addQrToHistory(data) {
-            const timestamp = new Date().toLocaleString();
-            const newEntry = { data, timestamp, type: this.state.currentTab, id: Date.now() };
-            this.state.qrHistory = this.state.qrHistory.filter(item => item.data !== data);
-            this.state.qrHistory.unshift(newEntry);
-            if (this.state.qrHistory.length > this.maxHistoryItems) { this.state.qrHistory.pop(); }
-            localStorage.setItem('qrHistory', JSON.stringify(this.state.qrHistory));
-            this.renderHistory();
-        },
-        loadHistory() { this.renderHistory(); },
-        renderHistory(searchTerm = '') {
-            const historyList = document.getElementById('qr-history-list');
-            historyList.innerHTML = '';
-            const filteredHistory = this.state.qrHistory.filter(item => 
-                item.data.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                item.type.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            if (filteredHistory.length === 0) {
-                historyList.innerHTML = '<li>No recent QR codes.</li>';
-                return;
-            }
-            filteredHistory.forEach(item => {
-                const li = document.createElement('li');
-                li.style = "display:flex; justify-content: space-between; align-items: center; padding: 0.5rem; margin-bottom: 0.5rem; background: rgba(0,0,0,0.2); border-radius: 8px;";
-                li.innerHTML = `
-                    <div style="display:flex; align-items:center; gap: 0.5rem;">
-                        <input type="checkbox" class="history-checkbox" data-id="${item.id}" onchange="App.toggleHistoryBulkActions()">
-                        <span style="font-size:0.9em; max-width: 200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                            <strong>${item.type}:</strong> ${item.data}
-                        </span>
-                    </div>
-                    <div>
-                        <button class="btn btn-outline" style="padding:0.3rem 0.6rem;" onclick="App.loadQrFromHistory(${item.id})"><i class="fas fa-redo"></i></button>
-                    </div>
-                `;
-                historyList.appendChild(li);
-            });
-        },
-        loadQrFromHistory(id) {
-            const item = this.state.qrHistory.find(h => h.id === id);
-            if (item) {
-                this.saveStateForUndo(); 
-                this.openTab(null, item.type);
-                const input = document.querySelector(`#${item.type} .qr-input`);
-                if(input) {
-                    input.value = item.data;
-                    this.generateQrCode();
-                    this.showToast(`Loaded from history!`);
-                }
-            }
-        },
-        clearHistory() {
-            if (confirm('Are you sure you want to clear all QR history?')) {
-                this.state.qrHistory = [];
-                localStorage.setItem('qrHistory', JSON.stringify(this.state.qrHistory));
-                this.renderHistory();
-                this.showToast('QR history cleared.', 'danger');
-            }
-        },
-        saveAppSettings() {
-            const settings = {
-                theme: this.state.appSettings.theme,
-                currentTab: this.state.currentTab,
-                currentTabIndex: this.state.currentTabIndex,
-                accentColor: document.documentElement.style.getPropertyValue('--color-primary') || '#3b82f6',
-            };
-            document.querySelectorAll('.qr-input').forEach(input => {
-                if(input.id) settings[input.id] = input.value;
-            });
-            settings.dotGradientColors = this.getGradientColors('dot');
-            settings.bgGradientColors = this.getGradientColors('bg');
-            this.state.appSettings = settings;
-            localStorage.setItem('appSettings', JSON.stringify(this.state.appSettings));
-        },
-        applyInitialSettings() {
-            const settings = this.state.appSettings;
-            if (!settings) return;
-            this.loadTheme();
-            if(settings.accentColor) this.setAccentColor(settings.accentColor);
-            for (const id in settings) {
-                const input = document.getElementById(id);
-                if (input) input.value = settings[id];
-            }
-            if (settings.currentTab) {
-                this.openTab(null, settings.currentTab);
-            }
-            this.generateQrCode();
-        },
-        initAccentColorPicker() {
-            const palette = document.getElementById('accent-color-palette');
-            const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#f43f5e'];
-            colors.forEach(color => {
-                const swatch = document.createElement('div');
-                swatch.className = 'accent-color-swatch';
-                swatch.style.backgroundColor = color;
-                swatch.dataset.color = color;
-                swatch.onclick = () => this.setAccentColor(color);
-                palette.appendChild(swatch);
-            });
-            this.updateAccentPickerUI();
-        },
-        setAccentColor(color) {
-            document.documentElement.style.setProperty('--color-primary', color);
-            document.getElementById('dot-color').value = color;
-            document.getElementById('corner-square-color').value = color;
-            this.updateAccentPickerUI();
-            this.generateQrCode();
-            this.saveAppSettings();
-        },
-        updateAccentPickerUI() {
-            const currentColor = document.documentElement.style.getPropertyValue('--color-primary');
-            document.querySelectorAll('.accent-color-swatch').forEach(sw => {
-                sw.classList.toggle('active', sw.dataset.color === currentColor);
-            });
-        },
-        initVoiceInput(inputId, buttonId) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                const button = document.getElementById(buttonId);
-                if(button) button.style.display = 'none';
-                return;
-            }
-            const recognition = new SpeechRecognition();
-            const button = document.getElementById(buttonId);
-            const icon = button.querySelector('i');
-            recognition.onstart = () => { button.classList.add('recording'); icon.className = 'fas fa-stop-circle'; };
-            recognition.onend = () => { button.classList.remove('recording'); icon.className = 'fas fa-microphone'; };
-            recognition.onerror = () => { this.showToast('Voice recognition error.', 'danger'); };
-            recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                document.getElementById(inputId).value = transcript;
-                this.generateQrCode();
-            };
-            button.onclick = () => {
-                if (button.classList.contains('recording')) {
-                    recognition.stop();
-                } else {
-                    recognition.start();
-                }
-            };
-        },
-        handleClipboardPaste(e) {
-            if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
-            const items = e.clipboardData.items;
-            for (const item of items) {
-                if (item.type.indexOf('image') !== -1) {
-                    const blob = item.getAsFile();
-                    this.handleLogoUpload(blob);
-                    e.preventDefault();
-                    this.showToast('Logo pasted from clipboard!', 'primary');
+                if (typeof QRCodeStyling === 'undefined') {
+                    console.log('QRCodeStyling not loaded yet, retrying...');
+                    setTimeout(initQRCode, 100);
                     return;
                 }
-            }
-        },
-        applyTemplate(templateName) {
-            this.saveStateForUndo();
-            const templates = {
-                'default': { 'dot-style': 'rounded', 'frame-text': '' },
-                'social': { 'dot-style': 'classy-rounded', 'corner-square-style': 'extra-rounded', 'frame-text': 'CONNECT' },
-                'business': { 'dot-style': 'square', 'corner-square-style': 'square', 'frame-text': 'MY vCARD' },
-                'event': { 'dot-style': 'dots', 'corner-square-style': 'dot', 'frame-text': 'JOIN US' },
-            };
-            const template = templates[templateName];
-            if (template) {
-                for(const key in template) {
-                    const el = document.getElementById(key);
-                    if(el) el.value = template[key];
+
+                qrCode = new QRCodeStyling({
+                    width: 300,
+                    height: 300,
+                    data: "Welcome to VIN NESIA QR Generator!",
+                    image: "",
+                    dotsOptions: { 
+                        color: "#000000", 
+                        type: "square" 
+                    },
+                    backgroundOptions: { 
+                        color: "#ffffff" 
+                    },
+                    imageOptions: { 
+                        crossOrigin: "anonymous", 
+                        margin: 5, 
+                        imageSize: 0.4 
+                    },
+                    qrOptions: { 
+                        errorCorrectionLevel: 'H' 
+                    }
+                });
+
+                const qrContainer = document.getElementById("qr-code");
+                if (qrContainer) {
+                    qrCode.append(qrContainer);
+                    console.log('QR Code initialized successfully');
+                } else {
+                    console.error('QR container not found');
                 }
-                this.generateQrCode();
-                this.showToast(`Applied '${templateName}' template!`);
+
+            } catch (error) {
+                console.error('Error initializing QR Code:', error);
+                setTimeout(initQRCode, 500);
             }
-        },
-        shareConfiguration() {
-            const config = localStorage.getItem('appSettings');
-            if (config) {
-                try {
-                    const base64Config = btoa(unescape(encodeURIComponent(config)));
-                    const url = `${window.location.origin}${window.location.pathname}#config=${base64Config}`;
-                    this.copyToClipboard(url);
-                    this.showToast('Share link copied to clipboard!');
-                } catch(e) {
-                    this.showToast('Error creating share link.', 'danger');
-                }
-            }
-        },
-        loadConfigFromURL() {
-            if (window.location.hash.startsWith('#config=')) {
-                const base64Config = window.location.hash.substring(8);
-                try {
-                    const config = decodeURIComponent(escape(atob(base64Config)));
-                    this.state.appSettings = JSON.parse(config);
-                    localStorage.setItem('appSettings', config);
-                    this.showToast('Configuration loaded from URL!', 'primary');
-                    history.pushState("", document.title, window.location.pathname + window.location.search);
-                } catch (e) {
-                    console.error('Failed to load config from URL', e);
-                    this.showToast('Invalid configuration in URL.', 'danger');
-                }
-            }
-        },
-        toggleHistoryBulkActions() {
-            const checked = document.querySelectorAll('.history-checkbox:checked').length > 0;
-            document.getElementById('history-bulk-actions').style.display = checked ? 'flex' : 'none';
-        },
-        deleteSelectedHistory() {
-            const idsToDelete = Array.from(document.querySelectorAll('.history-checkbox:checked')).map(cb => parseInt(cb.dataset.id));
-            this.state.qrHistory = this.state.qrHistory.filter(item => !idsToDelete.includes(item.id));
-            localStorage.setItem('qrHistory', JSON.stringify(this.state.qrHistory));
-            this.renderHistory();
-            this.toggleHistoryBulkActions();
-            this.showToast(`${idsToDelete.length} items deleted.`, 'danger');
-        },
-        exportSelectedHistory() {
-            const idsToExport = Array.from(document.querySelectorAll('.history-checkbox:checked')).map(cb => parseInt(cb.dataset.id));
-            const selectedItems = this.state.qrHistory.filter(item => idsToExport.includes(item.id));
-            this.downloadJSON(selectedItems, 'vinnesia-qr-history-selected.json');
-        },
-        exportHistory() {
-            this.downloadJSON(this.state.qrHistory, 'vinnesia-qr-history-all.json');
-        },
-        importHistory(file) {
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const imported = JSON.parse(e.target.result);
-                    if (Array.isArray(imported)) {
-                        this.state.qrHistory = [...imported, ...this.state.qrHistory]
-                            .filter((v,i,a)=>a.findIndex(t=>(t.data === v.data && t.type===v.type))===i)
-                            .slice(0, this.maxHistoryItems);
-                        localStorage.setItem('qrHistory', JSON.stringify(this.state.qrHistory));
-                        this.renderHistory();
-                        this.showToast('History imported successfully!', 'success');
-                    } else { throw new Error('Not an array'); }
-                } catch(err) {
-                    this.showToast('Invalid history file.', 'danger');
-                }
-            };
-            reader.readAsText(file);
-        },
-        downloadJSON(data, filename) {
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
-            URL.revokeObjectURL(url);
         }
-    };
-    document.addEventListener('DOMContentLoaded', () => App.init());
+
+        // Tab switching function
+        function openTab(evt, tabName) {
+            currentTab = tabName;
+            
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(tb => tb.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding content
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Generate QR Code function
+        function generateQrCode() {
+            if (!qrCode) {
+                console.log('QR Code not initialized yet');
+                return;
+            }
+
+            // Show loading state
+            const generateBtn = document.getElementById('generate-btn');
+            const originalText = generateBtn.textContent;
+            generateBtn.textContent = '⏳ Generating...';
+            generateBtn.disabled = true;
+
+            setTimeout(() => {
+                try {
+                    let data = "";
+
+                    // Generate data based on current tab
+                    switch (currentTab) {
+                        case 'text':
+                            data = document.getElementById('text-input').value || "https://qr.vinnesia.my.id";
+                            break;
+                        case 'wifi':
+                            const ssid = document.getElementById('wifi-ssid').value;
+                            const password = document.getElementById('wifi-password').value;
+                            const encryption = document.getElementById('wifi-encryption').value;
+                            if (ssid) data = `WIFI:T:${encryption};S:${ssid};P:${password};;`;
+                            break;
+                        case 'vcard':
+                            const name = document.getElementById('vcard-name').value;
+                            const phone = document.getElementById('vcard-phone').value;
+                            const email = document.getElementById('vcard-email').value;
+                            const org = document.getElementById('vcard-org').value;
+                            const url = document.getElementById('vcard-url').value;
+                            if (name) data = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${org}\nURL:${url}\nEND:VCARD`;
+                            break;
+                        case 'email':
+                            const to = document.getElementById('email-to').value;
+                            const subject = document.getElementById('email-subject').value;
+                            const body = document.getElementById('email-body').value;
+                            if (to) data = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                            break;
+                        case 'sms':
+                            const smsTo = document.getElementById('sms-to').value;
+                            const smsBody = document.getElementById('sms-body').value;
+                            if (smsTo) data = `SMSTO:${smsTo}:${encodeURIComponent(smsBody)}`;
+                            break;
+                        case 'geo':
+                            const lat = document.getElementById('geo-lat').value;
+                            const lon = document.getElementById('geo-lon').value;
+                            if (lat && lon) data = `geo:${lat},${lon}`;
+                            break;
+                        case 'file':
+                            data = fileDataUrl || " ";
+                            break;
+                        case 'event':
+                            const summary = document.getElementById('event-summary').value;
+                            const start = document.getElementById('event-start').value.replace(/[-:]/g, '');
+                            const end = document.getElementById('event-end').value.replace(/[-:]/g, '');
+                            const location = document.getElementById('event-location').value;
+                            const description = document.getElementById('event-description').value;
+                            if (summary && start && end) {
+                                data = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${summary}\nDTSTART:${start}\nDTEND:${end}\nLOCATION:${location}\nDESCRIPTION:${description}\nEND:VEVENT\nEND:VCALENDAR`;
+                            }
+                            break;
+                        case 'crypto':
+                            const cryptoType = document.getElementById('crypto-type').value;
+                            const address = document.getElementById('crypto-address').value;
+                            const amount = document.getElementById('crypto-amount').value;
+                            const label = document.getElementById('crypto-label').value;
+                            if (address) data = `${cryptoType}:${address}${amount ? `?amount=${amount}` : ''}${label ? `&label=${encodeURIComponent(label)}` : ''}`;
+                            break;
+                        case 'phone':
+                            const phoneNumber = document.getElementById('phone-number').value;
+                            if (phoneNumber) data = `tel:${phoneNumber}`;
+                            break;
+                        case 'whatsapp':
+                            const whatsappNumber = document.getElementById('whatsapp-number').value;
+                            const whatsappMessage = document.getElementById('whatsapp-message').value;
+                            if (whatsappNumber) data = `https://wa.me/${whatsappNumber.replace('+', '')}${whatsappMessage ? `?text=${encodeURIComponent(whatsappMessage)}` : ''}`;
+                            break;
+                        case 'social':
+                            const platform = document.getElementById('social-platform').value;
+                            const username = document.getElementById('social-username').value;
+                            if (username) {
+                                if (platform === 'instagram') data = `https://instagram.com/${username}`;
+                                else if (platform === 'telegram') data = `https://t.me/${username}`;
+                                else if (platform === 'tiktok') data = `https://tiktok.com/@${username}`;
+                            }
+                            break;
+                        case 'appstore':
+                            const appPlatform = document.getElementById('appstore-platform').value;
+                            const appId = document.getElementById('appstore-id').value;
+                            if (appId) {
+                                if (appPlatform === 'playstore') data = appId.startsWith('http') ? appId : `https://play.google.com/store/apps/details?id=${appId}`;
+                                else if (appPlatform === 'appstore') data = appId.startsWith('http') ? appId : `https://apps.apple.com/app/id${appId}`;
+                            }
+                            break;
+                        case 'multilang':
+                            const baseUrl = document.getElementById('multilang-baseurl').value;
+                            const langParam = document.getElementById('multilang-langparam').value;
+                            if (baseUrl && langParam) data = `${baseUrl}?${langParam}`;
+                            break;
+                        case 'htmlcustom':
+                            const htmlContent = document.getElementById('htmlcustom-content').value;
+                            if (htmlContent) data = `data:text/html;base64,${btoa(htmlContent)}`;
+                            break;
+                    }
+
+                    // Get design options
+                    const dotColor = document.getElementById('dot-color').value;
+                    const bgColor = document.getElementById('bg-color').value;
+                    const dotStyle = document.getElementById('dot-style').value;
+                    const qrContainer = document.getElementById('qr-code-container');
+                    
+                    if (qrContainer) {
+                        qrContainer.style.backgroundColor = bgColor;
+                    }
+
+                    // Update QR code
+                    qrCode.update({
+                        data: data || "Welcome to VIN NESIA QR Generator!",
+                        image: logoImage || "",
+                        dotsOptions: { 
+                            color: dotColor, 
+                            type: dotStyle 
+                        },
+                        backgroundOptions: { 
+                            color: "transparent" 
+                        }
+                    });
+
+                    console.log('QR Code generated successfully');
+
+                } catch (error) {
+                    console.error('Error generating QR code:', error);
+                } finally {
+                    // Reset button
+                    generateBtn.textContent = originalText;
+                    generateBtn.disabled = false;
+                }
+            }, 300);
+        }
+
+        // File upload handlers
+        function setupFileHandlers() {
+            // Logo upload
+            const logoUpload = document.getElementById('logo-upload');
+            if (logoUpload) {
+                logoUpload.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            logoImage = event.target.result;
+                            const label = document.querySelector('label[for="logo-upload"]');
+                            if (label) {
+                                const originalText = label.textContent;
+                                label.textContent = '✅ Logo uploaded!';
+                                setTimeout(() => label.textContent = originalText, 2000);
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            // File upload
+            const fileInput = document.getElementById('file-input');
+            if (fileInput) {
+                fileInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            fileDataUrl = event.target.result;
+                            const label = document.querySelector('label[for="file-input"]');
+                            if (label) {
+                                const originalText = label.textContent;
+                                label.textContent = '✅ File uploaded!';
+                                setTimeout(() => label.textContent = originalText, 2000);
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        }
+
+        // Download handlers
+        function setupDownloadHandlers() {
+            const downloadPng = document.getElementById('download-png');
+            if (downloadPng) {
+                downloadPng.addEventListener('click', () => {
+                    if (!qrCode) return;
+                    const originalText = downloadPng.textContent;
+                    downloadPng.textContent = '⬇️ Downloading...';
+                    qrCode.download({ name: "vinnesia-qr", extension: "png" });
+                    setTimeout(() => downloadPng.textContent = originalText, 2000);
+                });
+            }
+
+            const downloadSvg = document.getElementById('download-svg');
+            if (downloadSvg) {
+                downloadSvg.addEventListener('click', () => {
+                    if (!qrCode) return;
+                    const originalText = downloadSvg.textContent;
+                    downloadSvg.textContent = '⬇️ Downloading...';
+                    qrCode.download({ name: "vinnesia-qr", extension: "svg" });
+                    setTimeout(() => downloadSvg.textContent = originalText, 2000);
+                });
+            }
+        }
+
+        // Generate button handler
+        function setupGenerateButton() {
+            const generateBtn = document.getElementById('generate-btn');
+            if (generateBtn) {
+                generateBtn.addEventListener('click', generateQrCode);
+            }
+        }
+
+        // Keyboard shortcuts
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case 'Enter':
+                            e.preventDefault();
+                            generateQrCode();
+                            break;
+                        case 's':
+                            e.preventDefault();
+                            if (qrCode) {
+                                const downloadBtn = document.getElementById('download-png');
+                                if (downloadBtn) downloadBtn.click();
+                            }
+                            break;
+                    }
+                }
+            });
+        }
+
+        // Form interactions
+        function setupFormInteractions() {
+            document.querySelectorAll('input, textarea, select').forEach(element => {
+                element.addEventListener('focus', function() {
+                    if (this.parentElement) {
+                        this.parentElement.style.transform = 'translateY(-2px)';
+                        this.parentElement.style.boxShadow = '0 8px 25px rgba(0, 245, 255, 0.1)';
+                    }
+                });
+                
+                element.addEventListener('blur', function() {
+                    if (this.parentElement) {
+                        this.parentElement.style.transform = 'translateY(0)';
+                        this.parentElement.style.boxShadow = 'none';
+                    }
+                });
+            });
+        }
+
+        // Mobile scroll enhancement
+        function setupMobileScroll() {
+            if (window.innerWidth <= 1024) {
+                const generateBtn = document.getElementById('generate-btn');
+                if (generateBtn) {
+                    generateBtn.addEventListener('click', () => {
+                        setTimeout(() => {
+                            const output = document.querySelector('.output');
+                            if (output) {
+                                output.scrollIntoView({ 
+                                    behavior: 'smooth',
+                                    block: 'center'
+                                });
+                            }
+                        }, 600);
+                    });
+                }
+            }
+        }
+
+        // Intersection Observer for animations
+        function setupAnimations() {
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.glass-card').forEach(card => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    observer.observe(card);
+                });
+            }
+        }
+
+        // Initialize everything when DOM is ready
+        function initializeApp() {
+            console.log('Initializing VIN NESIA QR Generator...');
+            
+            // Setup all event handlers
+            setupFileHandlers();
+            setupDownloadHandlers();
+            setupGenerateButton();
+            setupKeyboardShortcuts();
+            setupFormInteractions();
+            setupMobileScroll();
+            setupAnimations();
+            
+            // Initialize QR Code
+            initQRCode();
+            
+            console.log('App initialized successfully');
+        }
+
+        // Start the app when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
+
+        // Make openTab function globally available
+        window.openTab = openTab;
     </script>
+
 </body>
 </html>
