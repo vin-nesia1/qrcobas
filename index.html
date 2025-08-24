@@ -10,32 +10,6 @@
     <meta name="description" content="Create custom QR Codes with your logo for free. The VIN NESIA QR Code Generator supports Text, URL, WiFi, vCard, Location, and Files. Design your QR code with unique colors and styles.">
     <meta name="keywords" content="qr code generator, create qr code, free qr code, vin nesia, online qr code, qr code with logo, wifi qr code, vcard qr code, qr generator tool">
     <meta name="author" content="VIN NESIA">
-    <link rel="canonical" href="https://qr.vinnesia.my.id">
-    <link rel="icon" type="image/png" href="/favicon-v1.png" sizes="48x48">
-    <link rel="shortcut icon" href="/favicon-v1.ico" type="image/x-icon">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://qr.vinnesia.my.id">
-    <meta property="og:title" content="QR Code Generator - VIN NESIA">
-    <meta property="og:description" content="Easily create custom QR Codes with your logo for free. Supports Text, URL, WiFi, vCard, and more.">
-    <meta property="og:image" content="https://www.vinnesia.my.id/og-image.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://qr.vinnesia.my.id">
-    <meta property="twitter:title" content="QR Code Generator - VIN NESIA">
-    <meta property="twitter:description" content="Easily create custom QR Codes with your logo for free. Supports Text, URL, WiFi, vCard, and more.">
-    <meta property="twitter:image" content="https://www.vinnesia.my.id/og-image.png">
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6MQ8QLENDT"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-6MQ8QLENDT');
-    </script>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -362,17 +336,6 @@
             cursor: pointer;
         }
 
-        .file-warning {
-            background: rgba(255, 193, 7, 0.1);
-            color: #ffc107;
-            padding: 1rem;
-            border: 1px solid rgba(255, 193, 7, 0.3);
-            border-radius: 12px;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            backdrop-filter: blur(8px);
-        }
-
         /* Design Options */
         .design-section {
             margin-top: 2rem;
@@ -430,7 +393,8 @@
             min-height: 280px;
         }
 
-        #qr-code canvas {
+        #qr-code canvas,
+        #qr-code svg {
             border-radius: 12px;
             max-width: 100%;
             height: auto;
@@ -556,31 +520,6 @@
             opacity: 0.7;
         }
 
-        /* Custom QR Styles */
-        .qr-square { 
-            fill: var(--dot-color, #000000) !important; 
-        }
-        .qr-dots { 
-            rx: "50%" !important; 
-            fill: var(--dot-color, #000000) !important; 
-        }
-        .qr-rounded { 
-            rx: "15%" !important; 
-            fill: var(--dot-color, #000000) !important; 
-        }
-        .qr-extra-rounded { 
-            rx: "30%" !important; 
-            fill: var(--dot-color, #000000) !important; 
-        }
-        .qr-classy { 
-            rx: "10%" !important; 
-            fill: var(--dot-color, #000000) !important; 
-        }
-        .qr-classy-rounded { 
-            rx: "25%" !important; 
-            fill: var(--dot-color, #000000) !important; 
-        }
-
         /* Responsive Design */
         @media (max-width: 1024px) {
             main {
@@ -694,56 +633,239 @@
             </div>
 
             <!-- Tab Contents -->
-            <div id="text" class="tab-content active"><div class="form-group"><label for="text-input">Your Text or URL</label><textarea id="text-input" placeholder="e.g., https://www.vinnesia.my.id">Welcome to VIN NESIA QR Generator!</textarea></div></div>
-            <div id="wifi" class="tab-content"><div class="form-group"><label for="wifi-ssid">Network Name (SSID)</label><input type="text" id="wifi-ssid" placeholder="MyWiFiNetwork"></div><div class="form-group"><label for="wifi-password">Password</label><input type="text" id="wifi-password" placeholder="SecretPassword"></div><div class="form-group"><label for="wifi-encryption">Encryption</label><select id="wifi-encryption"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">None</option></select></div></div>
-            <div id="vcard" class="tab-content"><div class="form-group"><label for="vcard-name">Full Name</label><input type="text" id="vcard-name"></div><div class="form-group"><label for="vcard-phone">Phone</label><input type="tel" id="vcard-phone"></div><div class="form-group"><label for="vcard-email">Email</label><input type="email" id="vcard-email"></div><div class="form-group"><label for="vcard-org">Organization</label><input type="text" id="vcard-org"></div><div class="form-group"><label for="vcard-url">Website</label><input type="url" id="vcard-url"></div></div>
-            <div id="email" class="tab-content"><div class="form-group"><label for="email-to">Recipient Email</label><input type="email" id="email-to" placeholder="recipient@example.com"></div><div class="form-group"><label for="email-subject">Subject</label><input type="text" id="email-subject"></div><div class="form-group"><label for="email-body">Message</label><textarea id="email-body"></textarea></div></div>
-            <div id="sms" class="tab-content"><div class="form-group"><label for="sms-to">Phone Number</label><input type="tel" id="sms-to" placeholder="+1234567890"></div><div class="form-group"><label for="sms-body">Message</label><textarea id="sms-body"></textarea></div></div>
-            <div id="geo" class="tab-content"><div class="form-group"><label for="geo-lat">Latitude</label><input type="text" id="geo-lat" placeholder="40.7128"></div><div class="form-group"><label for="geo-lon">Longitude</label><input type="text" id="geo-lon" placeholder="-74.0060"></div></div>
-            <div id="file" class="tab-content"><div class="form-group"><label for="file-input">Upload File</label><input type="file" id="file-input"><div class="file-warning"><strong>Warning:</strong> For very small files (< 2KB) only. Large files will create unscannable QR codes. For larger files, upload them to a cloud service and create a QR code from the share link.</div></div></div>
+            <div id="text" class="tab-content active">
+                <div class="form-group">
+                    <label for="text-input">Your Text or URL</label>
+                    <textarea id="text-input" placeholder="e.g., https://www.vinnesia.my.id">Welcome to VIN NESIA QR Generator!</textarea>
+                </div>
+            </div>
+            
+            <div id="wifi" class="tab-content">
+                <div class="form-group">
+                    <label for="wifi-ssid">Network Name (SSID)</label>
+                    <input type="text" id="wifi-ssid" placeholder="MyWiFiNetwork">
+                </div>
+                <div class="form-group">
+                    <label for="wifi-password">Password</label>
+                    <input type="text" id="wifi-password" placeholder="SecretPassword">
+                </div>
+                <div class="form-group">
+                    <label for="wifi-encryption">Encryption</label>
+                    <select id="wifi-encryption">
+                        <option value="WPA">WPA/WPA2</option>
+                        <option value="WEP">WEP</option>
+                        <option value="nopass">None</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="vcard" class="tab-content">
+                <div class="form-group">
+                    <label for="vcard-name">Full Name</label>
+                    <input type="text" id="vcard-name">
+                </div>
+                <div class="form-group">
+                    <label for="vcard-phone">Phone</label>
+                    <input type="tel" id="vcard-phone">
+                </div>
+                <div class="form-group">
+                    <label for="vcard-email">Email</label>
+                    <input type="email" id="vcard-email">
+                </div>
+                <div class="form-group">
+                    <label for="vcard-org">Organization</label>
+                    <input type="text" id="vcard-org">
+                </div>
+                <div class="form-group">
+                    <label for="vcard-url">Website</label>
+                    <input type="url" id="vcard-url">
+                </div>
+            </div>
+            
+            <div id="email" class="tab-content">
+                <div class="form-group">
+                    <label for="email-to">Recipient Email</label>
+                    <input type="email" id="email-to" placeholder="recipient@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="email-subject">Subject</label>
+                    <input type="text" id="email-subject">
+                </div>
+                <div class="form-group">
+                    <label for="email-body">Message</label>
+                    <textarea id="email-body"></textarea>
+                </div>
+            </div>
+            
+            <div id="sms" class="tab-content">
+                <div class="form-group">
+                    <label for="sms-to">Phone Number</label>
+                    <input type="tel" id="sms-to" placeholder="+1234567890">
+                </div>
+                <div class="form-group">
+                    <label for="sms-body">Message</label>
+                    <textarea id="sms-body"></textarea>
+                </div>
+            </div>
+            
+            <div id="geo" class="tab-content">
+                <div class="form-group">
+                    <label for="geo-lat">Latitude</label>
+                    <input type="text" id="geo-lat" placeholder="40.7128">
+                </div>
+                <div class="form-group">
+                    <label for="geo-lon">Longitude</label>
+                    <input type="text" id="geo-lon" placeholder="-74.0060">
+                </div>
+            </div>
+            
+            <div id="file" class="tab-content">
+                <div class="form-group">
+                    <label for="file-input">Upload File</label>
+                    <input type="file" id="file-input">
+                    <div style="background: rgba(255, 193, 7, 0.1); color: #ffc107; padding: 1rem; border: 1px solid rgba(255, 193, 7, 0.3); border-radius: 12px; font-size: 0.9rem; margin-top: 1rem;">
+                        <strong>Warning:</strong> For very small files (< 2KB) only. Large files will create unscannable QR codes.
+                    </div>
+                </div>
+            </div>
+            
             <div id="event" class="tab-content">
-                <div class="form-group"><label for="event-summary">Event Title</label><input type="text" id="event-summary" placeholder="My Event"></div>
-                <div class="form-group"><label for="event-start">Start Date (YYYY-MM-DDTHH:MM)</label><input type="text" id="event-start" placeholder="2023-12-31T23:59"></div>
-                <div class="form-group"><label for="event-end">End Date (YYYY-MM-DDTHH:MM)</label><input type="text" id="event-end" placeholder="2024-01-01T00:01"></div>
-                <div class="form-group"><label for="event-location">Location</label><input type="text" id="event-location" placeholder="Jakarta, Indonesia"></div>
-                <div class="form-group"><label for="event-description">Description</label><textarea id="event-description" placeholder="Event details..."></textarea></div>
+                <div class="form-group">
+                    <label for="event-summary">Event Title</label>
+                    <input type="text" id="event-summary" placeholder="My Event">
+                </div>
+                <div class="form-group">
+                    <label for="event-start">Start Date (YYYY-MM-DDTHH:MM)</label>
+                    <input type="text" id="event-start" placeholder="2023-12-31T23:59">
+                </div>
+                <div class="form-group">
+                    <label for="event-end">End Date (YYYY-MM-DDTHH:MM)</label>
+                    <input type="text" id="event-end" placeholder="2024-01-01T00:01">
+                </div>
+                <div class="form-group">
+                    <label for="event-location">Location</label>
+                    <input type="text" id="event-location" placeholder="Jakarta, Indonesia">
+                </div>
+                <div class="form-group">
+                    <label for="event-description">Description</label>
+                    <textarea id="event-description" placeholder="Event details..."></textarea>
+                </div>
             </div>
+            
             <div id="crypto" class="tab-content">
-                <div class="form-group"><label for="crypto-type">Crypto Type</label><select id="crypto-type"><option value="bitcoin">Bitcoin</option><option value="ethereum">Ethereum</option><option value="litecoin">Litecoin</option></select></div>
-                <div class="form-group"><label for="crypto-address">Wallet Address</label><input type="text" id="crypto-address" placeholder="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"></div>
-                <div class="form-group"><label for="crypto-amount">Amount</label><input type="text" id="crypto-amount" placeholder="0.001"></div>
-                <div class="form-group"><label for="crypto-label">Label</label><input type="text" id="crypto-label" placeholder="Donation"></div>
+                <div class="form-group">
+                    <label for="crypto-type">Crypto Type</label>
+                    <select id="crypto-type">
+                        <option value="bitcoin">Bitcoin</option>
+                        <option value="ethereum">Ethereum</option>
+                        <option value="litecoin">Litecoin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="crypto-address">Wallet Address</label>
+                    <input type="text" id="crypto-address" placeholder="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa">
+                </div>
+                <div class="form-group">
+                    <label for="crypto-amount">Amount</label>
+                    <input type="text" id="crypto-amount" placeholder="0.001">
+                </div>
+                <div class="form-group">
+                    <label for="crypto-label">Label</label>
+                    <input type="text" id="crypto-label" placeholder="Donation">
+                </div>
             </div>
+            
             <div id="phone" class="tab-content">
-                <div class="form-group"><label for="phone-number">Phone Number</label><input type="tel" id="phone-number" placeholder="+6281234567890"></div>
+                <div class="form-group">
+                    <label for="phone-number">Phone Number</label>
+                    <input type="tel" id="phone-number" placeholder="+6281234567890">
+                </div>
             </div>
+            
             <div id="whatsapp" class="tab-content">
-                <div class="form-group"><label for="whatsapp-number">Phone Number</label><input type="tel" id="whatsapp-number" placeholder="+6281234567890"></div>
-                <div class="form-group"><label for="whatsapp-message">Pre-filled Message</label><textarea id="whatsapp-message" placeholder="Hello!"></textarea></div>
+                <div class="form-group">
+                    <label for="whatsapp-number">Phone Number</label>
+                    <input type="tel" id="whatsapp-number" placeholder="+6281234567890">
+                </div>
+                <div class="form-group">
+                    <label for="whatsapp-message">Pre-filled Message</label>
+                    <textarea id="whatsapp-message" placeholder="Hello!"></textarea>
+                </div>
             </div>
+            
             <div id="social" class="tab-content">
-                <div class="form-group"><label for="social-platform">Platform</label><select id="social-platform"><option value="instagram">Instagram</option><option value="telegram">Telegram</option><option value="tiktok">TikTok</option></select></div>
-                <div class="form-group"><label for="social-username">Username</label><input type="text" id="social-username" placeholder="username"></div>
+                <div class="form-group">
+                    <label for="social-platform">Platform</label>
+                    <select id="social-platform">
+                        <option value="instagram">Instagram</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="tiktok">TikTok</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="social-username">Username</label>
+                    <input type="text" id="social-username" placeholder="username">
+                </div>
             </div>
+            
             <div id="appstore" class="tab-content">
-                <div class="form-group"><label for="appstore-platform">Platform</label><select id="appstore-platform"><option value="playstore">Google Play Store</option><option value="appstore">Apple App Store</option></select></div>
-                <div class="form-group"><label for="appstore-id">App ID or URL</label><input type="text" id="appstore-id" placeholder="com.example.app or full URL"></div>
+                <div class="form-group">
+                    <label for="appstore-platform">Platform</label>
+                    <select id="appstore-platform">
+                        <option value="playstore">Google Play Store</option>
+                        <option value="appstore">Apple App Store</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="appstore-id">App ID or URL</label>
+                    <input type="text" id="appstore-id" placeholder="com.example.app or full URL">
+                </div>
             </div>
+            
             <div id="multilang" class="tab-content">
-                <div class="form-group"><label for="multilang-baseurl">Base URL</label><input type="url" id="multilang-baseurl" placeholder="https://example.com"></div>
-                <div class="form-group"><label for="multilang-langparam">Language Parameter (e.g., lang=en)</label><input type="text" id="multilang-langparam" placeholder="lang=en"></div>
+                <div class="form-group">
+                    <label for="multilang-baseurl">Base URL</label>
+                    <input type="url" id="multilang-baseurl" placeholder="https://example.com">
+                </div>
+                <div class="form-group">
+                    <label for="multilang-langparam">Language Parameter (e.g., lang=en)</label>
+                    <input type="text" id="multilang-langparam" placeholder="lang=en">
+                </div>
             </div>
+            
             <div id="htmlcustom" class="tab-content">
-                <div class="form-group"><label for="htmlcustom-content">HTML Content</label><textarea id="htmlcustom-content" placeholder="<h1>Hello World</h1>"></textarea></div>
+                <div class="form-group">
+                    <label for="htmlcustom-content">HTML Content</label>
+                    <textarea id="htmlcustom-content" placeholder="<h1>Hello World</h1>"></textarea>
+                </div>
             </div>
 
             <div class="design-section">
                 <h3>Design Options</h3>
                 <div class="design-grid">
-                    <div class="form-group"><label for="dot-color">Dot Color</label><input type="color" id="dot-color" value="#000000"></div>
-                    <div class="form-group"><label for="bg-color">Background Color</label><input type="color" id="bg-color" value="#ffffff"></div>
-                    <div class="form-group"><label for="dot-style">Dot Style</label><select id="dot-style"><option value="square">Square</option><option value="dots">Dots</option><option value="rounded">Rounded</option><option value="extra-rounded">Extra Rounded</option><option value="classy">Classy</option><option value="classy-rounded">Classy Rounded</option></select></div>
-                    <div class="form-group"><label for="logo-upload">Upload Logo</label><input type="file" id="logo-upload" accept="image/*"></div>
+                    <div class="form-group">
+                        <label for="dot-color">Dot Color</label>
+                        <input type="color" id="dot-color" value="#000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="bg-color">Background Color</label>
+                        <input type="color" id="bg-color" value="#ffffff">
+                    </div>
+                    <div class="form-group">
+                        <label for="dot-style">Dot Style</label>
+                        <select id="dot-style">
+                            <option value="square">Square</option>
+                            <option value="dots">Dots</option>
+                            <option value="rounded">Rounded</option>
+                            <option value="extra-rounded">Extra Rounded</option>
+                            <option value="classy">Classy</option>
+                            <option value="classy-rounded">Classy Rounded</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="logo-upload">Upload Logo</label>
+                        <input type="file" id="logo-upload" accept="image/*">
+                    </div>
                 </div>
             </div>
 
@@ -776,14 +898,103 @@
         </div>
     </footer>
 
-    <!-- QR Code Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+    <!-- QRCodeStyling Library -->
+    <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
     
     <script>
         // Global variables
         let currentTab = 'text';
         let logoImage = null;
         let fileDataUrl = null;
+        let qrCode = null;
+
+        // Initialize QRCodeStyling
+        function initQRCode() {
+            console.log('Initializing QR Code...');
+            
+            if (typeof QRCodeStyling === 'undefined') {
+                console.log('QRCodeStyling not loaded yet, retrying...');
+                setTimeout(initQRCode, 500);
+                return;
+            }
+
+            try {
+                console.log('Creating QRCodeStyling instance...');
+                
+                qrCode = new QRCodeStyling({
+                    width: 280,
+                    height: 280,
+                    type: "svg",
+                    data: "Welcome to VIN NESIA QR Generator!",
+                    dotsOptions: {
+                        color: "#000000",
+                        type: "square"
+                    },
+                    backgroundOptions: {
+                        color: "#ffffff"
+                    },
+                    qrOptions: {
+                        errorCorrectionLevel: 'M'
+                    }
+                });
+
+                console.log('QRCodeStyling instance created successfully');
+
+                const qrContainer = document.getElementById("qr-code");
+                if (qrContainer) {
+                    qrContainer.innerHTML = '<div style="text-align: center; color: #666;">Loading QR Code...</div>';
+                    
+                    setTimeout(() => {
+                        try {
+                            qrContainer.innerHTML = '';
+                            qrCode.append(qrContainer);
+                            console.log('QR Code appended to container successfully');
+                        } catch (appendError) {
+                            console.error('Error appending QR code:', appendError);
+                            // Fallback: try to generate canvas manually
+                            generateFallbackQR();
+                        }
+                    }, 100);
+                } else {
+                    console.error('QR container not found');
+                }
+
+            } catch (error) {
+                console.error('Error creating QRCodeStyling instance:', error);
+                generateFallbackQR();
+            }
+        }
+
+        // Fallback QR generation using simple method
+        function generateFallbackQR() {
+            console.log('Using fallback QR generation method...');
+            const qrContainer = document.getElementById("qr-code");
+            if (qrContainer) {
+                // Create a simple QR code placeholder
+                qrContainer.innerHTML = `
+                    <div style="
+                        width: 280px; 
+                        height: 280px; 
+                        background: #ffffff; 
+                        border: 2px solid #000; 
+                        display: flex; 
+                        align-items: center; 
+                        justify-content: center; 
+                        border-radius: 12px;
+                        font-size: 14px;
+                        text-align: center;
+                        color: #333;
+                        flex-direction: column;
+                        gap: 10px;
+                    ">
+                        <div style="font-size: 48px;">📱</div>
+                        <div>QR Code Generator</div>
+                        <div style="font-size: 12px; opacity: 0.7;">Library loading issue</div>
+                        <div style="font-size: 12px; color: #007bff;">Please refresh the page</div>
+                    </div>
+                `;
+            }
+        }
 
         // Tab switching function
         function openTab(evt, tabName) {
@@ -796,141 +1007,171 @@
             // Add active class to clicked tab and corresponding content
             document.getElementById(tabName).classList.add('active');
             evt.currentTarget.classList.add('active');
+            
+            // Generate QR code for new tab
+            setTimeout(generateQrCode, 300);
         }
 
-        // Apply custom dot styles to QR code
-        function applyDotStyle(canvas, dotStyle, dotColor, bgColor) {
-            if (!canvas) {
-                console.log('No canvas provided to applyDotStyle');
-                return;
-            }
-            
-            try {
-                const ctx = canvas.getContext('2d');
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const data = imageData.data;
-                
-                console.log('Applying dot style:', dotStyle, 'with color:', dotColor);
-                
-                // Clear canvas and set background
-                ctx.fillStyle = bgColor || '#ffffff';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                // Calculate module size
-                const moduleCount = 21; // Basic QR code is 21x21 modules
-                const moduleSize = Math.floor(canvas.width / moduleCount);
-                
-                // Set dot color
-                ctx.fillStyle = dotColor || '#000000';
-                
-                // Scan through image data to find dark pixels
-                for (let y = 0; y < canvas.height; y += moduleSize) {
-                    for (let x = 0; x < canvas.width; x += moduleSize) {
-                        // Check if this module should be dark
-                        const centerX = x + Math.floor(moduleSize / 2);
-                        const centerY = y + Math.floor(moduleSize / 2);
-                        const pixelIndex = (centerY * canvas.width + centerX) * 4;
-                        
-                        if (pixelIndex < data.length) {
-                            const r = data[pixelIndex];
-                            const g = data[pixelIndex + 1];
-                            const b = data[pixelIndex + 2];
-                            const brightness = (r + g + b) / 3;
-                            
-                            // If pixel is dark, draw the styled module
-                            if (brightness < 128) {
-                                drawModuleWithStyle(ctx, x, y, moduleSize, dotStyle);
-                            }
-                        }
+        // Generate QR Code data based on current tab
+        function generateQRData() {
+            let data = "";
+
+            switch (currentTab) {
+                case 'text':
+                    data = document.getElementById('text-input').value || "Welcome to VIN NESIA QR Generator!";
+                    break;
+                case 'wifi':
+                    const ssid = document.getElementById('wifi-ssid').value;
+                    const password = document.getElementById('wifi-password').value;
+                    const encryption = document.getElementById('wifi-encryption').value;
+                    if (ssid) {
+                        data = `WIFI:T:${encryption};S:${ssid};P:${password};;`;
+                    } else {
+                        data = "WIFI:T:WPA;S:MyWiFiNetwork;P:password123;;";
                     }
-                }
-                
-                // Add logo if present
-                if (logoImage) {
-                    addLogoToCanvas(ctx, canvas.width, canvas.height);
-                }
-                
-            } catch (error) {
-                console.error('Error in applyDotStyle:', error);
-                // If styling fails, just use the basic QR code
-            }
-        }
-
-        // Draw individual module with specific style
-        function drawModuleWithStyle(ctx, x, y, size, style) {
-            switch (style) {
-                case 'dots':
-                    ctx.beginPath();
-                    ctx.arc(x + size/2, y + size/2, size/2.2, 0, 2 * Math.PI);
-                    ctx.fill();
                     break;
-                case 'rounded':
-                    drawRoundedRect(ctx, x + 1, y + 1, size - 2, size - 2, size * 0.15);
+                case 'vcard':
+                    const name = document.getElementById('vcard-name').value;
+                    const phone = document.getElementById('vcard-phone').value;
+                    const email = document.getElementById('vcard-email').value;
+                    const org = document.getElementById('vcard-org').value;
+                    const url = document.getElementById('vcard-url').value;
+                    if (name || phone || email) {
+                        data = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${org}\nURL:${url}\nEND:VCARD`;
+                    } else {
+                        data = "BEGIN:VCARD\nVERSION:3.0\nFN:John Doe\nTEL:+1234567890\nEMAIL:john@example.com\nORG:VIN NESIA\nURL:https://www.vinnesia.my.id\nEND:VCARD";
+                    }
                     break;
-                case 'extra-rounded':
-                    drawRoundedRect(ctx, x + 1, y + 1, size - 2, size - 2, size * 0.3);
+                case 'email':
+                    const to = document.getElementById('email-to').value;
+                    const subject = document.getElementById('email-subject').value;
+                    const body = document.getElementById('email-body').value;
+                    if (to) {
+                        data = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                    } else {
+                        data = "mailto:support@vinnesia.my.id?subject=Hello&body=Hello from QR Generator";
+                    }
                     break;
-                case 'classy':
-                    drawRoundedRect(ctx, x + 0.5, y + 0.5, size - 1, size - 1, size * 0.1);
+                case 'sms':
+                    const smsTo = document.getElementById('sms-to').value;
+                    const smsBody = document.getElementById('sms-body').value;
+                    if (smsTo) {
+                        data = `SMSTO:${smsTo}:${encodeURIComponent(smsBody)}`;
+                    } else {
+                        data = "SMSTO:+6281234567890:Hello from VIN NESIA QR Generator";
+                    }
                     break;
-                case 'classy-rounded':
-                    drawRoundedRect(ctx, x + 0.5, y + 0.5, size - 1, size - 1, size * 0.25);
+                case 'geo':
+                    const lat = document.getElementById('geo-lat').value;
+                    const lon = document.getElementById('geo-lon').value;
+                    if (lat && lon) {
+                        data = `geo:${lat},${lon}`;
+                    } else {
+                        data = "geo:-6.2088,106.8456"; // Jakarta coordinates
+                    }
                     break;
-                case 'square':
+                case 'file':
+                    data = fileDataUrl || "Please upload a file to generate QR code";
+                    break;
+                case 'event':
+                    const summary = document.getElementById('event-summary').value;
+                    const start = document.getElementById('event-start').value.replace(/[-:T]/g, '').replace(/\d{2}$/, '00');
+                    const end = document.getElementById('event-end').value.replace(/[-:T]/g, '').replace(/\d{2}$/, '00');
+                    const location = document.getElementById('event-location').value;
+                    const description = document.getElementById('event-description').value;
+                    if (summary && start && end) {
+                        data = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${summary}\nDTSTART:${start}\nDTEND:${end}\nLOCATION:${location}\nDESCRIPTION:${description}\nEND:VEVENT\nEND:VCALENDAR`;
+                    } else {
+                        data = "BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:VIN NESIA Event\nDTSTART:20241225T120000\nDTEND:20241225T130000\nLOCATION:Jakarta, Indonesia\nDESCRIPTION:Sample event from VIN NESIA QR Generator\nEND:VEVENT\nEND:VCALENDAR";
+                    }
+                    break;
+                case 'crypto':
+                    const cryptoType = document.getElementById('crypto-type').value;
+                    const address = document.getElementById('crypto-address').value;
+                    const amount = document.getElementById('crypto-amount').value;
+                    const label = document.getElementById('crypto-label').value;
+                    if (address) {
+                        data = `${cryptoType}:${address}${amount ? `?amount=${amount}` : ''}${label ? `&label=${encodeURIComponent(label)}` : ''}`;
+                    } else {
+                        data = "bitcoin:1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa?amount=0.001&label=Donation";
+                    }
+                    break;
+                case 'phone':
+                    const phoneNumber = document.getElementById('phone-number').value;
+                    if (phoneNumber) {
+                        data = `tel:${phoneNumber}`;
+                    } else {
+                        data = "tel:+6281234567890";
+                    }
+                    break;
+                case 'whatsapp':
+                    const whatsappNumber = document.getElementById('whatsapp-number').value;
+                    const whatsappMessage = document.getElementById('whatsapp-message').value;
+                    if (whatsappNumber) {
+                        data = `https://wa.me/${whatsappNumber.replace('+', '')}${whatsappMessage ? `?text=${encodeURIComponent(whatsappMessage)}` : ''}`;
+                    } else {
+                        data = "https://wa.me/6281234567890?text=Hello from VIN NESIA QR Generator";
+                    }
+                    break;
+                case 'social':
+                    const platform = document.getElementById('social-platform').value;
+                    const username = document.getElementById('social-username').value;
+                    if (username) {
+                        if (platform === 'instagram') data = `https://instagram.com/${username}`;
+                        else if (platform === 'telegram') data = `https://t.me/${username}`;
+                        else if (platform === 'tiktok') data = `https://tiktok.com/@${username}`;
+                    } else {
+                        data = "https://instagram.com/vin.nesia.id";
+                    }
+                    break;
+                case 'appstore':
+                    const appPlatform = document.getElementById('appstore-platform').value;
+                    const appId = document.getElementById('appstore-id').value;
+                    if (appId) {
+                        if (appPlatform === 'playstore') {
+                            data = appId.startsWith('http') ? appId : `https://play.google.com/store/apps/details?id=${appId}`;
+                        } else if (appPlatform === 'appstore') {
+                            data = appId.startsWith('http') ? appId : `https://apps.apple.com/app/id${appId}`;
+                        }
+                    } else {
+                        data = "https://play.google.com/store/apps/details?id=com.vinnesia.app";
+                    }
+                    break;
+                case 'multilang':
+                    const baseUrl = document.getElementById('multilang-baseurl').value;
+                    const langParam = document.getElementById('multilang-langparam').value;
+                    if (baseUrl && langParam) {
+                        data = `${baseUrl}?${langParam}`;
+                    } else {
+                        data = "https://www.vinnesia.my.id?lang=en";
+                    }
+                    break;
+                case 'htmlcustom':
+                    const htmlContent = document.getElementById('htmlcustom-content').value;
+                    if (htmlContent) {
+                        data = `data:text/html;base64,${btoa(htmlContent)}`;
+                    } else {
+                        data = "data:text/html;base64," + btoa("<h1>Hello from VIN NESIA</h1>");
+                    }
+                    break;
                 default:
-                    ctx.fillRect(x, y, size, size);
-                    break;
+                    data = "Welcome to VIN NESIA QR Generator!";
             }
-        }
 
-        // Helper function to draw rounded rectangles
-        function drawRoundedRect(ctx, x, y, width, height, radius) {
-            ctx.beginPath();
-            ctx.moveTo(x + radius, y);
-            ctx.lineTo(x + width - radius, y);
-            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-            ctx.lineTo(x + width, y + height - radius);
-            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-            ctx.lineTo(x + radius, y + height);
-            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-            ctx.lineTo(x, y + radius);
-            ctx.quadraticCurveTo(x, y, x + radius, y);
-            ctx.closePath();
-            ctx.fill();
-        }
-
-        // Helper function to convert hex to RGB
-        function hexToRgb(hex) {
-            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? {
-                r: parseInt(result[1], 16),
-                g: parseInt(result[2], 16),
-                b: parseInt(result[3], 16)
-            } : null;
-        }
-
-        // Add logo to canvas
-        function addLogoToCanvas(ctx, canvasWidth, canvasHeight) {
-            if (!logoImage) return;
-            
-            const img = new Image();
-            img.onload = function() {
-                const logoSize = Math.min(canvasWidth, canvasHeight) * 0.2;
-                const x = (canvasWidth - logoSize) / 2;
-                const y = (canvasHeight - logoSize) / 2;
-                
-                // Draw white background for logo
-                ctx.fillStyle = 'white';
-                ctx.fillRect(x - 5, y - 5, logoSize + 10, logoSize + 10);
-                
-                // Draw logo
-                ctx.drawImage(img, x, y, logoSize, logoSize);
-            };
-            img.src = logoImage;
+            return data;
         }
 
         // Generate QR Code function
         function generateQrCode() {
+            console.log('generateQrCode called, qrCode exists:', !!qrCode);
+            
+            if (!qrCode) {
+                console.log('QR Code not initialized, initializing...');
+                initQRCode();
+                setTimeout(generateQrCode, 2000);
+                return;
+            }
+
             // Show loading state
             const generateBtn = document.getElementById('generate-btn');
             const originalText = generateBtn.textContent;
@@ -939,183 +1180,67 @@
 
             setTimeout(() => {
                 try {
-                    let data = "";
-
-                    // Generate data based on current tab
-                    switch (currentTab) {
-                        case 'text':
-                            data = document.getElementById('text-input').value || "Welcome to VIN NESIA QR Generator!";
-                            break;
-                        case 'wifi':
-                            const ssid = document.getElementById('wifi-ssid').value;
-                            const password = document.getElementById('wifi-password').value;
-                            const encryption = document.getElementById('wifi-encryption').value;
-                            if (ssid) data = `WIFI:T:${encryption};S:${ssid};P:${password};;`;
-                            else data = "WIFI:T:WPA;S:MyWiFi;P:password123;;";
-                            break;
-                        case 'vcard':
-                            const name = document.getElementById('vcard-name').value;
-                            const phone = document.getElementById('vcard-phone').value;
-                            const email = document.getElementById('vcard-email').value;
-                            const org = document.getElementById('vcard-org').value;
-                            const url = document.getElementById('vcard-url').value;
-                            if (name) data = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${org}\nURL:${url}\nEND:VCARD`;
-                            else data = "BEGIN:VCARD\nVERSION:3.0\nFN:John Doe\nTEL:+1234567890\nEMAIL:john@example.com\nEND:VCARD";
-                            break;
-                        case 'email':
-                            const to = document.getElementById('email-to').value;
-                            const subject = document.getElementById('email-subject').value;
-                            const body = document.getElementById('email-body').value;
-                            if (to) data = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-                            else data = "mailto:example@email.com?subject=Hello&body=Hello World";
-                            break;
-                        case 'sms':
-                            const smsTo = document.getElementById('sms-to').value;
-                            const smsBody = document.getElementById('sms-body').value;
-                            if (smsTo) data = `SMSTO:${smsTo}:${encodeURIComponent(smsBody)}`;
-                            else data = "SMSTO:+1234567890:Hello from VIN NESIA";
-                            break;
-                        case 'geo':
-                            const lat = document.getElementById('geo-lat').value;
-                            const lon = document.getElementById('geo-lon').value;
-                            if (lat && lon) data = `geo:${lat},${lon}`;
-                            else data = "geo:-6.2088,106.8456";
-                            break;
-                        case 'file':
-                            data = fileDataUrl || "No file selected - Please upload a file";
-                            break;
-                        case 'event':
-                            const summary = document.getElementById('event-summary').value;
-                            const start = document.getElementById('event-start').value.replace(/[-:T]/g, '').replace(/\d{2}$/, '00');
-                            const end = document.getElementById('event-end').value.replace(/[-:T]/g, '').replace(/\d{2}$/, '00');
-                            const location = document.getElementById('event-location').value;
-                            const description = document.getElementById('event-description').value;
-                            if (summary && start && end) {
-                                data = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${summary}\nDTSTART:${start}\nDTEND:${end}\nLOCATION:${location}\nDESCRIPTION:${description}\nEND:VEVENT\nEND:VCALENDAR`;
-                            } else {
-                                data = "BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:Sample Event\nDTSTART:20241225T120000\nDTEND:20241225T130000\nLOCATION:Jakarta\nDESCRIPTION:Sample event from VIN NESIA\nEND:VEVENT\nEND:VCALENDAR";
-                            }
-                            break;
-                        case 'crypto':
-                            const cryptoType = document.getElementById('crypto-type').value;
-                            const address = document.getElementById('crypto-address').value;
-                            const amount = document.getElementById('crypto-amount').value;
-                            const label = document.getElementById('crypto-label').value;
-                            if (address) data = `${cryptoType}:${address}${amount ? `?amount=${amount}` : ''}${label ? `&label=${encodeURIComponent(label)}` : ''}`;
-                            else data = "bitcoin:1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa?amount=0.001&label=Donation";
-                            break;
-                        case 'phone':
-                            const phoneNumber = document.getElementById('phone-number').value;
-                            if (phoneNumber) data = `tel:${phoneNumber}`;
-                            else data = "tel:+6281234567890";
-                            break;
-                        case 'whatsapp':
-                            const whatsappNumber = document.getElementById('whatsapp-number').value;
-                            const whatsappMessage = document.getElementById('whatsapp-message').value;
-                            if (whatsappNumber) data = `https://wa.me/${whatsappNumber.replace('+', '')}${whatsappMessage ? `?text=${encodeURIComponent(whatsappMessage)}` : ''}`;
-                            else data = "https://wa.me/6281234567890?text=Hello from VIN NESIA";
-                            break;
-                        case 'social':
-                            const platform = document.getElementById('social-platform').value;
-                            const username = document.getElementById('social-username').value;
-                            if (username) {
-                                if (platform === 'instagram') data = `https://instagram.com/${username}`;
-                                else if (platform === 'telegram') data = `https://t.me/${username}`;
-                                else if (platform === 'tiktok') data = `https://tiktok.com/@${username}`;
-                            } else {
-                                data = "https://instagram.com/vin.nesia.id";
-                            }
-                            break;
-                        case 'appstore':
-                            const appPlatform = document.getElementById('appstore-platform').value;
-                            const appId = document.getElementById('appstore-id').value;
-                            if (appId) {
-                                if (appPlatform === 'playstore') data = appId.startsWith('http') ? appId : `https://play.google.com/store/apps/details?id=${appId}`;
-                                else if (appPlatform === 'appstore') data = appId.startsWith('http') ? appId : `https://apps.apple.com/app/id${appId}`;
-                            } else {
-                                data = "https://play.google.com/store/apps/details?id=com.example.app";
-                            }
-                            break;
-                        case 'multilang':
-                            const baseUrl = document.getElementById('multilang-baseurl').value;
-                            const langParam = document.getElementById('multilang-langparam').value;
-                            if (baseUrl && langParam) data = `${baseUrl}?${langParam}`;
-                            else data = "https://example.com?lang=en";
-                            break;
-                        case 'htmlcustom':
-                            const htmlContent = document.getElementById('htmlcustom-content').value;
-                            if (htmlContent) data = `data:text/html;base64,${btoa(htmlContent)}`;
-                            else data = "data:text/html;base64," + btoa("<h1>Hello World</h1>");
-                            break;
-                        default:
-                            data = "Welcome to VIN NESIA QR Generator!";
-                    }
-
-                    console.log('Generating QR code for data:', data);
+                    // Get QR data
+                    const data = generateQRData();
+                    console.log('Generated data for QR code:', data.substring(0, 50) + '...');
 
                     // Get design options
                     const dotColor = document.getElementById('dot-color').value;
                     const bgColor = document.getElementById('bg-color').value;
                     const dotStyle = document.getElementById('dot-style').value;
                     
+                    console.log('Design options - Color:', dotColor, 'BG:', bgColor, 'Style:', dotStyle);
+
+                    // Map dot styles to QRCodeStyling types
+                    const dotTypeMap = {
+                        'square': 'square',
+                        'dots': 'dots',
+                        'rounded': 'rounded',
+                        'extra-rounded': 'extra-rounded',
+                        'classy': 'classy',
+                        'classy-rounded': 'classy-rounded'
+                    };
+
                     // Update container background
                     const qrContainer = document.getElementById('qr-code-container');
                     qrContainer.style.backgroundColor = bgColor;
 
-                    // Clear previous QR code
-                    const qrCodeDiv = document.getElementById('qr-code');
-                    qrCodeDiv.innerHTML = '';
-
-                    // Create canvas element
-                    const canvas = document.createElement('canvas');
-                    canvas.width = 280;
-                    canvas.height = 280;
-                    canvas.style.maxWidth = '100%';
-                    canvas.style.height = 'auto';
-                    canvas.style.borderRadius = '12px';
-
-                    // Generate basic QR code first
-                    QRCode.toCanvas(canvas, data, {
-                        width: 280,
-                        margin: 2,
-                        color: {
-                            dark: dotColor,
-                            light: bgColor
+                    // Update QR code with new options
+                    const updateOptions = {
+                        data: data,
+                        dotsOptions: {
+                            color: dotColor,
+                            type: dotTypeMap[dotStyle] || 'square'
                         },
-                        errorCorrectionLevel: 'H'
-                    }, function (error) {
-                        if (error) {
-                            console.error('QR Code generation error:', error);
-                            qrCodeDiv.innerHTML = '<div style="color: #ff6b6b; text-align: center; padding: 2rem;">❌ Error generating QR code<br>Please check your input data</div>';
-                            return;
+                        backgroundOptions: {
+                            color: bgColor
                         }
-                        
-                        console.log('Basic QR code generated, applying custom styling...');
-                        
-                        // Apply custom dot styling
-                        setTimeout(() => {
-                            try {
-                                applyDotStyle(canvas, dotStyle, dotColor, bgColor);
-                                qrCodeDiv.appendChild(canvas);
-                                console.log('QR Code generated successfully with style:', dotStyle);
-                            } catch (styleError) {
-                                console.error('Error applying style:', styleError);
-                                // If styling fails, just show the basic QR code
-                                qrCodeDiv.appendChild(canvas);
-                            }
-                        }, 100);
-                    });
+                    };
+
+                    // Add logo if exists
+                    if (logoImage) {
+                        updateOptions.image = logoImage;
+                        updateOptions.imageOptions = {
+                            crossOrigin: "anonymous",
+                            margin: 8,
+                            imageSize: 0.3
+                        };
+                    }
+
+                    console.log('Updating QR code with options:', updateOptions);
+                    qrCode.update(updateOptions);
+                    console.log('QR Code updated successfully');
 
                 } catch (error) {
                     console.error('Error in generateQrCode:', error);
                     const qrCodeDiv = document.getElementById('qr-code');
-                    qrCodeDiv.innerHTML = '<div style="color: #ff6b6b; text-align: center; padding: 2rem;">❌ Error generating QR code<br>Please try again</div>';
+                    qrCodeDiv.innerHTML = '<div style="color: #ff6b6b; text-align: center; padding: 2rem;">❌ Error generating QR code<br><small>' + error.message + '</small></div>';
                 } finally {
                     // Reset button
                     generateBtn.textContent = originalText;
                     generateBtn.disabled = false;
                 }
-            }, 300);
+            }, 500);
         }
 
         // File upload handlers
@@ -1133,7 +1258,10 @@
                             if (label) {
                                 const originalText = label.textContent;
                                 label.textContent = '✅ Logo uploaded!';
-                                setTimeout(() => label.textContent = originalText, 2000);
+                                setTimeout(() => {
+                                    label.textContent = originalText;
+                                    generateQrCode();
+                                }, 1000);
                             }
                         };
                         reader.readAsDataURL(file);
@@ -1154,7 +1282,10 @@
                             if (label) {
                                 const originalText = label.textContent;
                                 label.textContent = '✅ File uploaded!';
-                                setTimeout(() => label.textContent = originalText, 2000);
+                                setTimeout(() => {
+                                    label.textContent = originalText;
+                                    if (currentTab === 'file') generateQrCode();
+                                }, 1000);
                             }
                         };
                         reader.readAsDataURL(file);
@@ -1168,8 +1299,7 @@
             const downloadPng = document.getElementById('download-png');
             if (downloadPng) {
                 downloadPng.addEventListener('click', () => {
-                    const canvas = document.querySelector('#qr-code canvas');
-                    if (!canvas) {
+                    if (!qrCode) {
                         alert('Please generate a QR code first!');
                         return;
                     }
@@ -1177,11 +1307,10 @@
                     const originalText = downloadPng.textContent;
                     downloadPng.textContent = '⬇️ Downloading...';
                     
-                    // Create download link
-                    const link = document.createElement('a');
-                    link.download = 'vinnesia-qr-code.png';
-                    link.href = canvas.toDataURL();
-                    link.click();
+                    qrCode.download({ 
+                        name: "vinnesia-qr-code", 
+                        extension: "png" 
+                    });
                     
                     setTimeout(() => downloadPng.textContent = originalText, 2000);
                 });
@@ -1190,8 +1319,7 @@
             const downloadSvg = document.getElementById('download-svg');
             if (downloadSvg) {
                 downloadSvg.addEventListener('click', () => {
-                    const canvas = document.querySelector('#qr-code canvas');
-                    if (!canvas) {
+                    if (!qrCode) {
                         alert('Please generate a QR code first!');
                         return;
                     }
@@ -1199,27 +1327,17 @@
                     const originalText = downloadSvg.textContent;
                     downloadSvg.textContent = '⬇️ Downloading...';
                     
-                    // Convert canvas to SVG (basic implementation)
-                    const dataURL = canvas.toDataURL();
-                    const svg = `<svg width="${canvas.width}" height="${canvas.height}" xmlns="http://www.w3.org/2000/svg">
-                        <image href="${dataURL}" width="${canvas.width}" height="${canvas.height}"/>
-                    </svg>`;
+                    qrCode.download({ 
+                        name: "vinnesia-qr-code", 
+                        extension: "svg" 
+                    });
                     
-                    const blob = new Blob([svg], { type: 'image/svg+xml' });
-                    const url = URL.createObjectURL(blob);
-                    
-                    const link = document.createElement('a');
-                    link.download = 'vinnesia-qr-code.svg';
-                    link.href = url;
-                    link.click();
-                    
-                    URL.revokeObjectURL(url);
                     setTimeout(() => downloadSvg.textContent = originalText, 2000);
                 });
             }
         }
 
-        // Generate button handler
+        // Setup generate button
         function setupGenerateButton() {
             const generateBtn = document.getElementById('generate-btn');
             if (generateBtn) {
@@ -1227,12 +1345,17 @@
             }
         }
 
-        // Real-time generation on input change
+        // Setup real-time generation
         function setupRealTimeGeneration() {
-            const inputs = document.querySelectorAll('input, textarea, select');
+            const inputs = document.querySelectorAll('input:not([type="file"]), textarea, select');
             inputs.forEach(input => {
-                if (input.type !== 'file') {
-                    input.addEventListener('input', debounce(generateQrCode, 1000));
+                input.addEventListener('input', debounce(() => {
+                    generateQrCode();
+                }, 1000));
+                
+                // Also trigger on color change
+                if (input.type === 'color') {
+                    input.addEventListener('change', generateQrCode);
                 }
             });
         }
@@ -1261,8 +1384,7 @@
                             break;
                         case 's':
                             e.preventDefault();
-                            const canvas = document.querySelector('#qr-code canvas');
-                            if (canvas) {
+                            if (qrCode) {
                                 const downloadBtn = document.getElementById('download-png');
                                 if (downloadBtn) downloadBtn.click();
                             }
@@ -1272,72 +1394,49 @@
             });
         }
 
-        // Form interactions
-        function setupFormInteractions() {
-            document.querySelectorAll('input, textarea, select').forEach(element => {
-                element.addEventListener('focus', function() {
-                    if (this.parentElement) {
-                        this.parentElement.style.transform = 'translateY(-2px)';
-                        this.parentElement.style.boxShadow = '0 8px 25px rgba(0, 245, 255, 0.1)';
-                    }
-                });
-                
-                element.addEventListener('blur', function() {
-                    if (this.parentElement) {
-                        this.parentElement.style.transform = 'translateY(0)';
-                        this.parentElement.style.boxShadow = 'none';
-                    }
-                });
-            });
-        }
-
-        // Mobile scroll enhancement
-        function setupMobileScroll() {
-            if (window.innerWidth <= 1024) {
-                const generateBtn = document.getElementById('generate-btn');
-                if (generateBtn) {
-                    generateBtn.addEventListener('click', () => {
-                        setTimeout(() => {
-                            const output = document.querySelector('.output');
-                            if (output) {
-                                output.scrollIntoView({ 
-                                    behavior: 'smooth',
-                                    block: 'center'
-                                });
-                            }
-                        }, 600);
-                    });
-                }
-            }
-        }
-
         // Initialize everything when DOM is ready
         function initializeApp() {
-            console.log('Initializing VIN NESIA QR Generator...');
+            console.log('=== Initializing VIN NESIA QR Generator ===');
             
-            // Check if QRCode library is loaded
-            if (typeof QRCode === 'undefined') {
-                console.log('QRCode library not loaded yet, retrying...');
-                setTimeout(initializeApp, 100);
+            // Check if required elements exist
+            const qrContainer = document.getElementById('qr-code');
+            const generateBtn = document.getElementById('generate-btn');
+            
+            if (!qrContainer) {
+                console.error('QR container not found!');
                 return;
             }
             
-            console.log('QRCode library loaded successfully');
+            if (!generateBtn) {
+                console.error('Generate button not found!');
+                return;
+            }
+            
+            console.log('All required elements found');
             
             // Setup all event handlers
             setupFileHandlers();
             setupDownloadHandlers();
             setupGenerateButton();
             setupKeyboardShortcuts();
-            setupFormInteractions();
-            setupMobileScroll();
-            // setupRealTimeGeneration(); // Disabled for now to avoid conflicts
+            // setupRealTimeGeneration(); // Disabled initially to avoid conflicts
             
-            // Generate initial QR code
-            console.log('Generating initial QR code...');
-            setTimeout(generateQrCode, 1000);
+            // Show initial loading message
+            qrContainer.innerHTML = '<div style="text-align: center; color: #666; padding: 50px;">🔄 Loading QR Generator...</div>';
             
-            console.log('App initialized successfully');
+            // Initialize QR Code with delay to ensure DOM is ready
+            setTimeout(() => {
+                console.log('Starting QR Code initialization...');
+                initQRCode();
+                
+                // Generate initial QR code after initialization
+                setTimeout(() => {
+                    console.log('Generating initial QR code...');
+                    generateQrCode();
+                }, 3000);
+            }, 1000);
+            
+            console.log('=== App initialization complete ===');
         }
 
         // Start the app when DOM is ready
