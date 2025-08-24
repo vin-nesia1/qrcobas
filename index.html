@@ -368,13 +368,13 @@
         #qr-code-container {
             width: 100%;
             max-width: 320px;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 20px;
             background: rgba(255, 255, 255, 0.95);
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.1),
                 0 0 0 1px rgba(255, 255, 255, 0.1);
-            margin-bottom: 2rem;
+            margin: 0 auto 2rem auto;
             transition: all 0.3s ease;
         }
 
@@ -391,13 +391,52 @@
             justify-content: center;
             align-items: center;
             min-height: 280px;
+            width: 100%;
+            overflow: hidden;
         }
 
         #qr-code canvas,
         #qr-code svg {
             border-radius: 12px;
-            max-width: 100%;
-            height: auto;
+            width: 100% !important;
+            height: auto !important;
+            max-width: 280px;
+            max-height: 280px;
+        }
+
+        /* Mobile Responsive QR */
+        @media (max-width: 768px) {
+            #qr-code-container {
+                max-width: calc(100vw - 4rem);
+                padding: 1rem;
+            }
+            
+            #qr-code {
+                min-height: 250px;
+            }
+            
+            #qr-code canvas,
+            #qr-code svg {
+                max-width: 250px;
+                max-height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #qr-code-container {
+                max-width: calc(100vw - 2rem);
+                padding: 0.75rem;
+            }
+            
+            #qr-code {
+                min-height: 220px;
+            }
+            
+            #qr-code canvas,
+            #qr-code svg {
+                max-width: 220px;
+                max-height: 220px;
+            }
         }
 
         /* Buttons */
@@ -854,12 +893,12 @@
                     <div class="form-group">
                         <label for="dot-style">Dot Style</label>
                         <select id="dot-style">
-                            <option value="square">Square</option>
-                            <option value="dots">Dots</option>
-                            <option value="rounded">Rounded</option>
-                            <option value="extra-rounded">Extra Rounded</option>
-                            <option value="classy">Classy</option>
-                            <option value="classy-rounded">Classy Rounded</option>
+                            <option value="square">🟦 Square (Classic)</option>
+                            <option value="dots">⚫ Dots (Circular)</option>
+                            <option value="rounded">🔘 Rounded (Smooth)</option>
+                            <option value="extra-rounded">🟡 Extra Rounded (Pill)</option>
+                            <option value="classy">💎 Classy (Diamond)</option>
+                            <option value="classy-rounded">✨ Classy Rounded (Elegant)</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -1191,14 +1230,60 @@
                     
                     console.log('Design options - Color:', dotColor, 'BG:', bgColor, 'Style:', dotStyle);
 
-                    // Map dot styles to QRCodeStyling types
-                    const dotTypeMap = {
-                        'square': 'square',
-                        'dots': 'dots',
-                        'rounded': 'rounded',
-                        'extra-rounded': 'extra-rounded',
-                        'classy': 'classy',
-                        'classy-rounded': 'classy-rounded'
+                    // Get responsive size
+                    const getQRSize = () => {
+                        if (window.innerWidth <= 480) return 220;
+                        if (window.innerWidth <= 768) return 250;
+                        return 280;
+                    };
+
+                    // Advanced dot style mapping with unique characteristics
+                    const getDotsOptions = (style) => {
+                        switch (style) {
+                            case 'square':
+                                return { color: dotColor, type: "square" };
+                            case 'dots':
+                                return { color: dotColor, type: "dots" };
+                            case 'rounded':
+                                return { color: dotColor, type: "rounded" };
+                            case 'extra-rounded':
+                                return { color: dotColor, type: "extra-rounded" };
+                            case 'classy':
+                                return { color: dotColor, type: "classy" };
+                            case 'classy-rounded':
+                                return { color: dotColor, type: "classy-rounded" };
+                            default:
+                                return { color: dotColor, type: "square" };
+                        }
+                    };
+
+                    // Corner styling based on dot style
+                    const getCornersSquareOptions = (style) => {
+                        switch (style) {
+                            case 'dots':
+                                return { color: dotColor, type: "dot" };
+                            case 'rounded':
+                            case 'extra-rounded':
+                                return { color: dotColor, type: "extra-rounded" };
+                            case 'classy':
+                            case 'classy-rounded':
+                                return { color: dotColor, type: "square" };
+                            default:
+                                return { color: dotColor, type: "square" };
+                        }
+                    };
+
+                    const getCornersDotOptions = (style) => {
+                        switch (style) {
+                            case 'dots':
+                                return { color: dotColor, type: "dot" };
+                            case 'rounded':
+                            case 'extra-rounded':
+                            case 'classy-rounded':
+                                return { color: dotColor, type: "square" };
+                            default:
+                                return { color: dotColor, type: "square" };
+                        }
                     };
 
                     // Update container background
@@ -1207,11 +1292,12 @@
 
                     // Update QR code with new options
                     const updateOptions = {
+                        width: getQRSize(),
+                        height: getQRSize(),
                         data: data,
-                        dotsOptions: {
-                            color: dotColor,
-                            type: dotTypeMap[dotStyle] || 'square'
-                        },
+                        dotsOptions: getDotsOptions(dotStyle),
+                        cornersSquareOptions: getCornersSquareOptions(dotStyle),
+                        cornersDotOptions: getCornersDotOptions(dotStyle),
                         backgroundOptions: {
                             color: bgColor
                         }
@@ -1223,7 +1309,7 @@
                         updateOptions.imageOptions = {
                             crossOrigin: "anonymous",
                             margin: 8,
-                            imageSize: 0.3
+                            imageSize: 0.25
                         };
                     }
 
@@ -1360,6 +1446,20 @@
             });
         }
 
+        // Handle window resize to update QR size
+        function setupResponsiveHandlers() {
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    if (qrCode) {
+                        console.log('Window resized, updating QR code size');
+                        generateQrCode();
+                    }
+                }, 300);
+            });
+        }
+
         // Debounce function
         function debounce(func, wait) {
             let timeout;
@@ -1419,7 +1519,8 @@
             setupDownloadHandlers();
             setupGenerateButton();
             setupKeyboardShortcuts();
-            // setupRealTimeGeneration(); // Disabled initially to avoid conflicts
+            setupResponsiveHandlers();
+            setupRealTimeGeneration();
             
             // Show initial loading message
             qrContainer.innerHTML = '<div style="text-align: center; color: #666; padding: 50px;">🔄 Loading QR Generator...</div>';
